@@ -432,3 +432,103 @@ class RegressionTrainer(BaseTrainer):
                 tf.summary.scalar('mse', metrics['mse_placeholder'])
             ])
         return metrics
+
+class ClassificationTrainer(BaseTrainer):
+    def __init__(self, train_batch, train_eval_batch, val_batch,
+                 train_model, train_eval_model, val_model,
+                 train_preds, train_eval_preds, val_preds,
+                 sess, steps_per_epoch, ls_bands, nl_band, learning_rate, lr_decay,
+                 log_dir, save_ckpt_prefix, init_ckpt_dir, imagenet_weights_path,
+                 hs_weight_init, exclude_final_layer, image_summaries=True):
+        '''
+        See Trainer for args descriptions
+        '''
+        super(ClassificationTrainer, self).__init__(
+            train_batch, train_eval_batch, val_batch,
+            train_model, train_eval_model, val_model,
+            train_preds, train_eval_preds, val_preds,
+            sess, steps_per_epoch, ls_bands, nl_band, learning_rate, lr_decay,
+            log_dir, save_ckpt_prefix, init_ckpt_dir, imagenet_weights_path,
+            hs_weight_init, exclude_final_layer, image_summaries,
+            loss_fn=loss_utils.loss_xent,
+            loss_type='loss_xent',
+            results_cols=['loss_xent', 'acc'])
+
+    def eval_val(self, init_iter=None, feed_dict=None, max_nbatches=None):
+        '''Run trained model on validation dataset. Saves model checkpoint if
+        validation mse is lower than the best seen so far.
+        Args
+        - init_iter: tf.Operation, validation dataset iterator initializer
+            set to None if no iterator initialization is necessary
+        - feed_dict: dict, used for populating placeholders needed
+            to initialize the dataset iterator
+        - max_nbatches: int, maximum number of batches of the validation dataset to run
+            set to None to run until reaching a tf.errors.OutOfRangeError
+        '''
+        self._eval_split(
+            labels=self.val_labels,
+            preds=self.val_preds,
+            split='val',
+            eval_summaries=self.val_eval_summaries,
+            weights=self.val_weights,
+            init_iter=init_iter,
+            feed_dict=feed_dict,
+            max_nbatches=max_nbatches)
+
+        # if first run or new best val mse
+        val_acc = self.results.loc[(self.epoch, 'val'), 'acc']
+        val_accs = self.results.loc[(slice(None), 'val'), 'acc']
+        if (len(val_accs) == 1) or (val_acc == val_accs.max()):
+            saved_ckpt_path = self.save_ckpt()
+            print('New best acc on val! Saved checkpoint to', saved_ckpt_path)
+
+    def evaluate_preds(self, labels, preds, split, weights=None, eval_summaries=None):
+        '''Helper method to calculate loss_xent and accuracy.
+        Args
+        - labels: np.array, shape [N], type int32
+        - preds: np.array, shape [N, C], type float32
+        - split: str
+        - weights: np.array of shape [N], or None
+        - eval_summaries: dict, keys are str
+            'xent_placeholder' => tf.placeholder
+            'acc_placeholder' => tf.placeholder
+            'summary_op' => tf.Summary, merge of xent and acc summaries
+        Returns: xent, acc
+        '''
+        assert len(labels) == len(preds)
+        assert len(preds.shape) == 2
+
+        xent = sklearn.metrics.log_loss(y_true=labels, y_pred=preds, sample_weight=weights)
+        acc = np.mean(labels == np.argmax(preds, axis=1))
+
+        num_examples = len(labels)
+        s = 'Epoch {:02d}, {} ({} examples) xent: {:0.3f}, acc: {:0.3f}'
+        print(s.format(self.epoch, split, num_examples, xent, acc))
+
+        if eval_summaries is not None:
+            summary_str = self.sess.run(eval_summaries['summary_op'], feed_dict={
+                eval_summaries['xent_placeholder']: xent,
+                eval_summaries['acc_placeholder']: acc,
+            })
+            self.summary_writer.add_summary(summary_str, self.epoch)
+        return xent, acc
+
+    def create_eval_summaries(self, scope: str):
+        '''
+        Args
+        - scope: str
+        Returns metrics: dict, keys are str
+            'xent_placeholder' => tf.placeholder
+            'acc_placeholder' => tf.placeholder
+            'summary_op' => tf.Summary, merge of xent and acc summaries
+        '''
+        metrics = {}
+        # not sure why, but we need the '/' in order to reuse the same 'train/' name for the scope
+        with tf.name_scope(scope + '/'):
+            metrics['xent_placeholder'] = tf.placeholder(tf.float32, shape=[], name='xent_placeholder')
+            metrics['acc_placeholder'] = tf.placeholder(tf.float32, shape=[], name='acc_placeholder')
+            metrics['summary_op'] = tf.summary.merge([
+                tf.summary.scalar('xent', metrics['xent_placeholder']),
+                tf.summary.scalar('acc', metrics['acc_placeholder'])
+            ])
+        return metrics
