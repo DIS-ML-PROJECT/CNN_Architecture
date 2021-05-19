@@ -282,7 +282,7 @@ def run_extraction_on_models(model_infos, ModelClass, model_params, batcher,
 
         for model_info in model_infos:
             model_dir = model_info['model_dir']
-            ckpt_dir = os.path.join(ckpts_root_dir, model_dir)
+            ckpt_dir = os.path.join(ck pts_root_dir, model_dir)
             logs_dir = os.path.join(logs_root_dir, model_dir)
 
             # clear the model weights, then load saved checkpoint
