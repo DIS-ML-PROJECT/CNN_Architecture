@@ -226,7 +226,7 @@ def check_existing(models: dict, logs_root_dir: str, ckpts_root_dir: str,
         model_dir = models[model_name]['model_dir']
 
         # check that checkpoint exists
-        ckpt_glob = os.path.join(ckpts_root_dir, model_dir, 'ckpt-*')
+        ckpt_glob = os.path.join(ckpts_root_dir, model_dir, 'ckpt-*').replace('\\', '/')
         assert len(glob(ckpt_glob)) > 0, f'did not find checkpoint matching: {ckpt_glob}'
 
         npz_path = os.path.join(logs_root_dir, model_dir, save_filename)
@@ -282,8 +282,10 @@ def run_extraction_on_models(model_infos, ModelClass, model_params, batcher,
 
         for model_info in model_infos:
             model_dir = model_info['model_dir']
-            ckpt_dir = os.path.join(ck pts_root_dir, model_dir)
-            logs_dir = os.path.join(logs_root_dir, model_dir)
+
+            # false backslash edit mm
+            ckpt_dir = os.path.join(ckpts_root_dir, model_dir).replace('\\', '/')
+            logs_dir = os.path.join(logs_root_dir, model_dir).replace('\\', '/')
 
             # clear the model weights, then load saved checkpoint
             print('Loading saved ckpt...')
