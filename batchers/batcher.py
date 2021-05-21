@@ -5,14 +5,16 @@ import os
 
 import tensorflow as tf
 
-#ROOT_DIR = '/atlas/u/chrisyeh/africa_poverty/'
-DHS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/dhs_tfrecords')
-LSMS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/lsms_tfrecords')
+#%%
+ROOT_DIR = os.getcwd()
+DHS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data\dhs_tfrecords')
+LSMS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data\lsms_tfrecords')
 
-
+#%%
 def get_tfrecord_paths(dataset, split='all'):
     '''
     Args
+    - dataset: str, a key in SURVEY_NAMES
     - dataset: str, a key in SURVEY_NAMES
     - split: str, one of ['train', 'val', 'test', 'all']
 
