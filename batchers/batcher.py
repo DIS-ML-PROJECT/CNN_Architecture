@@ -16,6 +16,7 @@ def get_tfrecord_paths(dataset, split='all'):
     Args
     - dataset: str, a key in SURVEY_NAMES
     - split: str, one of ['train', 'val', 'test', 'all']
+    
     Returns:
     - tfrecord_paths: list of str, paths to TFRecord files, sorted
     '''
@@ -35,11 +36,11 @@ def get_tfrecord_paths(dataset, split='all'):
     assert len(tfrecord_paths) == expected_size
     return tfrecord_paths
 
-
 def get_lsms_tfrecord_paths(cys):
     '''
     Args
     - cys: list of 'country_year' str, order matters!
+
     Returns:
     - tfrecord_paths: list of str, paths to TFRecord files, order of country_years given by cys
     '''
@@ -116,6 +117,7 @@ class Batcher():
 
     def get_batch(self):
         '''Gets the tf.Tensors that represent a batch of data.
+
         Returns
         - iter_init: tf.Operation that should be run before each epoch
         - batch: dict, str -> tf.Tensor
@@ -125,6 +127,7 @@ class Batcher():
             - 'labels': tf.Tensor, shape [batch_size] or [batch_size, label_dim], type float32
                 - shape [batch_size, 2] if self.label_name and self.nl_label are not None
             - 'years': tf.Tensor, shape [batch_size], type int32
+
         IMPLEMENTATION NOTE: The order of tf.data.Dataset.batch() and .repeat() matters!
             Suppose the size of the dataset is not evenly divisible by self.batch_size.
             If batch then repeat, ie. `ds.batch(batch_size).repeat(num_epochs)`:
@@ -184,6 +187,7 @@ class Batcher():
         '''
         Args
         - example_proto: a tf.train.Example protobuf
+
         Returns: dict {'images': img, 'labels': label, 'locs': loc, 'years': year}
         - img: tf.Tensor, shape [224, 224, C], type float32
           - channel order is [B, G, R, SWIR1, SWIR2, TEMP1, NIR, NIGHTLIGHTS]
@@ -264,10 +268,12 @@ class Batcher():
 
     def split_nl_band(self, ex):
         '''Splits the NL band into separate DMSP and VIIRS bands.
+
         Args
         - ex: dict {'images': img, 'years': year, ...}
             - img: tf.Tensor, shape [H, W, C], type float32, final band is NL
             - year: tf.Tensor, scalar, type int32
+
         Returns: ex, with img updated to have 2 NL bands
         - img: tf.Tensor, shape [H, W, C], type float32, last two bands are [DMSP, VIIRS]
         '''
@@ -288,10 +294,12 @@ class Batcher():
     def augment_example(self, ex):
         '''Performs image augmentation (random flips + levels adjustments).
         Does not perform level adjustments on NL band(s).
+
         Args
         - ex: dict {'images': img, ...}
             - img: tf.Tensor, shape [H, W, C], type float32
                 NL band depends on self.ls_bands and self.nl_band
+
         Returns: ex, with img replaced with an augmented image
         '''
         assert self.augment
@@ -307,10 +315,12 @@ class Batcher():
     def augment_levels(self, img):
         '''Perform random brightness / contrast on the image.
         Does not perform level adjustments on NL band(s).
+
         Args
         - img: tf.Tensor, shape [H, W, C], type float32
             - self.nl_band = 'merge' => final band is NL band
             - self.nl_band = 'split' => last 2 bands are NL bands
+
         Returns: tf.Tensor with data augmentation applied
         '''
         def rand_levels(image):
@@ -337,6 +347,7 @@ class UrbanBatcher(Batcher):
         '''
         Args
         - example_proto: a tf.train.Example protobuf
+
         Returns
         - predicate: tf.Tensor, type bool, True to keep, False to filter out
         '''
@@ -353,6 +364,7 @@ class RuralBatcher(Batcher):
         '''
         Args
         - example_proto: a tf.train.Example protobuf
+
         Returns
         - predicate: tf.Tensor, type bool, True to keep, False to filter out
         '''
@@ -394,6 +406,7 @@ class ResidualBatcher(Batcher):
 
     def get_batch(self):
         '''Gets the tf.Tensors that represent a batch of data.
+
         Returns
         - iter_init: tf.Operation that should be run before each epoch
         - batch: dict, str -> tf.Tensor
@@ -402,6 +415,7 @@ class ResidualBatcher(Batcher):
             - 'locs': tf.Tensor, shape [batch_size, 2], type float32, each row is [lat, lon]
             - 'labels': tf.Tensor, shape [batch_size], type float32, residuals
             - 'years': tf.Tensor, shape [batch_size], type int32
+
         IMPLEMENTATION NOTE: The order of tf.data.Dataset.batch() and .repeat() matters!
             Suppose the size of the dataset is not evenly divisible by self.batch_size.
             If batch then repeat, ie. `ds.batch(batch_size).repeat(num_epochs)`:
@@ -470,6 +484,7 @@ class ResidualBatcher(Batcher):
         - parsed_dict: dict, contains
           - 'labels': tf.Tensor, scalar, type float32, label from TFRecord file
         - pred: tf.Tensor, scalar, type float32
+
         Returns
         - parsed_dict: dict, same as input, except 'labels' maps to residual
         '''
