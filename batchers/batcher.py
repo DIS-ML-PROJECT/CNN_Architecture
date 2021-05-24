@@ -2,10 +2,10 @@ from batchers.dataset_constants import SIZES, SURVEY_NAMES, MEANS_DICT, STD_DEVS
 
 from glob import glob
 import os
+
 import tensorflow as tf
 
-
-ROOT_DIR = '/atlas/u/chrisyeh/africa_poverty/'
+#ROOT_DIR = '/atlas/u/chrisyeh/africa_poverty/'
 DHS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/dhs_tfrecords')
 LSMS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/lsms_tfrecords')
 
