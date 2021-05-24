@@ -143,6 +143,3 @@ def plot_label_vs_score(scores_list, labels_list, legends, metric, sort, figsize
     for handle in lgd.legendHandles:
         handle.set_sizes([30.0])
     plt.show()
-
-
-
