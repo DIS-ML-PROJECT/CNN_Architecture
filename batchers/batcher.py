@@ -5,7 +5,8 @@ import os
 
 import tensorflow as tf
 
-#ROOT_DIR = '/atlas/u/chrisyeh/africa_poverty/'
+# edited mm
+ROOT_DIR = 'C:/Users/matte/Documents/Data/01_Universitaet/02_TH_Koeln/06_Semester/04_Machine_Learning_Project/CNN_Architecture'
 DHS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/dhs_tfrecords')
 LSMS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/lsms_tfrecords')
 
@@ -15,7 +16,7 @@ def get_tfrecord_paths(dataset, split='all'):
     Args
     - dataset: str, a key in SURVEY_NAMES
     - split: str, one of ['train', 'val', 'test', 'all']
-
+    
     Returns:
     - tfrecord_paths: list of str, paths to TFRecord files, sorted
     '''
@@ -50,6 +51,7 @@ def get_lsms_tfrecord_paths(cys):
         tfrecord_paths.extend(sorted(glob(glob_path)))
     assert len(tfrecord_paths) == expected_size
     return tfrecord_paths
+
 
 class Batcher():
     def __init__(self, tfrecord_files, dataset, batch_size, label_name,
