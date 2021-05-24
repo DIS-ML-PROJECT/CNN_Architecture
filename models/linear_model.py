@@ -12,6 +12,7 @@ def train_linear_logo(features, labels, group_labels, cv_groups, test_groups,
                       plot=True, group_names=None, return_weights=False,
                       verbose=False):
     '''Leave-one-group-out cross-validated training of a linear model.
+
     Args
     - features: np.array, shape [N, D]
         each feature dim should be normalized to 0 mean, unit variance
@@ -25,6 +26,7 @@ def train_linear_logo(features, labels, group_labels, cv_groups, test_groups,
     - group_names: list of str, names of the groups, only used when plotting
     - return_weights: bool, whether to return the final trained model weights
     - verbose: bool
+
     Returns
     - test_preds: np.array, predictions on indices from test_groups
     - coefs: np.array, shape [D] (only returned if return_weights=True)
@@ -99,9 +101,6 @@ def train_linear_logo(features, labels, group_labels, cv_groups, test_groups,
         return test_preds, coefs, intercept
 
 
-
-###Ridge CV model
-
 def ridge_cv(features, labels, group_labels, group_names, savedir=None,
              weights=None, save_weights=False, do_plot=False,
              subset_indices=None, subset_name=None, save_dict=None,
@@ -112,11 +111,13 @@ def ridge_cv(features, labels, group_labels, group_names, savedir=None,
          to tune ridge model alpha parameter
       2. using best alpha, trains ridge model on all folds except F
       3. runs trained ridge model on F
+
     Saves predictions for each fold on test.
         savedir/test_preds_{subset_name}.npz if subset_name is given
         savedir/test_preds.npz otherwise
     Saves ridge regression weights to savedir/ridge_weights.npz
         if save_weight=True
+
     Args
     - features: either a dict or np.array
         - if dict: group_name => np.array, shape [N, D]
@@ -134,6 +135,7 @@ def ridge_cv(features, labels, group_labels, group_names, savedir=None,
     - subset_name: str, name of the subset
     - save_dict: dict, str => np.array, saved with test preds npz file
     - verbose: bool
+
     Returns
     - test_preds: np.array, shape [N]
     '''

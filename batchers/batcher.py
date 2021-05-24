@@ -35,7 +35,6 @@ def get_tfrecord_paths(dataset, split='all'):
     assert len(tfrecord_paths) == expected_size
     return tfrecord_paths
 
-
 def get_lsms_tfrecord_paths(cys):
     '''
     Args
@@ -51,7 +50,6 @@ def get_lsms_tfrecord_paths(cys):
         tfrecord_paths.extend(sorted(glob(glob_path)))
     assert len(tfrecord_paths) == expected_size
     return tfrecord_paths
-
 
 class Batcher():
     def __init__(self, tfrecord_files, dataset, batch_size, label_name,

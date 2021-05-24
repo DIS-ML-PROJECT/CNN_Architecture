@@ -136,7 +136,7 @@ _MEANS_2009_17nl = {
     'SWIR2': 0.162268,
     'TEMP1': 298.736746,
     'NIR':   0.245430,
-    'DMSP':  7.152961,
+    'DMSP':  7.152961,wealthpooled
     'VIIRS': 2.322687,
 }
 _MEANS_LSMS = {
