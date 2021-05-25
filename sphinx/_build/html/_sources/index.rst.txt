@@ -1,55 +1,68 @@
-.. CNN_Architecture documentation master file, created by
-   sphinx-quickstart on Mon May 24 17:08:24 2021.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to CNN_Architecture's documentation!
 ============================================
 .. automodule:: cnn_training
    :members:
 
-.. automodule:: feature_extract
+.. automodule:: feature_extract.extract_features
    :members:
 
-.. automodule:: model_analysis
+.. automodule:: model_analysis.lsmsdelta_resnet
    :members:
 
-.. automodule:: models
+.. automodule:: models.base_model
    :members:
 
-.. automodule:: utils
+.. automodule:: models.histograms
+   :members:
+
+.. automodule:: models.hyperspectral_resnet
+   :members:
+
+.. automodule:: models.knn
+   :members:
+
+.. automodule:: models.linear_model
+   :members:
+
+.. automodule:: models.loss_utils
+   :members:
+
+.. automodule:: models.resnet_config
+   :members:
+
+.. automodule:: models.resnet_model
+   :members:
+
+.. automodule:: models.dhs_ridge_resnet_model
+   :members:
+
+.. automodule:: models.lsms_baselines
+   :members:
+
+.. automodule:: models.lsmsdelta_baselines
+   :members:
+
+.. automodule:: utils.analysis
+   :members:
+
+.. automodule:: utils.general
+   :members:
+
+.. automodule:: utils.geo_plot
+   :members:
+
+.. automodule:: utils.plot
+   :members:
+
+.. automodule:: utils.run
+   :members:
+
+.. automodule:: utils.trainer
    :members:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Contents:
-
-   docs/batchers/batcher.rst
-   docs/batchers/dataset_constants.rst
-   docs/batchers/delta_batcher.rst
-   docs/batchers/modules.rst
-
-   docs/cnn_training/modules.rst
-   docs/cnn_training/train_delta.rst
-   docs/cnn_training/train_directly.rst
-
-   docs/data/modules.rst
-
-   docs/feature_extract/extract_features.rst
-   docs/feature_extract/modules.rst
-
-   docs/model_analysis/modules.rst
-
-   docs/models/base_model.rst
-   docs/models/extract_features.rst
-   docs/models/histograms.rst
-   docs/models/hyperspectral_resnet.rst
-   docs/models/knn.rst
-   docs/models/linear_model.rst
-   docs/models/loss_utils.rst
-   docs/models/modules.rst
-   docs/models/resnet_config.rst
-   docs/models/resnet_model.rst
 
 
 Indices and tables

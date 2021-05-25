@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>models.loss_utils &#8212; CNN_Architecture  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for models.loss_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+
+<div class="viewcode-block" id="loss_mse"><a class="viewcode-back" href="../../index.html#models.loss_utils.loss_mse">[docs]</a><span class="k">def</span> <span class="nf">loss_mse</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_summaries</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Computes the mean squared-error between preds and labels.</span>
+<span class="sd">    Args</span>
+<span class="sd">    - labels: tf.Tensor, shape [batch_size] or [batch_size, labels_dim]</span>
+<span class="sd">    - preds: tf.Tensor, same shape as labels, type float32</span>
+<span class="sd">    - weights: tf.Tensor, scalar or shape [batch_size], type float</span>
+<span class="sd">    - add_sumaries: bool, whether to create summaries for the loss variables</span>
+<span class="sd">    Returns</span>
+<span class="sd">    - loss_total: tf.Tensor, scalar, loss_mse + loss_reg</span>
+<span class="sd">    - loss_mse: tf.Tensor, scalar, mean squared-error loss over the batch</span>
+<span class="sd">    - loss_reg: tf.Tensor, scalar, regularization loss</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">loss_mse</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+        <span class="n">predictions</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
+        <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
+        <span class="n">reduction</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Reduction</span><span class="o">.</span><span class="n">SUM_BY_NONZERO_WEIGHTS</span><span class="p">)</span>
+    <span class="n">loss_total</span><span class="p">,</span> <span class="n">loss_reg</span><span class="p">,</span> <span class="n">loss_summaries</span> <span class="o">=</span> <span class="n">_loss_helper</span><span class="p">(</span>
+        <span class="n">loss_mse</span><span class="p">,</span>
+        <span class="n">loss_name</span><span class="o">=</span><span class="s1">&#39;loss_mse&#39;</span><span class="p">,</span>
+        <span class="n">add_summaries</span><span class="o">=</span><span class="n">add_summaries</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss_total</span><span class="p">,</span> <span class="n">loss_mse</span><span class="p">,</span> <span class="n">loss_reg</span><span class="p">,</span> <span class="n">loss_summaries</span></div>
+
+
+<div class="viewcode-block" id="loss_xent"><a class="viewcode-back" href="../../index.html#models.loss_utils.loss_xent">[docs]</a><span class="k">def</span> <span class="nf">loss_xent</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">logits</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_summaries</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Takes a softmax over logits, then calculates cross-entropy loss with the</span>
+<span class="sd">    given labels.</span>
+<span class="sd">    Args</span>
+<span class="sd">    - labels: tf.Tensor, shape [batch_size], type int32, elements in [0, num_classes)</span>
+<span class="sd">    - logits: tf.Tensor, shape [batch_size, num_classes], type float32</span>
+<span class="sd">    - weights: tf.Tensor, scalar or shape [batch_size], type float</span>
+<span class="sd">    - add_sumaries: bool, whether to create summaries for the loss variables</span>
+<span class="sd">    Returns</span>
+<span class="sd">    - loss_total: tf.Tensor, scalar, loss_xent + loss_reg</span>
+<span class="sd">    - loss_xent: tf.Tensor, scalar, mean cross-entropy loss over the batch</span>
+<span class="sd">    - loss_reg: tf.Tensor, scalar, regularization loss</span>
+<span class="sd">    - loss_summaries: tf.summary if add_summaries is True, None otherwise</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">loss_xent</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_softmax_cross_entropy</span><span class="p">(</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+        <span class="n">logits</span><span class="o">=</span><span class="n">logits</span><span class="p">,</span>
+        <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span>
+        <span class="n">reduction</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Reduction</span><span class="o">.</span><span class="n">SUM_BY_NONZERO_WEIGHTS</span><span class="p">)</span>
+    <span class="n">loss_total</span><span class="p">,</span> <span class="n">loss_reg</span><span class="p">,</span> <span class="n">loss_summaries</span> <span class="o">=</span> <span class="n">_loss_helper</span><span class="p">(</span>
+        <span class="n">loss_xent</span><span class="p">,</span>
+        <span class="n">loss_name</span><span class="o">=</span><span class="s1">&#39;loss_cross_entropy&#39;</span><span class="p">,</span>
+        <span class="n">add_summaries</span><span class="o">=</span><span class="n">add_summaries</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss_total</span><span class="p">,</span> <span class="n">loss_xent</span><span class="p">,</span> <span class="n">loss_reg</span><span class="p">,</span> <span class="n">loss_summaries</span></div>
+
+
+<span class="k">def</span> <span class="nf">_loss_helper</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">loss_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_summaries</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Helper function to get total loss and regularization loss, and add summaries for</span>
+<span class="sd">    all losses.</span>
+<span class="sd">    Args</span>
+<span class="sd">    - loss: tf.Tensor, scalar, the loss without regularization</span>
+<span class="sd">    - loss_name: str, name for the loss summary</span>
+<span class="sd">    - add_sumaries: bool, whether to create summaries for the loss variables</span>
+<span class="sd">    Returns</span>
+<span class="sd">    - loss_total: tf.Tensor, loss + loss_reg</span>
+<span class="sd">    - loss_reg: tf.Tensor, the regularization loss</span>
+<span class="sd">    - loss_summaries: tf.summary if add_summaries is True, None otherwise</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">loss_total</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">get_total_loss</span><span class="p">(</span><span class="n">add_regularization_losses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">loss_reg</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">get_regularization_loss</span><span class="p">()</span>
+    <span class="n">loss_summaries</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">add_summaries</span><span class="p">:</span>
+        <span class="n">loss_summaries</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s1">&#39;loss_total&#39;</span><span class="p">,</span> <span class="n">loss_total</span><span class="p">),</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s1">&#39;loss_regularization_only&#39;</span><span class="p">,</span> <span class="n">loss_reg</span><span class="p">),</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="n">loss_name</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+        <span class="p">])</span>
+    <span class="k">return</span> <span class="n">loss_total</span><span class="p">,</span> <span class="n">loss_reg</span><span class="p">,</span> <span class="n">loss_summaries</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CNN_Architecture</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PS, JD, MM (original author is sustainlab-group).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

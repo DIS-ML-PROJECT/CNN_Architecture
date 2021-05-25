@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>feature_extract.extract_features &#8212; CNN_Architecture  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for feature_extract.extract_features</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="c1"># edit if necessary</span>
+<span class="n">ROOT_DIR</span> <span class="o">=</span> <span class="s1">&#39;C:/Users/matte/Documents/Data/01_Universitaet/02_TH_Koeln/06_Semester/04_Machine_Learning_Project/CNN_Architecture&#39;</span>
+
+<span class="n">DATASET_NAME</span> <span class="o">=</span> <span class="s1">&#39;2009-17&#39;</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">KEEP_FRAC</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">LABEL_NAME</span> <span class="o">=</span> <span class="s1">&#39;wealthpooled&#39;</span>
+<span class="n">IS_TRAINING</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">NAME</span> <span class="o">=</span> <span class="s1">&#39;DHS_OOC&#39;</span>
+
+<span class="c1"># false backslash edit mm</span>
+<span class="n">CKPTS_ROOT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT_DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ckpts/</span><span class="si">{</span><span class="n">NAME</span><span class="si">}</span><span class="s1">/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="n">LOGS_ROOT_DIR</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT_DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;logs/</span><span class="si">{</span><span class="n">NAME</span><span class="si">}</span><span class="s1">/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
+
+<span class="k">def</span> <span class="nf">get_bands</span><span class="p">(</span><span class="n">bands</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;ms&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;ms&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s1">&#39;msnl&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;ms&#39;</span><span class="p">,</span> <span class="s1">&#39;split&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;nl&#39;</span><span class="p">:</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;split&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;rgb&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;rgb&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="s1">&#39;rgbnl&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;rgb&#39;</span><span class="p">,</span> <span class="s1">&#39;split&#39;</span><span class="p">),</span>
+    <span class="p">}[</span><span class="n">bands</span><span class="p">]</span>
+
+<span class="c1"># models to run</span>
+<span class="n">ALL_MODELS</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># best ResNet-18 transfer models</span>
+<span class="n">TRANSFER_MODELS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ResNet-18 RGB Transfer&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;model_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;transfer_2009-17nl_nlcenter_18preact_rgb_b64_fc001_conv001_lr0001&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;rgb&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;ResNet-18 MS Transfer&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;model_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;transfer_2009-17nl_nlcenter_18preact_ms_b64_fc001_conv001_lr0001&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;ms&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c1"># ImageNet &#39;Transfer&#39; Learning</span>
+<span class="n">IMAGENET_TRANSFER_MODELS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;18preact_rgb_random&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_rgb_random2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_rgb_random3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_rgb_same&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_rgbnl_random&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_rgbnl_random2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_rgbnl_random3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_rgbnl_same&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_rgbnl_samecaled&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_ms_random&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_ms_random2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_ms_random3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_ms_same&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_ms_samecaled&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_msnl_random&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_msnl_random2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_msnl_random3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_msnl_same&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;18preact_msnl_samecaled&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># get parameters and bands for transfer models</span>
+<span class="k">for</span> <span class="n">model_dir</span> <span class="ow">in</span> <span class="n">IMAGENET_TRANSFER_MODELS</span><span class="p">:</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;18preact_(\w+)_(\w+)&#39;</span>
+    <span class="n">bands_name</span><span class="p">,</span> <span class="n">init</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="n">bands_tup</span> <span class="o">=</span> <span class="n">get_bands</span><span class="p">(</span><span class="n">bands_name</span><span class="p">)</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Resnet-18 </span><span class="si">{</span><span class="n">bands_name</span><span class="si">}</span><span class="s1"> Init </span><span class="si">{</span><span class="n">init</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">ALL_MODELS</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;model_dir&#39;</span><span class="p">:</span> <span class="n">model_dir</span><span class="p">,</span>
+        <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="n">bands_tup</span>
+    <span class="p">}</span>
+
+<span class="c1"># best ResNet-18 OOC End-to-End models</span>
+<span class="n">OOC_MODEL_DIRS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># 6/14/2019</span>
+    <span class="s1">&#39;2009-17A_18preact_ms_samescaled_b64_fc01_conv01_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17B_18preact_ms_samescaled_b64_fc001_conv001_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17C_18preact_ms_samescaled_b64_fc001_conv001_lr001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17D_18preact_ms_samescaled_b64_fc001_conv001_lr01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17E_18preact_ms_samescaled_b64_fc01_conv01_lr001&#39;</span><span class="p">,</span>
+
+    <span class="c1"># 10/7/2018</span>
+    <span class="s1">&#39;2009-17A_18preact_nl_random_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17B_18preact_nl_random_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17C_18preact_nl_random_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17D_18preact_nl_random_b64_fc1.0_conv1.0_lr01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17E_18preact_nl_random_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+
+    <span class="c1"># 10/7/2018</span>
+    <span class="s1">&#39;2009-17A_18preact_rgb_same_b64_fc001_conv001_lr01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17B_18preact_rgb_same_b64_fc001_conv001_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17C_18preact_rgb_same_b64_fc001_conv001_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17D_18preact_rgb_same_b64_fc1.0_conv1.0_lr01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2009-17E_18preact_rgb_same_b64_fc001_conv001_lr0001&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># get parameters and bands for ooc models</span>
+<span class="k">for</span> <span class="n">model_dir</span> <span class="ow">in</span> <span class="n">OOC_MODEL_DIRS</span><span class="p">:</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;2009-17(\w)_18preact_(\w+)_\w+_b64.+&#39;</span>
+    <span class="n">fold</span><span class="p">,</span> <span class="n">bands_name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="n">bands_tup</span> <span class="o">=</span> <span class="n">get_bands</span><span class="p">(</span><span class="n">bands_name</span><span class="p">)</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Resnet-18 </span><span class="si">{</span><span class="n">bands_name</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">ALL_MODELS</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;model_dir&#39;</span><span class="p">:</span> <span class="n">model_dir</span><span class="p">,</span>
+        <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="n">bands_tup</span>
+    <span class="p">}</span>
+
+<span class="c1"># Incountry models</span>
+<span class="n">INCOUNTRY_MODEL_DIRS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># 6/12/2019</span>
+    <span class="s1">&#39;incountryA_18preact_ms_samescaled_b64_fc01_conv01_lr001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;incountryB_18preact_ms_samescaled_b64_fc1_conv1_lr001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;incountryC_18preact_ms_samescaled_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;incountryD_18preact_ms_samescaled_b64_fc001_conv001_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;incountryE_18preact_ms_samescaled_b64_fc001_conv001_lr0001&#39;</span><span class="p">,</span>
+
+    <span class="c1"># May 2019</span>
+    <span class="s1">&#39;incountryA_18preact_nl_random_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;incountryB_18preact_nl_random_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;incountryC_18preact_nl_random_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;incountryD_18preact_nl_random_b64_fc1.0_conv1.0_lr0001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;incountryE_18preact_nl_random_b64_fc01_conv01_lr001&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># get parameters and bands for incountry models</span>
+<span class="k">for</span> <span class="n">model_dir</span> <span class="ow">in</span> <span class="n">INCOUNTRY_MODEL_DIRS</span><span class="p">:</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;incountry(\w)_18preact_(\w+)_\w+_b64.+&#39;</span>
+    <span class="n">fold</span><span class="p">,</span> <span class="n">bands_name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="n">bands_tup</span> <span class="o">=</span> <span class="n">get_bands</span><span class="p">(</span><span class="n">bands_name</span><span class="p">)</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">NAME</span><span class="si">}</span><span class="s1"> Resnet-18 Incountry </span><span class="si">{</span><span class="n">bands_name</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">ALL_MODELS</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;model_dir&#39;</span><span class="p">:</span> <span class="n">model_dir</span><span class="p">,</span>
+        <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="n">bands_tup</span>
+    <span class="p">}</span>
+
+<span class="c1"># keep models</span>
+<span class="n">KEEP_MODEL_DIRS</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LOGS_ROOT_DIR</span><span class="p">,</span> <span class="s1">&#39;2009-17*_18preact_nl_random_keep*seed*&#39;</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">model_dir</span> <span class="ow">in</span> <span class="n">KEEP_MODEL_DIRS</span><span class="p">:</span>
+    <span class="n">model_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">model_dir</span><span class="p">)</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;2009-17(\w)_18preact_(\w+)_\w+_keep(.+)_seed(\w+)_b64.+&#39;</span>
+    <span class="n">fold</span><span class="p">,</span> <span class="n">bands_name</span><span class="p">,</span> <span class="n">keep</span><span class="p">,</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+    <span class="n">bands_tup</span> <span class="o">=</span> <span class="n">get_bands</span><span class="p">(</span><span class="n">bands_name</span><span class="p">)</span>
+    <span class="n">model_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Resnet-18 </span><span class="si">{</span><span class="n">bands_name</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s1">, keep</span><span class="si">{</span><span class="n">keep</span><span class="si">}</span><span class="s1"> seed</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">ALL_MODELS</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;model_dir&#39;</span><span class="p">:</span> <span class="n">model_dir</span><span class="p">,</span>
+        <span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="n">bands_tup</span>
+    <span class="p">}</span>
+
+<span class="c1"># set model parameters</span>
+
+<span class="n">MODEL_PARAMS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;fc_reg&#39;</span><span class="p">:</span> <span class="mf">5e-3</span><span class="p">,</span>  <span class="c1"># sustainlab: this doesn&#39;t actually matter</span>
+    <span class="s1">&#39;conv_reg&#39;</span><span class="p">:</span> <span class="mf">5e-3</span><span class="p">,</span>  <span class="c1"># sustainlab: this doesn&#39;t actually matter</span>
+    <span class="s1">&#39;num_layers&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+    <span class="s1">&#39;num_outputs&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;is_training&#39;</span><span class="p">:</span> <span class="n">IS_TRAINING</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">get_model_class</span><span class="p">(</span><span class="n">model_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;resnet&#39;</span><span class="p">:</span>
+        <span class="n">model_class</span> <span class="o">=</span> <span class="n">Hyperspectral_Resnet</span>
+    <span class="k">elif</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;vggf&#39;</span><span class="p">:</span>
+        <span class="n">model_class</span> <span class="o">=</span> <span class="n">VGGF</span>
+    <span class="k">elif</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;simplecnn&#39;</span><span class="p">:</span>
+        <span class="n">model_class</span> <span class="o">=</span> <span class="n">SimpleCNN</span>
+    <span class="k">elif</span> <span class="n">model_type</span> <span class="o">==</span> <span class="s1">&#39;resnetcombo&#39;</span><span class="p">:</span>
+        <span class="n">model_class</span> <span class="o">=</span> <span class="n">ResnetCombo</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown model_name. Was not one of [&quot;resnet&quot;, &quot;vggf&quot;, &quot;simplecnn&quot;, &quot;resnetcombo&quot;].&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model_class</span>
+
+<div class="viewcode-block" id="get_batcher"><a class="viewcode-back" href="../../index.html#feature_extract.extract_features.get_batcher">[docs]</a><span class="k">def</span> <span class="nf">get_batcher</span><span class="p">(</span><span class="n">ls_bands</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nl_band</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Args</span>
+<span class="sd">    - ls_bands: one of [None, &#39;ms&#39;, &#39;rgb&#39;]</span>
+<span class="sd">    - nl_band: one of [None, &#39;merge&#39;, &#39;split&#39;]</span>
+<span class="sd">    - num_epochs: int</span>
+<span class="sd">    Returns</span>
+<span class="sd">    - b: Batcher</span>
+<span class="sd">    - size: int, length of dataset</span>
+<span class="sd">    - feed_dict: dict, feed_dict for initializing the dataset iterator</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># get tfrecord paths and dataset size</span>
+    <span class="n">tfrecord_paths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">batcher</span><span class="o">.</span><span class="n">get_tfrecord_paths</span><span class="p">(</span><span class="n">DATASET_NAME</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">))</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tfrecord_paths</span><span class="p">)</span>
+    <span class="n">tfrecord_paths_ph</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">size</span><span class="p">])</span>
+    <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">tfrecord_paths_ph</span><span class="p">:</span> <span class="n">tfrecord_paths</span><span class="p">}</span>
+
+    <span class="c1"># get batcher</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">batcher</span><span class="o">.</span><span class="n">Batcher</span><span class="p">(</span>
+        <span class="n">tfrecord_files</span><span class="o">=</span><span class="n">tfrecord_paths</span><span class="p">,</span>
+        <span class="n">dataset</span><span class="o">=</span><span class="n">DATASET_NAME</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span>
+        <span class="n">label_name</span><span class="o">=</span><span class="n">LABEL_NAME</span><span class="p">,</span>
+        <span class="n">num_threads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
+        <span class="n">ls_bands</span><span class="o">=</span><span class="n">ls_bands</span><span class="p">,</span>
+        <span class="n">nl_band</span><span class="o">=</span><span class="n">nl_band</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">augment</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">cache</span><span class="o">=</span><span class="p">(</span><span class="n">num_epochs</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">feed_dict</span></div>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># sustainlab: If any *.npz files already exist, print them out then throw an error</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Checking all models for valid checkpoints and no existing *.npz files ...&#39;</span><span class="p">)</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ALL_MODELS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">check_existing</span><span class="p">(</span><span class="n">ALL_MODELS</span><span class="p">,</span>
+                          <span class="n">logs_root_dir</span><span class="o">=</span><span class="n">LOGS_ROOT_DIR</span><span class="p">,</span>
+                          <span class="n">ckpts_root_dir</span><span class="o">=</span><span class="n">CKPTS_ROOT_DIR</span><span class="p">,</span>
+                          <span class="n">save_filename</span><span class="o">=</span><span class="s1">&#39;feaures.npz&#39;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Stopping&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ready to go.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># model configuration and parameter setting</span>
+    <span class="n">models_by_config</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="n">ALL_MODELS</span><span class="p">:</span>
+        <span class="n">model_info</span> <span class="o">=</span> <span class="n">ALL_MODELS</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span>
+        <span class="n">ls_bands</span><span class="p">,</span> <span class="n">nl_band</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span>
+        <span class="n">model_type</span> <span class="o">=</span> <span class="n">model_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model_type&#39;</span><span class="p">,</span> <span class="n">DEFAULT_MODEL_TYPE</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="p">(</span><span class="n">ls_bands</span><span class="p">,</span> <span class="n">nl_band</span><span class="p">,</span> <span class="n">model_type</span><span class="p">)</span>
+        <span class="n">models_by_config</span><span class="p">[</span><span class="n">config</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_info</span><span class="p">)</span>
+
+    <span class="c1"># print configuration</span>
+    <span class="k">for</span> <span class="n">config</span><span class="p">,</span> <span class="n">model_infos</span> <span class="ow">in</span> <span class="n">models_by_config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">ls_bands</span><span class="p">,</span> <span class="n">nl_band</span><span class="p">,</span> <span class="n">model_type</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;====== Current Config: ======&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- ls_bands:&#39;</span><span class="p">,</span> <span class="n">ls_bands</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- nl_band:&#39;</span><span class="p">,</span> <span class="n">nl_band</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- model_type:&#39;</span><span class="p">,</span> <span class="n">model_type</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- number of models:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_infos</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># get batcher, dataset size and feed_dict</span>
+    <span class="n">b</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">feed_dict</span> <span class="o">=</span> <span class="n">get_batcher</span><span class="p">(</span><span class="n">ls_bands</span><span class="o">=</span><span class="n">ls_bands</span><span class="p">,</span> <span class="n">nl_band</span><span class="o">=</span><span class="n">nl_band</span><span class="p">,</span>
+                                     <span class="n">num_epochs</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">model_infos</span><span class="p">))</span>
+
+    <span class="c1"># calculate batches per epoch</span>
+    <span class="n">batches_per_epoch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">size</span> <span class="o">/</span> <span class="n">BATCH_SIZE</span><span class="p">))</span>
+
+    <span class="c1"># run feature extraction</span>
+    <span class="n">run_extraction_on_models</span><span class="p">(</span>
+        <span class="n">model_infos</span><span class="p">,</span>
+        <span class="n">ModelClass</span> <span class="o">=</span> <span class="n">get_model_class</span><span class="p">(</span><span class="n">model_type</span><span class="p">),</span>
+        <span class="n">model_params</span> <span class="o">=</span> <span class="n">MODEL_PARAMS</span><span class="p">,</span>
+        <span class="n">batcher</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span>
+        <span class="n">batches_per_epoch</span> <span class="o">=</span> <span class="n">batches_per_epoch</span><span class="p">,</span>
+        <span class="n">logs_root_dir</span> <span class="o">=</span> <span class="n">LOGS_ROOT_DIR</span><span class="p">,</span>
+        <span class="n">ckpts_root_dir</span> <span class="o">=</span> <span class="n">CKPTS_ROOT_DIR</span><span class="p">,</span>
+        <span class="n">save_filename</span> <span class="o">=</span> <span class="s1">&#39;features.npz&#39;</span><span class="p">,</span>
+        <span class="n">batch_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">,</span> <span class="s1">&#39;locs&#39;</span><span class="p">,</span> <span class="s1">&#39;years&#39;</span><span class="p">],</span>
+        <span class="n">feed_dict</span> <span class="o">=</span> <span class="n">feed_dict</span>
+    <span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CNN_Architecture</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PS, JD, MM (original author is sustainlab-group).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

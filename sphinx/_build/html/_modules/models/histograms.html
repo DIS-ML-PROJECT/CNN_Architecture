@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>models.histograms &#8212; CNN_Architecture  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for models.histograms</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<div class="viewcode-block" id="get_per_image_histograms"><a class="viewcode-back" href="../../index.html#models.histograms.get_per_image_histograms">[docs]</a><span class="k">def</span> <span class="nf">get_per_image_histograms</span><span class="p">(</span><span class="n">init_iter</span><span class="p">,</span> <span class="n">batch_op</span><span class="p">,</span> <span class="n">band_bin_edges</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Args</span>
+<span class="sd">    - iter_init: tf op, initializes the dataset iterator</span>
+<span class="sd">    - batch_op: dict, str =&gt; tf.Tensor</span>
+<span class="sd">      - &#39;images&#39;: tf.Tensor, shape [batch_size, 224, 224, C], last channel is nightlights</span>
+<span class="sd">      - &#39;labels&#39;: tf.Tensor, shape [batch_size]</span>
+<span class="sd">      - &#39;locs&#39;: tf.Tensor, shape [batch_size, 2]</span>
+<span class="sd">      - &#39;years&#39;: tf.Tensor, shape [batch_size]</span>
+<span class="sd">    - band_bin_edges</span>
+
+<span class="sd">    Returns: results, dict</span>
+<span class="sd">    - &#39;image_hists&#39;: np.array, shape [N, C, nbins], type int64</span>
+<span class="sd">    - &#39;labels&#39;: np.array, shape [N], type float32, all labels</span>
+<span class="sd">    - &#39;locs&#39;: np.array, shape [N, 2], type float32, all locs</span>
+<span class="sd">    - &#39;years&#39;: np.array, shape [N], type int32, year for each image</span>
+<span class="sd">    - &#39;nls_center&#39;: np.array, shape [N], type float32, center nightlight value</span>
+<span class="sd">    - &#39;nls_mean&#39;: np.array, shape [N], type float32, mean nightlight value</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;image_hists&#39;</span><span class="p">,</span> <span class="s1">&#39;labels&#39;</span><span class="p">,</span> <span class="s1">&#39;locs&#39;</span><span class="p">,</span> <span class="s1">&#39;years&#39;</span><span class="p">,</span> <span class="s1">&#39;nls_center&#39;</span><span class="p">,</span> <span class="s1">&#39;nls_mean&#39;</span><span class="p">]</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span>
+
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_iter</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">batch_num</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">batch</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">batch_op</span><span class="p">)</span>
+                <span class="n">results</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">])</span>
+                <span class="n">results</span><span class="p">[</span><span class="s1">&#39;locs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;locs&#39;</span><span class="p">])</span>
+                <span class="n">results</span><span class="p">[</span><span class="s1">&#39;years&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s1">&#39;years&#39;</span><span class="p">])</span>
+
+                <span class="n">images</span> <span class="o">=</span> <span class="n">batch</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]</span>
+
+                <span class="c1"># calculate scalar nightlights</span>
+                <span class="n">nl_center</span> <span class="o">=</span> <span class="n">images</span><span class="p">[:,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">results</span><span class="p">[</span><span class="s1">&#39;nls_center&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nl_center</span><span class="p">)</span>
+                <span class="n">nl_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">images</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+                <span class="n">results</span><span class="p">[</span><span class="s1">&#39;nls_mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nl_mean</span><span class="p">)</span>
+
+                <span class="c1"># create image histograms</span>
+                <span class="n">num_images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">num_bands</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_images</span><span class="p">):</span>
+                    <span class="n">image_hists</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">image</span> <span class="o">=</span> <span class="n">images</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+                    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_bands</span><span class="p">):</span>
+                        <span class="n">band</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">b</span><span class="p">]</span>
+                        <span class="n">hist</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">band_bin_edges</span><span class="p">)</span>
+                        <span class="n">image_hists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
+
+                    <span class="n">image_hists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">image_hists</span><span class="p">)</span>
+                    <span class="n">results</span><span class="p">[</span><span class="s1">&#39;image_hists&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_hists</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Finished batch&#39;</span><span class="p">,</span> <span class="n">batch_num</span><span class="p">)</span>
+                <span class="n">batch_num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span> <span class="n">tf</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">OutOfRangeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="n">results</span><span class="p">[</span><span class="s1">&#39;image_hists&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;image_hists&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">,</span> <span class="s1">&#39;locs&#39;</span><span class="p">,</span> <span class="s1">&#39;years&#39;</span><span class="p">,</span> <span class="s1">&#39;nls_center&#39;</span><span class="p">,</span> <span class="s1">&#39;nls_mean&#39;</span><span class="p">]:</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="split_nl_hist"><a class="viewcode-back" href="../../index.html#models.histograms.split_nl_hist">[docs]</a><span class="k">def</span> <span class="nf">split_nl_hist</span><span class="p">(</span><span class="n">image_hists</span><span class="p">,</span> <span class="n">years</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Args</span>
+<span class="sd">    - image_hists: np.array, shape [nimages, C, nbins], last band is NIGHTLIGHTS</span>
+<span class="sd">    - years: np.array, shape [nimages]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    - image_hists_nl: np.array, shape [nimages, C+1, nbins]</span>
+<span class="sd">        2nd-to-last band is DMSP, last band is VIIRS</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">nimages</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">nbins</span> <span class="o">=</span> <span class="n">image_hists</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">image_hists_nl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">nimages</span><span class="p">,</span> <span class="n">C</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbins</span><span class="p">])</span>
+    <span class="n">dmsp_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">years</span> <span class="o">&lt;</span> <span class="mi">2012</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">viirs_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">years</span> <span class="o">&gt;=</span> <span class="mi">2012</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dmsp_bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>  <span class="c1"># [0, 1, ..., C-1]</span>
+    <span class="n">viirs_bands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">C</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="p">[</span><span class="n">C</span><span class="p">])</span>  <span class="c1"># [0, 1, ..., C-2, C]</span>
+    <span class="k">for</span> <span class="n">indices</span><span class="p">,</span> <span class="n">bands</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">dmsp_indices</span><span class="p">,</span> <span class="n">dmsp_bands</span><span class="p">),</span> <span class="p">(</span><span class="n">viirs_indices</span><span class="p">,</span> <span class="n">viirs_bands</span><span class="p">)]:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="n">image_hists_nl</span><span class="p">[</span><span class="n">indices</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">bands</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">image_hists</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">image_hists_nl</span><span class="p">[</span><span class="n">dmsp_indices</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">image_hists_nl</span><span class="p">[</span><span class="n">viirs_indices</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">image_hists_nl</span></div>
+
+<div class="viewcode-block" id="plot_band_hists"><a class="viewcode-back" href="../../index.html#models.histograms.plot_band_hists">[docs]</a><span class="k">def</span> <span class="nf">plot_band_hists</span><span class="p">(</span><span class="n">band_hists</span><span class="p">,</span> <span class="n">band_order</span><span class="p">,</span> <span class="n">band_colors</span><span class="p">,</span> <span class="n">bin_centers</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">,</span>
+                    <span class="n">ylabel</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Args</span>
+<span class="sd">    - band_hists: np.array, shape [C, nbins]</span>
+<span class="sd">      - assumes DMSP and VIIRS each have their own band</span>
+<span class="sd">    - band_order: list of str</span>
+<span class="sd">    - band_colors: dict, band_name =&gt; matplotlib color</span>
+<span class="sd">    - bin_centers: np.array, shape [nbins]</span>
+<span class="sd">    - xlabel, ylabel, title: str</span>
+<span class="sd">    - yscale: str, one of [&#39;linear&#39;, &#39;log&#39;]</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+    <span class="n">nbands</span> <span class="o">=</span> <span class="n">band_hists</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbands</span><span class="p">):</span>
+        <span class="n">band_name</span> <span class="o">=</span> <span class="n">band_order</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">band_hists</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">band_name</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">band_colors</span><span class="p">[</span><span class="n">band_name</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="n">yscale</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="plot_label_hist"><a class="viewcode-back" href="../../index.html#models.histograms.plot_label_hist">[docs]</a><span class="k">def</span> <span class="nf">plot_label_hist</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">bin_edges</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">)):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Args</span>
+<span class="sd">    - labels: np.array, shape [num_images]</span>
+<span class="sd">    - bin_edges: np.array, shape [num_label_bins + 1]</span>
+<span class="sd">    - title: str</span>
+<span class="sd">    - figsize: tuple of (width, height), in inches</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bin_edges</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CNN_Architecture</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, PS, JD, MM (original author is sustainlab-group).
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
