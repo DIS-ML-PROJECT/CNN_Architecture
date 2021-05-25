@@ -12,18 +12,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../python'))
-
-sys.path.insert(0, os.path.abspath('../CNN_Architecture/'))
-sys.path.insert(0, os.path.abspath('../CNN_Architecture/batchers'))
-sys.path.insert(0, os.path.abspath('../CNN_Architecture/cnn_training'))
-sys.path.insert(0, os.path.abspath('../CNN_Architecture/data'))
-sys.path.insert(0, os.path.abspath('../CNN_Architecture/feature_extract'))
-sys.path.insert(0, os.path.abspath('../CNN_Architecture/model_analysis'))
-sys.path.insert(0, os.path.abspath('../CNN_Architecture/models'))
-sys.path.insert(0, os.path.abspath('../CNN_Architecture/utils'))
-
-print(sys.path)
+#sys.path.insert(0, os.path.abspath('../python'))
+sys.path.insert(0, os.path.abspath('../'))
 
 
 # -- Project information -----------------------------------------------------
@@ -39,6 +29,7 @@ author = 'PS, JD, MM (original author is sustainlab-group)'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
+              'sphinx.ext.coverage',
               'sphinx.ext.doctest',
               'sphinx.ext.todo',
               'sphinx.ext.coverage',
