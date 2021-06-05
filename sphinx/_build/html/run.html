@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>run module &#8212; DIS22_ML_Project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/agogo.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="trainer module" href="trainer.html" />
+    <link rel="prev" title="plot module" href="plot.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">DIS22_ML_Project  documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="plot.html" title="plot module"
+             accesskey="P">previous</a> |
+          <a href="trainer.html" title="trainer module"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-utils.run">
+<span id="run-module"></span><h1>run module<a class="headerlink" href="#module-utils.run" title="Permalink to this headline">¶</a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="utils.run.LoadNoFileError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">LoadNoFileError</span></span><a class="headerlink" href="#utils.run.LoadNoFileError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.check_existing">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">check_existing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs_root_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpts_root_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#utils.run.check_existing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- models: dict, models[model_name][‘model_dir’] is name of model directory
+- logs_root_dir: str, path to root directory for saving logs
+- ckpts_root_dir: str, path to root directory for saving checkpoints
+- save_filename: str, name of existing file to check for
+Returns: bool, True if ckpts exist and no <a href="#id1"><span class="problematic" id="id2">*</span></a>.npz files found, otherwise False</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.checkpoint_path_exists">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">checkpoint_path_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ckpt_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#utils.run.checkpoint_path_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- ckpt_path: str, path to a checkpoint file
+Returns: bool, whether the checkpoint path exists</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.get_full_experiment_name">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">get_full_experiment_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fc_reg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_reg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#utils.run.get_full_experiment_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a str ‘{experiment_name}_b{batch_size}_fc{fc_str}_conv{conv_str}’ where fc_str and
+conv_str are the numbers past the decimal for the fc/conv regularization parameters. Optionally
+appends a tag to the end.
+Args
+- experiment_name: str
+- batch_size: int
+- fc_reg: float
+- conv_reg: float
+- learning_rate: float
+- tag: str or None
+Returns
+- full_experiment_name: str</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.load">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sess</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tensorflow.python.client.session.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saver</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tensorflow.python.training.saver.Saver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#utils.run.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the most recent checkpoint from checkpoint_dir.
+Args
+- sess: tf.compat.v1.Session (edited mm)
+- saver: tf.compat.v1.train.Saver (edited mm)
+- checkpoint_dir: str, path to directory containing checkpoint(s)
+Returns: bool, True if successful at restoring checkpoint from given directory</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.make_log_and_ckpt_dirs">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">make_log_and_ckpt_dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir_base</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpt_dir_base</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_experiment_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.run.make_log_and_ckpt_dirs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Creates 2 new directories:</dt><dd><ol class="arabic simple">
+<li><p>log_dir: log_dir_base/full_experiment_name</p></li>
+<li><p>ckpt_dir: ckpt_dir_base/full_experiment_name</p></li>
+</ol>
+</dd>
+</dl>
+<p>Args
+- log_dir_base: str, path to base directory for logs from all experiments
+- ckpt_dir_base: str, path to base directory for checkpoints from all experiments
+- full_experiment_name: str
+Returns: log_dir, ckpt_dir
+- log_dir: str, path to log directory for this specific experiment
+- ckpt_prefix: str, prefix for checkpoint files for this experiment, equals ckpt_dir/ckpt</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.param_to_str">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">param_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#utils.run.param_to_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>if p &lt; 1, only leaves everything after decimal
+- 0.001 -&gt; ‘001’
+- 1e-06 -&gt; ‘1e-06’
+if p &gt;= 1, adds a decimal point if there isn’t already one
+- 1 -&gt; ‘1.’
+- 2.5 -&gt; ‘2.5’</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.print_number_of_parameters">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">print_number_of_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.run.print_number_of_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints the total number of trainable parameters.
+Args
+- verbose: bool, whether to print name and shape info for every trainable var</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.run_batches">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">run_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sess</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tensorflow.python.client.session.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensors_dict_ops</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">tensorflow.python.framework.ops.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_nbatches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#utils.run.run_batches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the ops in tensors_dict_ops for a fixed number of batches or until
+reaching a tf.errors.OutOfRangeError, concatenating the runs.
+Note: assumes that the dataset iterator doesn’t need initialization, or is</p>
+<blockquote>
+<div><p>already initialized.</p>
+</div></blockquote>
+<p>Args
+- sess: tf.Session
+- tensors_dict_ops: dict, str =&gt; tf.Tensor, shape [batch_size] or [batch_size, D]
+- max_nbatches: int, maximum number of batches to run the ops for,</p>
+<blockquote>
+<div><p>set to None to run until reaching a tf.errors.OutOfRangeError</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>verbose: bool, whether to print out current batch and speed</p></li>
+</ul>
+<p>Returns
+- all_tensors: dict, str =&gt; np.array, shape [N] or [N, D]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.run_epoch">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">run_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sess</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tensorflow.python.client.session.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensors_dict_ops</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">tensorflow.python.framework.ops.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#utils.run.run_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- sess: tf.Session
+- tensors_dict_ops: dict, str =&gt; tf.Tensor, shape [batch_size] or [batch_size, D]
+- verbose: bool, whether to print out current batch and speed
+Note: assumes that the dataset iterator doesn’t need initialization, or is</p>
+<blockquote>
+<div><p>already initialized.</p>
+</div></blockquote>
+<p>Returns
+- all_tensors: dict, str =&gt; np.array, shape [N] or [N, D]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.run_extraction_on_models">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">run_extraction_on_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ModelClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batcher</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batches_per_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs_root_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpts_root_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feed_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.run.run_extraction_on_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- model_infos: list of dict</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>‘model_dir’: str, name of folder where model is saved</p></li>
+<li><p>‘bands’: tuple</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>ModelClass: class, an instance <cite>model</cite> of ModelClass has attributes</dt><dd><p>model.features_layer: tf.Tensor
+model.outputs: tf.Tensor</p>
+</dd>
+</dl>
+</li>
+<li><p>model_params: dict, parameters to pass to ModelClass constructor</p></li>
+<li><p>batcher: Batcher, whose batch_op includes ‘images’ key</p></li>
+<li><p>batches_per_epoch: int</p></li>
+<li><p>logs_root_dir: str, path to root directory for saving logs</p></li>
+<li><p>ckpts_root_dir: str, path to root directory for saving checkpoints</p></li>
+<li><p>save_filename: str, name of file to save</p></li>
+<li><p>batch_keys: list of str</p></li>
+<li><p>feed_dict: dict, tf.Tensor =&gt; python value, feed_dict for initializing batcher iterator</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.run.save_results">
+<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">save_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">np_dict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'features.npz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.run.save_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a compressed features.npz file in the given dir.
+Args
+- dir_path: str, path to directory to save .npz file
+- np_dict: dict, maps str =&gt; np.array
+- filename: str, name of file to save</p>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">DIS22 ML Project</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="extract_features.html">extract_features module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_surveys.html">split_surveys module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="train_directly.html">train_directly module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batchers.html">batchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="utils.html">utils</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="plot.html" title="plot module"
+              >previous</a> |
+            <a href="trainer.html" title="trainer module"
+              >next</a> |
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/run.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Jonas Dudda, Melanie Fumfack, Matteo Meier, Pia Störmer (original code by sustainlab group).
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

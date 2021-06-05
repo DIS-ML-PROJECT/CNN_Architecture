@@ -30,26 +30,30 @@ class BaseModel(object):
         raise NotImplementedError
 
     def get_first_layer_weights(self):
-        '''Gets the weights in the first layer of the CNN
+        '''
+        Gets the weights in the first layer of the CNN
         Returns: tf.Tensor
         '''
         raise NotImplementedError
 
     def get_final_layer_weights(self):
-        '''Gets the weights in the final fully-connected layer after the conv layers.
+        '''
+        Gets the weights in the final fully-connected layer after the conv layers.
         Returns: list of tf.Tensor
         '''
         raise NotImplementedError
 
     def get_first_layer_summaries(self, ls_bands=None, nl_band=None):
-        '''Creates the following summaries:
+        '''
+        Creates the following summaries:
         - histogram of weights in 1st conv layer
         - (if model includes batch-norm layer) histogram of 1st batch-norm layer's moving mean
         Args
-        - ls_bands: one of [None, 'rgb', 'ms'], if 'ms' then add separate histograms for RGB vs. other
-            channel weights the first layer of the CNN
+        - ls_bands: one of [None, 'rgb', 'ms'], if 'ms' then add separate histograms for RGB vs. otherchannel weights the first layer of the CNN
         - nl_band: one of [None, 'split', 'merge']
+
         Returns
         - summaries: tf.summary, merged summaries
+
         '''
         raise NotImplementedError

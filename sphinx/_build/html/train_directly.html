@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>train_directly module &#8212; DIS22_ML_Project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/agogo.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="batchers" href="batchers.html" />
+    <link rel="prev" title="split_surveys module" href="split_surveys.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">DIS22_ML_Project  documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="split_surveys.html" title="split_surveys module"
+             accesskey="P">previous</a> |
+          <a href="batchers.html" title="batchers"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-train_directly">
+<span id="train-directly-module"></span><h1>train_directly module<a class="headerlink" href="#module-train_directly" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="train_directly.main">
+<span class="sig-prename descclassname"><span class="pre">train_directly.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#train_directly.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="train_directly.run_training">
+<span class="sig-prename descclassname"><span class="pre">train_directly.</span></span><span class="sig-name descname"><span class="pre">run_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sess</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ooc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batcher_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_band</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">augment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr_decay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_epochs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_every</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_every</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_threads</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_ckpt_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_ckpt_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imagenet_weights_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hs_weight_init</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_final_layer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#train_directly.run_training" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- sess: tf.Session
+- ooc: bool, whether to use out-of-country split
+- batcher_type: str, type of batcher, one of [‘base’, ‘urban’, ‘rural’]
+- dataset: str, options depends on batcher_type
+- keep_frac: float
+- model_name: str, one of [‘resnet’, ‘vggf’, ‘simplecnn’, ‘resnetcombo’]
+- model_params: dict
+- batch_size: int
+- ls_bands: one of [None, ‘rgb’, ‘ms’]
+- nl_band: one of [None, ‘merge’, ‘split’]
+- label_name: str, name of the label in the TFRecord file
+- augment: bool
+- learning_rate: float
+- lr_decay: float
+- max_epochs: int
+- print_every: int
+- eval_every: int
+- num_threads: int
+- cache: list of str
+- log_dir: str, path to directory to save logs for TensorBoard, must already exist
+- save_ckpt_dir: str, path to checkpoint dir for saving weights</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>intermediate dirs must already exist</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>init_ckpt_dir: str, path to checkpoint dir from which to load existing weights</dt><dd><ul>
+<li><p>set to empty string ‘’ to use ImageNet or random initialization</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>imagenet_weights_path: str, path to pre-trained weights from ImageNet</dt><dd><ul>
+<li><p>set to empty string ‘’ to use saved ckpt or random initialization</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>hs_weight_init: str, one of [None, ‘random’, ‘same’, ‘samescaled’]</p></li>
+<li><p>exclude_final_layer: bool, or None</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="train_directly.run_training_wrapper">
+<span class="sig-prename descclassname"><span class="pre">train_directly.</span></span><span class="sig-name descname"><span class="pre">run_training_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#train_directly.run_training_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>params is a dict with keys matching the FLAGS defined below</p>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">DIS22 ML Project</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="extract_features.html">extract_features module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_surveys.html">split_surveys module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">train_directly module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batchers.html">batchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="split_surveys.html" title="split_surveys module"
+              >previous</a> |
+            <a href="batchers.html" title="batchers"
+              >next</a> |
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/train_directly.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Jonas Dudda, Melanie Fumfack, Matteo Meier, Pia Störmer (original code by sustainlab group).
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

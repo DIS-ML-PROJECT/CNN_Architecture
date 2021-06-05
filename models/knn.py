@@ -29,8 +29,7 @@ def knn_cv_opt(features, labels, group_labels, group_names, savedir=None, weight
     - savedir: str, path to directory to save predictions
     - weights: np.array, shape [N], optional
     - do_plot: bool, whether to plot alpha vs. mse curve for 1st fold
-    - subset_indices: np.array, indices of examples to include for both
-        training and testing
+    - subset_indices: np.array, indices of examples to include for both training and testing
     - subset_name: str, name of the subset
     - save_dict: dict, str => np.array, saved with test preds npz file
     - distance_metric: str, see documentation for scipy.spatial.distance.pdist

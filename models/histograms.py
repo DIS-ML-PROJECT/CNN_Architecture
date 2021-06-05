@@ -72,8 +72,7 @@ def split_nl_hist(image_hists, years):
     - years: np.array, shape [nimages]
 
     Returns
-    - image_hists_nl: np.array, shape [nimages, C+1, nbins]
-        2nd-to-last band is DMSP, last band is VIIRS
+    - image_hists_nl: np.array, shape [nimages, C+1, nbins] 2nd-to-last band is DMSP, last band is VIIRS
     '''
     nimages, C, nbins = image_hists.shape
     image_hists_nl = np.zeros([nimages, C+1, nbins])

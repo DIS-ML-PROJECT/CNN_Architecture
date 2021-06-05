@@ -42,8 +42,7 @@ def inference(x, is_training,
     Args
     - x: tf.Tensor, shape [batch_size, H, W, C], type float32
     - is_training: bool
-    - num_classes: int, number of output classes for final fully-connected layer,
-        set to None if no fully-connected layer is desired
+    - num_classes: int, number of output classes for final fully-connected layer, set to None if no fully-connected layer is desired
     - num_blocks: list of 4 integers, number of blocks in each of the 4 "groups" (or "scales")
     - use_bias: bool, if True performs conv(x)+bias, if False performs batch_norm(conv(x))
     - bottleneck: bool, if True uses bottleneck layer
@@ -52,6 +51,7 @@ def inference(x, is_training,
         NOTE: the keys are BLOCK numbers, not LAYER numbers
     - conv_reg: float, L2 weight regularization penalty for conv layers
     - fc_reg: float, L2 weight regularization penalty for fully-connected layer
+
     Returns:
     - x: if num_classes is None, x is equal to features_layer
         otherwise, x is a tf.Tensor with shape [batch_size, num_classes]

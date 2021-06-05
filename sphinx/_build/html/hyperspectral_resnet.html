@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>hyperspectral_resnet module &#8212; DIS22_ML_Project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/agogo.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="knn module" href="knn.html" />
+    <link rel="prev" title="histograms module" href="histograms.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">DIS22_ML_Project  documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="histograms.html" title="histograms module"
+             accesskey="P">previous</a> |
+          <a href="knn.html" title="knn module"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-models.hyperspectral_resnet">
+<span id="hyperspectral-resnet-module"></span><h1>hyperspectral_resnet module<a class="headerlink" href="#module-models.hyperspectral_resnet" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.block_preact">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">block_preact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.block_preact" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.bn">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">bn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.bn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.bn_activation">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">bn_activation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.bn_activation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.conv">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">conv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.conv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.fc">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">fc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.fc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.first_layer_dilated_conv">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">first_layer_dilated_conv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.first_layer_dilated_conv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.inference">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">inference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_training</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_blocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[3,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">3]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottleneck</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_dilated_conv_in_first_layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_to_save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fc_reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.inference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements Resnet v2 (preactivation).
+Args
+- x: tf.Tensor, shape [batch_size, H, W, C], type float32
+- is_training: bool
+- num_classes: int, number of output classes for final fully-connected layer, set to None if no fully-connected layer is desired
+- num_blocks: list of 4 integers, number of blocks in each of the 4 “groups” (or “scales”)
+- use_bias: bool, if True performs conv(x)+bias, if False performs batch_norm(conv(x))
+- bottleneck: bool, if True uses bottleneck layer
+- use_dilated_conv_in_first_layer: bool
+- blocks_to_save: dict of {int: None}, keys are block numbers from which to save features</p>
+<blockquote>
+<div><p>NOTE: the keys are BLOCK numbers, not LAYER numbers</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>conv_reg: float, L2 weight regularization penalty for conv layers</p></li>
+<li><p>fc_reg: float, L2 weight regularization penalty for fully-connected layer</p></li>
+</ul>
+<p>Returns:
+- x: if num_classes is None, x is equal to features_layer</p>
+<blockquote>
+<div><p>otherwise, x is a tf.Tensor with shape [batch_size, num_classes]</p>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>features_layer: tf.Tensor with shape [batch_size, num_final_filters] where num_final_filters</dt><dd><p>is the number of filters in the last layer of the resnet before the average-pooling</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.stack">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.stack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="models.hyperspectral_resnet.update_feature_dict">
+<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">update_feature_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.hyperspectral_resnet.update_feature_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">DIS22 ML Project</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="extract_features.html">extract_features module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_surveys.html">split_surveys module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="train_directly.html">train_directly module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batchers.html">batchers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="models.html">models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="histograms.html" title="histograms module"
+              >previous</a> |
+            <a href="knn.html" title="knn module"
+              >next</a> |
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/hyperspectral_resnet.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Jonas Dudda, Melanie Fumfack, Matteo Meier, Pia Störmer (original code by sustainlab group).
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

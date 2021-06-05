@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>knn module &#8212; DIS22_ML_Project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/agogo.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="linear_model module" href="linear_model.html" />
+    <link rel="prev" title="hyperspectral_resnet module" href="hyperspectral_resnet.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">DIS22_ML_Project  documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="hyperspectral_resnet.html" title="hyperspectral_resnet module"
+             accesskey="P">previous</a> |
+          <a href="linear_model.html" title="linear_model module"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-models.knn">
+<span id="knn-module"></span><h1>knn module<a class="headerlink" href="#module-models.knn" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="models.knn.knn_cv_opt">
+<span class="sig-prename descclassname"><span class="pre">models.knn.</span></span><span class="sig-name descname"><span class="pre">knn_cv_opt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savedir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cityblock'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.knn.knn_cv_opt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to knn_cv(), but pre-computes a distance matrix to use for all folds.</p>
+<dl class="simple">
+<dt>For every fold F (the test fold):</dt><dd><ol class="arabic simple">
+<li><p>uses leave-one-fold-out CV on all other folds
+to tune KNN k parameter</p></li>
+<li><p>using best k, trains KNN model on all folds except F</p></li>
+<li><p>runs trained ridge model on F</p></li>
+</ol>
+</dd>
+<dt>Saves predictions for each fold on test.</dt><dd><p>savedir/test_preds_{subset_name}.npz if subset_name is given
+savedir/test_preds.npz otherwise</p>
+</dd>
+</dl>
+<p>Args
+- features: np.array, shape [N, D]
+- labels: np.array, shape [N]
+- group_labels: np.array, shape [N], type int
+- group_names: list of str, a group_label of X corresponds to group_names[X]
+- savedir: str, path to directory to save predictions
+- weights: np.array, shape [N], optional
+- do_plot: bool, whether to plot alpha vs. mse curve for 1st fold
+- subset_indices: np.array, indices of examples to include for both training and testing
+- subset_name: str, name of the subset
+- save_dict: dict, str =&gt; np.array, saved with test preds npz file
+- distance_metric: str, see documentation for scipy.spatial.distance.pdist</p>
+<p>Returns
+- test_preds: np.array, shape [N]</p>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">DIS22 ML Project</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="extract_features.html">extract_features module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_surveys.html">split_surveys module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="train_directly.html">train_directly module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batchers.html">batchers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="models.html">models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="hyperspectral_resnet.html" title="hyperspectral_resnet module"
+              >previous</a> |
+            <a href="linear_model.html" title="linear_model module"
+              >next</a> |
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/knn.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Jonas Dudda, Melanie Fumfack, Matteo Meier, Pia Störmer (original code by sustainlab group).
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

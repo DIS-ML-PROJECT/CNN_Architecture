@@ -1,12 +1,10 @@
 Welcome to CNN_Architecture's documentation!
 ============================================
-.. automodule:: cnn_training
-   :members:
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
 
 .. automodule:: feature_extract.extract_features
-   :members:
-
-.. automodule:: model_analysis.lsmsdelta_resnet
    :members:
 
 .. automodule:: models.base_model
@@ -36,12 +34,6 @@ Welcome to CNN_Architecture's documentation!
 .. automodule:: models.dhs_ridge_resnet_model
    :members:
 
-.. automodule:: models.lsms_baselines
-   :members:
-
-.. automodule:: models.lsmsdelta_baselines
-   :members:
-
 .. automodule:: utils.analysis
    :members:
 
@@ -60,9 +52,7 @@ Welcome to CNN_Architecture's documentation!
 .. automodule:: utils.trainer
    :members:
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+
 
 
 Indices and tables

@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>batcher module &#8212; DIS22_ML_Project  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/agogo.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="models" href="models.html" />
+    <link rel="prev" title="batchers" href="batchers.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">DIS22_ML_Project  documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="batchers.html" title="batchers"
+             accesskey="P">previous</a> |
+          <a href="models.html" title="models"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-batchers.batcher">
+<span id="batcher-module"></span><h1>batcher module<a class="headerlink" href="#module-batchers.batcher" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="batchers.batcher.Batcher">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">batchers.batcher.</span></span><span class="sig-name descname"><span class="pre">Batcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tfrecord_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rgb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">augment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negatives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zero'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.Batcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.Batcher.augment_example">
+<span class="sig-name descname"><span class="pre">augment_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.Batcher.augment_example" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs image augmentation (random flips + levels adjustments).
+Does not perform level adjustments on NL band(s).</p>
+<p>Args
+- ex: dict {‘images’: img, …}</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>img: tf.Tensor, shape [H, W, C], type float32</dt><dd><p>NL band depends on self.ls_bands and self.nl_band</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Returns: ex, with img replaced with an augmented image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.Batcher.augment_levels">
+<span class="sig-name descname"><span class="pre">augment_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.Batcher.augment_levels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform random brightness / contrast on the image.
+Does not perform level adjustments on NL band(s).</p>
+<p>Args
+- img: tf.Tensor, shape [H, W, C], type float32</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>self.nl_band = ‘merge’ =&gt; final band is NL band</p></li>
+<li><p>self.nl_band = ‘split’ =&gt; last 2 bands are NL bands</p></li>
+</ul>
+</div></blockquote>
+<p>Returns: tf.Tensor with data augmentation applied</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.Batcher.get_batch">
+<span class="sig-name descname"><span class="pre">get_batch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.Batcher.get_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the tf.Tensors that represent a batch of data.</p>
+<p>Returns
+- iter_init: tf.Operation that should be run before each epoch
+- batch: dict, str -&gt; tf.Tensor</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>‘images’: tf.Tensor, shape [batch_size, H, W, C], type float32</dt><dd><ul>
+<li><p>C depends on the ls_bands and nl_band settings</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>‘locs’: tf.Tensor, shape [batch_size, 2], type float32, each row is [lat, lon]</p></li>
+<li><dl class="simple">
+<dt>‘labels’: tf.Tensor, shape [batch_size] or [batch_size, label_dim], type float32</dt><dd><ul>
+<li><p>shape [batch_size, 2] if self.label_name and self.nl_label are not None</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>‘years’: tf.Tensor, shape [batch_size], type int32</p></li>
+</ul>
+</div></blockquote>
+<dl>
+<dt>IMPLEMENTATION NOTE: The order of tf.data.Dataset.batch() and .repeat() matters!</dt><dd><p>Suppose the size of the dataset is not evenly divisible by self.batch_size.
+If batch then repeat, ie. <cite>ds.batch(batch_size).repeat(num_epochs)</cite>:</p>
+<blockquote>
+<div><p>the last batch of every epoch will be smaller than batch_size</p>
+</div></blockquote>
+<dl class="simple">
+<dt>If repeat then batch, ie. <cite>ds.repeat(num_epochs).batch(batch_size)</cite>:</dt><dd><p>the boundaries between epochs are blurred, ie. the dataset “wraps around”</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.Batcher.process_tfrecords">
+<span class="sig-name descname"><span class="pre">process_tfrecords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">example_proto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.Batcher.process_tfrecords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- example_proto: a tf.train.Example protobuf</p>
+<p>Returns: dict {‘images’: img, ‘labels’: label, ‘locs’: loc, ‘years’: year}
+- img: tf.Tensor, shape [224, 224, C], type float32</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>channel order is [B, G, R, SWIR1, SWIR2, TEMP1, NIR, NIGHTLIGHTS]</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>label: tf.Tensor, scalar or shape [2], type float32
+- not returned if both self.label_name and self.nl_label are None
+- [label, nl_label] (shape [2]) if self.label_name and self.nl_label are both not None
+- otherwise, is a scalar tf.Tensor containing the single label</p></li>
+<li><p>loc: tf.Tensor, shape [2], type float32, order is [lat, lon]</p></li>
+<li><p>year: tf.Tensor, scalar, type int32
+- default value of -1 if ‘year’ is not a key in the protobuf</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.Batcher.split_nl_band">
+<span class="sig-name descname"><span class="pre">split_nl_band</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ex</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.Batcher.split_nl_band" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits the NL band into separate DMSP and VIIRS bands.</p>
+<p>Args
+- ex: dict {‘images’: img, ‘years’: year, …}</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>img: tf.Tensor, shape [H, W, C], type float32, final band is NL</p></li>
+<li><p>year: tf.Tensor, scalar, type int32</p></li>
+</ul>
+</div></blockquote>
+<p>Returns: ex, with img updated to have 2 NL bands
+- img: tf.Tensor, shape [H, W, C], type float32, last two bands are [DMSP, VIIRS]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="batchers.batcher.ResidualBatcher">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">batchers.batcher.</span></span><span class="sig-name descname"><span class="pre">ResidualBatcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tfrecord_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds_ph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rgb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">augment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negatives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zero'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.ResidualBatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#batchers.batcher.Batcher" title="batchers.batcher.Batcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">batchers.batcher.Batcher</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.ResidualBatcher.get_batch">
+<span class="sig-name descname"><span class="pre">get_batch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.ResidualBatcher.get_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the tf.Tensors that represent a batch of data.</p>
+<p>Returns
+- iter_init: tf.Operation that should be run before each epoch
+- batch: dict, str -&gt; tf.Tensor</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>‘images’: tf.Tensor, shape [batch_size, H, W, C], type float32</dt><dd><ul>
+<li><p>C depends on the ls_bands and nl_band settings</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>‘locs’: tf.Tensor, shape [batch_size, 2], type float32, each row is [lat, lon]</p></li>
+<li><p>‘labels’: tf.Tensor, shape [batch_size], type float32, residuals</p></li>
+<li><p>‘years’: tf.Tensor, shape [batch_size], type int32</p></li>
+</ul>
+</div></blockquote>
+<dl>
+<dt>IMPLEMENTATION NOTE: The order of tf.data.Dataset.batch() and .repeat() matters!</dt><dd><p>Suppose the size of the dataset is not evenly divisible by self.batch_size.
+If batch then repeat, ie. <cite>ds.batch(batch_size).repeat(num_epochs)</cite>:</p>
+<blockquote>
+<div><p>the last batch of every epoch will be smaller than batch_size</p>
+</div></blockquote>
+<dl class="simple">
+<dt>If repeat then batch, ie. <cite>ds.repeat(num_epochs).batch(batch_size)</cite>:</dt><dd><p>the boundaries between epochs are blurred, ie. the dataset “wraps around”</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.ResidualBatcher.merge_residuals">
+<span class="sig-name descname"><span class="pre">merge_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parsed_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.ResidualBatcher.merge_residuals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- parsed_dict: dict, contains</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>‘labels’: tf.Tensor, scalar, type float32, label from TFRecord file</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>pred: tf.Tensor, scalar, type float32</p></li>
+</ul>
+<p>Returns
+- parsed_dict: dict, same as input, except ‘labels’ maps to residual</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="batchers.batcher.RuralBatcher">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">batchers.batcher.</span></span><span class="sig-name descname"><span class="pre">RuralBatcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tfrecord_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rgb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">augment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negatives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zero'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.RuralBatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#batchers.batcher.Batcher" title="batchers.batcher.Batcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">batchers.batcher.Batcher</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.RuralBatcher.filter_fn">
+<span class="sig-name descname"><span class="pre">filter_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">example_proto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.RuralBatcher.filter_fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- example_proto: a tf.train.Example protobuf</p>
+<p>Returns
+- predicate: tf.Tensor, type bool, True to keep, False to filter out</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="batchers.batcher.UrbanBatcher">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">batchers.batcher.</span></span><span class="sig-name descname"><span class="pre">UrbanBatcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tfrecord_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ls_bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rgb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">augment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negatives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zero'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.UrbanBatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#batchers.batcher.Batcher" title="batchers.batcher.Batcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">batchers.batcher.Batcher</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="batchers.batcher.UrbanBatcher.filter_fn">
+<span class="sig-name descname"><span class="pre">filter_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">example_proto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.UrbanBatcher.filter_fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- example_proto: a tf.train.Example protobuf</p>
+<p>Returns
+- predicate: tf.Tensor, type bool, True to keep, False to filter out</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="batchers.batcher.get_tfrecord_paths">
+<span class="sig-prename descclassname"><span class="pre">batchers.batcher.</span></span><span class="sig-name descname"><span class="pre">get_tfrecord_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#batchers.batcher.get_tfrecord_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args
+- dataset: str, a key in SURVEY_NAMES
+- split: str, one of [‘train’, ‘val’, ‘test’, ‘all’]</p>
+<p>Returns:
+- tfrecord_paths: list of str, paths to TFRecord files, sorted</p>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">DIS22 ML Project</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="extract_features.html">extract_features module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_surveys.html">split_surveys module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="train_directly.html">train_directly module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="batchers.html">batchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
+</ul>
+</li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="batchers.html" title="batchers"
+              >previous</a> |
+            <a href="models.html" title="models"
+              >next</a> |
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/batcher.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Jonas Dudda, Melanie Fumfack, Matteo Meier, Pia Störmer (original code by sustainlab group).
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

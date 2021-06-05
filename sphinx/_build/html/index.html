@@ -6,666 +6,56 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Welcome to CNN_Architecture’s documentation! &#8212; CNN_Architecture  documentation</title>
+    <title>Welcome to DIS22_ML_Project’s documentation! &#8212; DIS22_ML_Project  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/agogo.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="next" title="DIS22 ML Project" href="readme.html" /> 
   </head><body>
-  
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="#">DIS22_ML_Project  documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="readme.html" title="DIS22 ML Project"
+             accesskey="N">next</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
 
-    <div class="document">
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
-  <section id="module-cnn_training">
-<span id="welcome-to-cnn-architecture-s-documentation"></span><h1>Welcome to CNN_Architecture’s documentation!<a class="headerlink" href="#module-cnn_training" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-feature_extract.extract_features"></span><dl class="py function">
-<dt class="sig sig-object py" id="feature_extract.extract_features.get_batcher">
-<span class="sig-prename descclassname"><span class="pre">feature_extract.extract_features.</span></span><span class="sig-name descname"><span class="pre">get_batcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls_bands</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_band</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epochs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/feature_extract/extract_features.html#get_batcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#feature_extract.extract_features.get_batcher" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- ls_bands: one of [None, ‘ms’, ‘rgb’]
-- nl_band: one of [None, ‘merge’, ‘split’]
-- num_epochs: int
-Returns
-- b: Batcher
-- size: int, length of dataset
-- feed_dict: dict, feed_dict for initializing the dataset iterator</p>
-</dd></dl>
-
-<span class="target" id="module-models.base_model"></span><dl class="py class">
-<dt class="sig sig-object py" id="models.base_model.BaseModel">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">models.base_model.</span></span><span class="sig-name descname"><span class="pre">BaseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_training</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fc_reg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_reg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/base_model.html#BaseModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.base_model.BaseModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>The base class of models</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="models.base_model.BaseModel.get_final_layer_weights">
-<span class="sig-name descname"><span class="pre">get_final_layer_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/base_model.html#BaseModel.get_final_layer_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.base_model.BaseModel.get_final_layer_weights" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the weights in the final fully-connected layer after the conv layers.
-Returns: list of tf.Tensor</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="models.base_model.BaseModel.get_first_layer_summaries">
-<span class="sig-name descname"><span class="pre">get_first_layer_summaries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls_bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nl_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/base_model.html#BaseModel.get_first_layer_summaries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.base_model.BaseModel.get_first_layer_summaries" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the following summaries:
-- histogram of weights in 1st conv layer
-- (if model includes batch-norm layer) histogram of 1st batch-norm layer’s moving mean
-Args
-- ls_bands: one of [None, ‘rgb’, ‘ms’], if ‘ms’ then add separate histograms for RGB vs. other</p>
-<blockquote>
-<div><p>channel weights the first layer of the CNN</p>
-</div></blockquote>
-<ul class="simple">
-<li><p>nl_band: one of [None, ‘split’, ‘merge’]</p></li>
+  <section id="welcome-to-dis22-ml-project-s-documentation">
+<h1>Welcome to DIS22_ML_Project’s documentation!<a class="headerlink" href="#welcome-to-dis22-ml-project-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">DIS22 ML Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extract_features.html">extract_features module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_surveys.html">split_surveys module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="train_directly.html">train_directly module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batchers.html">batchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils</a></li>
 </ul>
-<p>Returns
-- summaries: tf.summary, merged summaries</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="models.base_model.BaseModel.get_first_layer_weights">
-<span class="sig-name descname"><span class="pre">get_first_layer_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/base_model.html#BaseModel.get_first_layer_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.base_model.BaseModel.get_first_layer_weights" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the weights in the first layer of the CNN
-Returns: tf.Tensor</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="models.base_model.BaseModel.init_from_numpy">
-<span class="sig-name descname"><span class="pre">init_from_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sess</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/base_model.html#BaseModel.init_from_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.base_model.BaseModel.init_from_numpy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args:
-- path: str, path to saved weights
-- sess: tf.Session</p>
-</dd></dl>
-
-</dd></dl>
-
-<span class="target" id="module-models.histograms"></span><dl class="py function">
-<dt class="sig sig-object py" id="models.histograms.get_per_image_histograms">
-<span class="sig-prename descclassname"><span class="pre">models.histograms.</span></span><span class="sig-name descname"><span class="pre">get_per_image_histograms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_iter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_op</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_bin_edges</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/histograms.html#get_per_image_histograms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.histograms.get_per_image_histograms" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- iter_init: tf op, initializes the dataset iterator
-- batch_op: dict, str =&gt; tf.Tensor</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>‘images’: tf.Tensor, shape [batch_size, 224, 224, C], last channel is nightlights</p></li>
-<li><p>‘labels’: tf.Tensor, shape [batch_size]</p></li>
-<li><p>‘locs’: tf.Tensor, shape [batch_size, 2]</p></li>
-<li><p>‘years’: tf.Tensor, shape [batch_size]</p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
-<li><p>band_bin_edges</p></li>
-</ul>
-<p>Returns: results, dict
-- ‘image_hists’: np.array, shape [N, C, nbins], type int64
-- ‘labels’: np.array, shape [N], type float32, all labels
-- ‘locs’: np.array, shape [N, 2], type float32, all locs
-- ‘years’: np.array, shape [N], type int32, year for each image
-- ‘nls_center’: np.array, shape [N], type float32, center nightlight value
-- ‘nls_mean’: np.array, shape [N], type float32, mean nightlight value</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="models.histograms.plot_band_hists">
-<span class="sig-prename descclassname"><span class="pre">models.histograms.</span></span><span class="sig-name descname"><span class="pre">plot_band_hists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">band_hists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_centers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yscale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/histograms.html#plot_band_hists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.histograms.plot_band_hists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- band_hists: np.array, shape [C, nbins]</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>assumes DMSP and VIIRS each have their own band</p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
-<li><p>band_order: list of str</p></li>
-<li><p>band_colors: dict, band_name =&gt; matplotlib color</p></li>
-<li><p>bin_centers: np.array, shape [nbins]</p></li>
-<li><p>xlabel, ylabel, title: str</p></li>
-<li><p>yscale: str, one of [‘linear’, ‘log’]</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="models.histograms.plot_label_hist">
-<span class="sig-prename descclassname"><span class="pre">models.histograms.</span></span><span class="sig-name descname"><span class="pre">plot_label_hist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(10,</span> <span class="pre">4)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/histograms.html#plot_label_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.histograms.plot_label_hist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- labels: np.array, shape [num_images]
-- bin_edges: np.array, shape [num_label_bins + 1]
-- title: str
-- figsize: tuple of (width, height), in inches</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="models.histograms.split_nl_hist">
-<span class="sig-prename descclassname"><span class="pre">models.histograms.</span></span><span class="sig-name descname"><span class="pre">split_nl_hist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_hists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">years</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/histograms.html#split_nl_hist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.histograms.split_nl_hist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- image_hists: np.array, shape [nimages, C, nbins], last band is NIGHTLIGHTS
-- years: np.array, shape [nimages]</p>
-<p>Returns
-- image_hists_nl: np.array, shape [nimages, C+1, nbins]</p>
-<blockquote>
-<div><p>2nd-to-last band is DMSP, last band is VIIRS</p>
-</div></blockquote>
-</dd></dl>
-
-<span class="target" id="module-models.hyperspectral_resnet"></span><dl class="py function">
-<dt class="sig sig-object py" id="models.hyperspectral_resnet.inference">
-<span class="sig-prename descclassname"><span class="pre">models.hyperspectral_resnet.</span></span><span class="sig-name descname"><span class="pre">inference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_training</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_blocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[3,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">3]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottleneck</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_dilated_conv_in_first_layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_to_save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fc_reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/hyperspectral_resnet.html#inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.hyperspectral_resnet.inference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements Resnet v2 (preactivation).
-Args
-- x: tf.Tensor, shape [batch_size, H, W, C], type float32
-- is_training: bool
-- num_classes: int, number of output classes for final fully-connected layer,</p>
-<blockquote>
-<div><p>set to None if no fully-connected layer is desired</p>
-</div></blockquote>
-<ul class="simple">
-<li><p>num_blocks: list of 4 integers, number of blocks in each of the 4 “groups” (or “scales”)</p></li>
-<li><p>use_bias: bool, if True performs conv(x)+bias, if False performs batch_norm(conv(x))</p></li>
-<li><p>bottleneck: bool, if True uses bottleneck layer</p></li>
-<li><p>use_dilated_conv_in_first_layer: bool</p></li>
-<li><dl class="simple">
-<dt>blocks_to_save: dict of {int: None}, keys are block numbers from which to save features</dt><dd><p>NOTE: the keys are BLOCK numbers, not LAYER numbers</p>
-</dd>
-</dl>
-</li>
-<li><p>conv_reg: float, L2 weight regularization penalty for conv layers</p></li>
-<li><p>fc_reg: float, L2 weight regularization penalty for fully-connected layer</p></li>
-</ul>
-<p>Returns:
-- x: if num_classes is None, x is equal to features_layer</p>
-<blockquote>
-<div><p>otherwise, x is a tf.Tensor with shape [batch_size, num_classes]</p>
-</div></blockquote>
-<ul class="simple">
-<li><dl class="simple">
-<dt>features_layer: tf.Tensor with shape [batch_size, num_final_filters] where num_final_filters</dt><dd><p>is the number of filters in the last layer of the resnet before the average-pooling</p>
-</dd>
-</dl>
 </li>
 </ul>
-</dd></dl>
-
-<span class="target" id="module-models.knn"></span><dl class="py function">
-<dt class="sig sig-object py" id="models.knn.knn_cv_opt">
-<span class="sig-prename descclassname"><span class="pre">models.knn.</span></span><span class="sig-name descname"><span class="pre">knn_cv_opt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savedir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cityblock'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/knn.html#knn_cv_opt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.knn.knn_cv_opt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Similar to knn_cv(), but pre-computes a distance matrix to use for all folds.</p>
-<dl class="simple">
-<dt>For every fold F (the test fold):</dt><dd><ol class="arabic simple">
-<li><p>uses leave-one-fold-out CV on all other folds
-to tune KNN k parameter</p></li>
-<li><p>using best k, trains KNN model on all folds except F</p></li>
-<li><p>runs trained ridge model on F</p></li>
-</ol>
-</dd>
-<dt>Saves predictions for each fold on test.</dt><dd><p>savedir/test_preds_{subset_name}.npz if subset_name is given
-savedir/test_preds.npz otherwise</p>
-</dd>
-</dl>
-<p>Args
-- features: np.array, shape [N, D]
-- labels: np.array, shape [N]
-- group_labels: np.array, shape [N], type int
-- group_names: list of str, a group_label of X corresponds to group_names[X]
-- savedir: str, path to directory to save predictions
-- weights: np.array, shape [N], optional
-- do_plot: bool, whether to plot alpha vs. mse curve for 1st fold
-- subset_indices: np.array, indices of examples to include for both</p>
-<blockquote>
-<div><p>training and testing</p>
-</div></blockquote>
-<ul class="simple">
-<li><p>subset_name: str, name of the subset</p></li>
-<li><p>save_dict: dict, str =&gt; np.array, saved with test preds npz file</p></li>
-<li><p>distance_metric: str, see documentation for scipy.spatial.distance.pdist</p></li>
-</ul>
-<p>Returns
-- test_preds: np.array, shape [N]</p>
-</dd></dl>
-
-<span class="target" id="module-models.linear_model"></span><dl class="py function">
-<dt class="sig sig-object py" id="models.linear_model.ridge_cv">
-<span class="sig-prename descclassname"><span class="pre">models.linear_model.</span></span><span class="sig-name descname"><span class="pre">ridge_cv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savedir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/linear_model.html#ridge_cv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.linear_model.ridge_cv" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>For every fold F (the test fold):</dt><dd><ol class="arabic simple">
-<li><p>uses leave-one-fold-out CV on all other folds
-to tune ridge model alpha parameter</p></li>
-<li><p>using best alpha, trains ridge model on all folds except F</p></li>
-<li><p>runs trained ridge model on F</p></li>
-</ol>
-</dd>
-<dt>Saves predictions for each fold on test.</dt><dd><p>savedir/test_preds_{subset_name}.npz if subset_name is given
-savedir/test_preds.npz otherwise</p>
-</dd>
-<dt>Saves ridge regression weights to savedir/ridge_weights.npz</dt><dd><p>if save_weight=True</p>
-</dd>
-</dl>
-<p>Args
-- features: either a dict or np.array</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>if dict: group_name =&gt; np.array, shape [N, D]</p></li>
-<li><p>otherwise, just a single np.array, shape [N, D]</p></li>
-<li><p>each feature dim should be normalized to 0 mean, unit variance</p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
-<li><p>labels: np.array, shape [N]</p></li>
-<li><p>group_labels: np.array, shape [N], type int</p></li>
-<li><p>group_names: list of str, names corresponding to the group labels</p></li>
-<li><p>savedir: str, path to directory to save predictions</p></li>
-<li><p>weights: np.array, shape [N], optional</p></li>
-<li><p>save_weights: bool, whether to save the ridge regression weights</p></li>
-<li><p>do_plot: bool, whether to plot alpha vs. mse curve for 1st fold</p></li>
-<li><dl class="simple">
-<dt>subset_indices: np.array, indices of examples to include for both</dt><dd><p>training and testing</p>
-</dd>
-</dl>
-</li>
-<li><p>subset_name: str, name of the subset</p></li>
-<li><p>save_dict: dict, str =&gt; np.array, saved with test preds npz file</p></li>
-<li><p>verbose: bool</p></li>
-</ul>
-<p>Returns
-- test_preds: np.array, shape [N]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="models.linear_model.train_linear_logo">
-<span class="sig-prename descclassname"><span class="pre">models.linear_model.</span></span><span class="sig-name descname"><span class="pre">train_linear_logo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">features</span></em>, <em class="sig-param"><span class="pre">labels</span></em>, <em class="sig-param"><span class="pre">group_labels</span></em>, <em class="sig-param"><span class="pre">cv_groups</span></em>, <em class="sig-param"><span class="pre">test_groups</span></em>, <em class="sig-param"><span class="pre">weights=None</span></em>, <em class="sig-param"><span class="pre">linear_model=&lt;class</span> <span class="pre">'sklearn.linear_model._ridge.Ridge'&gt;</span></em>, <em class="sig-param"><span class="pre">plot=True</span></em>, <em class="sig-param"><span class="pre">group_names=None</span></em>, <em class="sig-param"><span class="pre">return_weights=False</span></em>, <em class="sig-param"><span class="pre">verbose=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/linear_model.html#train_linear_logo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.linear_model.train_linear_logo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Leave-one-group-out cross-validated training of a linear model.</p>
-<p>Args
-- features: np.array, shape [N, D]</p>
-<blockquote>
-<div><p>each feature dim should be normalized to 0 mean, unit variance</p>
-</div></blockquote>
-<ul class="simple">
-<li><p>labels: np.array, shape [N]</p></li>
-<li><p>group_labels: np.array, shape [N], type np.int32</p></li>
-<li><p>cv_groups: list of int, labels of groups to use for LOGO-CV</p></li>
-<li><p>test_groups: list of int, labels of groups to test on</p></li>
-<li><p>weights: np.array, shape [N]</p></li>
-<li><p>linear_model: sklearn.linear_model</p></li>
-<li><p>plot: bool, whether to plot MSE as a function of alpha</p></li>
-<li><p>group_names: list of str, names of the groups, only used when plotting</p></li>
-<li><p>return_weights: bool, whether to return the final trained model weights</p></li>
-<li><p>verbose: bool</p></li>
-</ul>
-<p>Returns
-- test_preds: np.array, predictions on indices from test_groups
-- coefs: np.array, shape [D] (only returned if return_weights=True)
-- intercept: float (only returned if return_weights=True)</p>
-</dd></dl>
-
-<span class="target" id="module-models.loss_utils"></span><dl class="py function">
-<dt class="sig sig-object py" id="models.loss_utils.loss_mse">
-<span class="sig-prename descclassname"><span class="pre">models.loss_utils.</span></span><span class="sig-name descname"><span class="pre">loss_mse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_summaries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/loss_utils.html#loss_mse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.loss_utils.loss_mse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the mean squared-error between preds and labels.
-Args
-- labels: tf.Tensor, shape [batch_size] or [batch_size, labels_dim]
-- preds: tf.Tensor, same shape as labels, type float32
-- weights: tf.Tensor, scalar or shape [batch_size], type float
-- add_sumaries: bool, whether to create summaries for the loss variables
-Returns
-- loss_total: tf.Tensor, scalar, loss_mse + loss_reg
-- loss_mse: tf.Tensor, scalar, mean squared-error loss over the batch
-- loss_reg: tf.Tensor, scalar, regularization loss</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="models.loss_utils.loss_xent">
-<span class="sig-prename descclassname"><span class="pre">models.loss_utils.</span></span><span class="sig-name descname"><span class="pre">loss_xent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_summaries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/loss_utils.html#loss_xent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.loss_utils.loss_xent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a softmax over logits, then calculates cross-entropy loss with the
-given labels.
-Args
-- labels: tf.Tensor, shape [batch_size], type int32, elements in [0, num_classes)
-- logits: tf.Tensor, shape [batch_size, num_classes], type float32
-- weights: tf.Tensor, scalar or shape [batch_size], type float
-- add_sumaries: bool, whether to create summaries for the loss variables
-Returns
-- loss_total: tf.Tensor, scalar, loss_xent + loss_reg
-- loss_xent: tf.Tensor, scalar, mean cross-entropy loss over the batch
-- loss_reg: tf.Tensor, scalar, regularization loss
-- loss_summaries: tf.summary if add_summaries is True, None otherwise</p>
-</dd></dl>
-
-<span class="target" id="module-models.resnet_config"></span><span class="target" id="module-models.resnet_model"></span><dl class="py class">
-<dt class="sig sig-object py" id="models.resnet_model.Hyperspectral_Resnet">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">models.resnet_model.</span></span><span class="sig-name descname"><span class="pre">Hyperspectral_Resnet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_training</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fc_reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0003</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0003</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_dilated_conv_in_first_layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks_to_save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/resnet_model.html#Hyperspectral_Resnet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.resnet_model.Hyperspectral_Resnet" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<span class="target" id="module-utils.analysis"></span><dl class="py function">
-<dt class="sig sig-object py" id="utils.analysis.calc_score">
-<span class="sig-prename descclassname"><span class="pre">utils.analysis.</span></span><span class="sig-name descname"><span class="pre">calc_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/analysis.html#calc_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.analysis.calc_score" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Weighted_correlation_coefficient">https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#Weighted_correlation_coefficient</a>
-for the weighted correlation coefficient formula.</p>
-<p>Args
-- labels: np.array, shape [N]
-- preds: np.array, shape [N]
-- score: str, one of [‘r2’, ‘R2’, ‘mse’, ‘rank’]</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>‘r2’: (weighted) squared Pearson correlation coefficient</p></li>
-<li><p>‘R2’: (weighted) coefficient of determination</p></li>
-<li><p>‘mse’: (weighted) mean squared-error</p></li>
-<li><p>‘rank’: (unweighted) Spearman rank correlation coefficient</p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
-<li><p>weights: np.array, shape [N]</p></li>
-</ul>
-<p>Returns: float</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.analysis.evaluate">
-<span class="sig-prename descclassname"><span class="pre">utils.analysis.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_print</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/analysis.html#evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.analysis.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- labels: list of labels, length N
-- preds: list of preds, length N
-- weights: list of weights, length N
-- do_print: bool
-- title: str</p>
-<p>Returns: r^2, R^2, mse, rank_corr</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.analysis.evaluate_df">
-<span class="sig-prename descclassname"><span class="pre">utils.analysis.</span></span><span class="sig-name descname"><span class="pre">evaluate_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/analysis.html#evaluate_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.analysis.evaluate_df" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- df: pd.DataFrame, columns include cols and labels_col
-- cols: list of str, names of cols in df to evaluate
-- labels_col: str, name of labels column
-- weights_col: str, name of weights column, optional
-- index_name: str, name of index for returned df</p>
-<p>Returns
-- results_df: pd.DataFrame, columns are [‘r2’, ‘R2’, ‘mse’, ‘rank’]</p>
-<blockquote>
-<div><p>row index are <cite>cols</cite></p>
-</div></blockquote>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.analysis.plot_label_vs_score">
-<span class="sig-prename descclassname"><span class="pre">utils.analysis.</span></span><span class="sig-name descname"><span class="pre">plot_label_vs_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legends</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">4)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/analysis.html#plot_label_vs_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.analysis.plot_label_vs_score" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- scores_list: list of length num_models, each element is np.array of shape [num_examples]
-- labels_list: list of length num_models, each element is np.array of shape [num_examples]
-- legends: list of str, length num_models
-- metric: str, metric by which the scores were calculated
-- sort: str, one of [‘increasing’, ‘decreasing’, ‘random’]
-- figsize: tuple (width, height), in inches</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.analysis.sorted_scores">
-<span class="sig-prename descclassname"><span class="pre">utils.analysis.</span></span><span class="sig-name descname"><span class="pre">sorted_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'increasing'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/analysis.html#sorted_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.analysis.sorted_scores" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sorts (pred, label) datapoints by label using the given sorting direction,
-then calculates the chosen score over for the first k datapoints,
-for k = 1 to N.</p>
-<p>Args
-- labels: np.array, shape [N]
-- preds: np.array, shape [N]
-- metric: one of [‘r2’, ‘R2’, ‘mse’, ‘rank’]
-- sort: str, one of [‘increasing’, ‘decreasing’, ‘random’]</p>
-<p>Returns:
-- scores: np.array, shape [N]
-- labels_sorted: np.array, shape [N]</p>
-</dd></dl>
-
-<span class="target" id="module-utils.general"></span><dl class="py function">
-<dt class="sig sig-object py" id="utils.general.colordisplay">
-<span class="sig-prename descclassname"><span class="pre">utils.general.</span></span><span class="sig-name descname"><span class="pre">colordisplay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coolwarm'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/general.html#colordisplay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.general.colordisplay" title="Permalink to this definition">¶</a></dt>
-<dd><p>Displays a pandas DataFrame with background color.
-This function should only be called inside a Jupyter Notebook.
-Args
-- df: pd.DataFrame
-- columns: str or list of str, column(s) to color
-- cmap: str, name of matplotlib colormap</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.general.load_npz">
-<span class="sig-prename descclassname"><span class="pre">utils.general.</span></span><span class="sig-name descname"><span class="pre">load_npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/general.html#load_npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.general.load_npz" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads .npz file into a dict.
-Args
-- path: str, path to .npz file
-- verbose: bool, whether to print out type and shape info
-- check: dict, key (str) =&gt; np.array, values to check
-Returns
-- result: dict</p>
-</dd></dl>
-
-<span class="target" id="module-utils.geo_plot"></span><dl class="py function">
-<dt class="sig sig-object py" id="utils.geo_plot.plot_locs">
-<span class="sig-prename descclassname"><span class="pre">utils.geo_plot.</span></span><span class="sig-name descname"><span class="pre">plot_locs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">15)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cbar_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">scatter_kws</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/geo_plot.html#plot_locs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geo_plot.plot_locs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- locs: np.array, shape [N, 2], each row is [lat, lon]
-- fig: matplotlib.figure.Figure
-- pos: 3-tuple of int, axes position (nrows, ncols, index)
-- figsize: list, [width, height] in inches, only used if fig is None
-- title: str
-- colors: list of int, length N
-- cbar_label: str, label for the colorbar
-- show_cbar: bool, whether to show the colorbar
-- scatter_kws: other arguments for ax.scatter
-Returns: matplotlib.axes.Axes</p>
-</dd></dl>
-
-<span class="target" id="module-utils.plot"></span><dl class="py function">
-<dt class="sig sig-object py" id="utils.plot.plot_image_by_band">
-<span class="sig-prename descclassname"><span class="pre">utils.plot.</span></span><span class="sig-name descname"><span class="pre">plot_image_by_band</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/plot.html#plot_image_by_band"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.plot.plot_image_by_band" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- img: np.array, shape [H, W, C], type float, normalized
-- band_order: list of str, names of the bands in order
-- nrows: int, desired number of rows in the created figure
-- title: str, or None
-- rgb: one of [None, ‘merge’, ‘add’]</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>None: do not create a separate RGB image</p></li>
-<li><p>‘merge’: plot the RGB bands as a merged image</p></li>
-<li><p>‘add’: plot all bands, but also add a merged RGB image</p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
-<li><p>colorbar: bool, whether to show colorbar</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.plot.scatter_preds">
-<span class="sig-prename descclassname"><span class="pre">utils.plot.</span></span><span class="sig-name descname"><span class="pre">scatter_preds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(5,</span> <span class="pre">5)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/plot.html#scatter_preds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.plot.scatter_preds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a scatter plot of labels vs. preds, overlayed with regression line.</p>
-<p>Args
-- labels: np.array, shape [N]
-- preds: np.array, shape [N]
-- by_name: str, name of col
-- by_col: np.array, shape [N]
-- ax: matplotlib.axes.Axes
-- figsize: tuple of (width, height)</p>
-</dd></dl>
-
-<span class="target" id="module-utils.run"></span><dl class="py exception">
-<dt class="sig sig-object py" id="utils.run.LoadNoFileError">
-<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">LoadNoFileError</span></span><a class="reference internal" href="_modules/utils/run.html#LoadNoFileError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.LoadNoFileError" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.check_existing">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">check_existing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs_root_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpts_root_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="_modules/utils/run.html#check_existing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.check_existing" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- models: dict, models[model_name][‘model_dir’] is name of model directory
-- logs_root_dir: str, path to root directory for saving logs
-- ckpts_root_dir: str, path to root directory for saving checkpoints
-- save_filename: str, name of existing file to check for
-Returns: bool, True if ckpts exist and no <a href="#id1"><span class="problematic" id="id2">*</span></a>.npz files found, otherwise False</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.checkpoint_path_exists">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">checkpoint_path_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ckpt_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="_modules/utils/run.html#checkpoint_path_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.checkpoint_path_exists" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- ckpt_path: str, path to a checkpoint file
-Returns: bool, whether the checkpoint path exists</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.get_full_experiment_name">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">get_full_experiment_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fc_reg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_reg</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/utils/run.html#get_full_experiment_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.get_full_experiment_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a str ‘{experiment_name}_b{batch_size}_fc{fc_str}_conv{conv_str}’ where fc_str and
-conv_str are the numbers past the decimal for the fc/conv regularization parameters. Optionally
-appends a tag to the end.
-Args
-- experiment_name: str
-- batch_size: int
-- fc_reg: float
-- conv_reg: float
-- learning_rate: float
-- tag: str or None
-Returns
-- full_experiment_name: str</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.load">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sess</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tensorflow.python.client.session.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saver</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tensorflow.python.training.saver.Saver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="_modules/utils/run.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the most recent checkpoint from checkpoint_dir.
-Args
-- sess: tf.compat.v1.Session (edited mm)
-- saver: tf.compat.v1.train.Saver (edited mm)
-- checkpoint_dir: str, path to directory containing checkpoint(s)
-Returns: bool, True if successful at restoring checkpoint from given directory</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.make_log_and_ckpt_dirs">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">make_log_and_ckpt_dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir_base</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpt_dir_base</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_experiment_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/run.html#make_log_and_ckpt_dirs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.make_log_and_ckpt_dirs" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Creates 2 new directories:</dt><dd><ol class="arabic simple">
-<li><p>log_dir: log_dir_base/full_experiment_name</p></li>
-<li><p>ckpt_dir: ckpt_dir_base/full_experiment_name</p></li>
-</ol>
-</dd>
-</dl>
-<p>Args
-- log_dir_base: str, path to base directory for logs from all experiments
-- ckpt_dir_base: str, path to base directory for checkpoints from all experiments
-- full_experiment_name: str
-Returns: log_dir, ckpt_dir
-- log_dir: str, path to log directory for this specific experiment
-- ckpt_prefix: str, prefix for checkpoint files for this experiment, equals ckpt_dir/ckpt</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.param_to_str">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">param_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/utils/run.html#param_to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.param_to_str" title="Permalink to this definition">¶</a></dt>
-<dd><p>if p &lt; 1, only leaves everything after decimal
-- 0.001 -&gt; ‘001’
-- 1e-06 -&gt; ‘1e-06’
-if p &gt;= 1, adds a decimal point if there isn’t already one
-- 1 -&gt; ‘1.’
-- 2.5 -&gt; ‘2.5’</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.print_number_of_parameters">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">print_number_of_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/run.html#print_number_of_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.print_number_of_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints the total number of trainable parameters.
-Args
-- verbose: bool, whether to print name and shape info for every trainable var</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.run_batches">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">run_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sess</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tensorflow.python.client.session.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensors_dict_ops</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">tensorflow.python.framework.ops.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_nbatches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/utils/run.html#run_batches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.run_batches" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs the ops in tensors_dict_ops for a fixed number of batches or until
-reaching a tf.errors.OutOfRangeError, concatenating the runs.
-Note: assumes that the dataset iterator doesn’t need initialization, or is</p>
-<blockquote>
-<div><p>already initialized.</p>
-</div></blockquote>
-<p>Args
-- sess: tf.Session
-- tensors_dict_ops: dict, str =&gt; tf.Tensor, shape [batch_size] or [batch_size, D]
-- max_nbatches: int, maximum number of batches to run the ops for,</p>
-<blockquote>
-<div><p>set to None to run until reaching a tf.errors.OutOfRangeError</p>
-</div></blockquote>
-<ul class="simple">
-<li><p>verbose: bool, whether to print out current batch and speed</p></li>
-</ul>
-<p>Returns
-- all_tensors: dict, str =&gt; np.array, shape [N] or [N, D]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.run_epoch">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">run_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sess</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">tensorflow.python.client.session.Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensors_dict_ops</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">tensorflow.python.framework.ops.Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/utils/run.html#run_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.run_epoch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- sess: tf.Session
-- tensors_dict_ops: dict, str =&gt; tf.Tensor, shape [batch_size] or [batch_size, D]
-- verbose: bool, whether to print out current batch and speed
-Note: assumes that the dataset iterator doesn’t need initialization, or is</p>
-<blockquote>
-<div><p>already initialized.</p>
-</div></blockquote>
-<p>Returns
-- all_tensors: dict, str =&gt; np.array, shape [N] or [N, D]</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.run_extraction_on_models">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">run_extraction_on_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ModelClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batcher</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batches_per_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs_root_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpts_root_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feed_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/run.html#run_extraction_on_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.run_extraction_on_models" title="Permalink to this definition">¶</a></dt>
-<dd><p>Args
-- model_infos: list of dict</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>‘model_dir’: str, name of folder where model is saved</p></li>
-<li><p>‘bands’: tuple</p></li>
-</ul>
-</div></blockquote>
-<ul class="simple">
-<li><dl class="simple">
-<dt>ModelClass: class, an instance <cite>model</cite> of ModelClass has attributes</dt><dd><p>model.features_layer: tf.Tensor
-model.outputs: tf.Tensor</p>
-</dd>
-</dl>
-</li>
-<li><p>model_params: dict, parameters to pass to ModelClass constructor</p></li>
-<li><p>batcher: Batcher, whose batch_op includes ‘images’ key</p></li>
-<li><p>batches_per_epoch: int</p></li>
-<li><p>logs_root_dir: str, path to root directory for saving logs</p></li>
-<li><p>ckpts_root_dir: str, path to root directory for saving checkpoints</p></li>
-<li><p>save_filename: str, name of file to save</p></li>
-<li><p>batch_keys: list of str</p></li>
-<li><p>feed_dict: dict, tf.Tensor =&gt; python value, feed_dict for initializing batcher iterator</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="utils.run.save_results">
-<span class="sig-prename descclassname"><span class="pre">utils.run.</span></span><span class="sig-name descname"><span class="pre">save_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">np_dict</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'features.npz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/run.html#save_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.run.save_results" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves a compressed features.npz file in the given dir.
-Args
-- dir_path: str, path to directory to save .npz file
-- np_dict: dict, maps str =&gt; np.array
-- filename: str, name of file to save</p>
-</dd></dl>
-
-<span class="target" id="module-utils.trainer"></span><div class="toctree-wrapper compound">
 </div>
 </section>
 <section id="indices-and-tables">
@@ -678,66 +68,61 @@ Args
 </section>
 
 
+            <div class="clearer"></div>
           </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
           
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">CNN_Architecture</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-  <li><a href="#">Documentation overview</a><ul>
-  </ul></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">DIS22 ML Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">modules</a></li>
 </ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
 
-
-
-
-
-
-
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
 
         </div>
+        <div class="clearer"></div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2021, PS, JD, MM (original author is sustainlab-group).
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
     </div>
 
-    
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="readme.html" title="DIS22 ML Project"
+              >next</a> |
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/index.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
 
-    
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Jonas Dudda, Melanie Fumfack, Matteo Meier, Pia Störmer (original code by sustainlab group).
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
   </body>
 </html>

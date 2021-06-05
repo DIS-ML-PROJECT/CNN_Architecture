@@ -8,8 +8,6 @@ import tensorflow as tf
 # edited mm
 ROOT_DIR = 'C:/Users/matte/Documents/Data/01_Universitaet/02_TH_Koeln/06_Semester/04_Machine_Learning_Project/CNN_Architecture'
 DHS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/dhs_tfrecords')
-LSMS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/lsms_tfrecords')
-
 
 def get_tfrecord_paths(dataset, split='all'):
     '''
@@ -33,22 +31,6 @@ def get_tfrecord_paths(dataset, split='all'):
             glob_path = os.path.join(DHS_TFRECORDS_PATH_ROOT, country_year + '*', '*.tfrecord.gz')
             tfrecord_paths.extend(glob(glob_path))
     tfrecord_paths = sorted(tfrecord_paths)
-    assert len(tfrecord_paths) == expected_size
-    return tfrecord_paths
-
-def get_lsms_tfrecord_paths(cys):
-    '''
-    Args
-    - cys: list of 'country_year' str, order matters!
-
-    Returns:
-    - tfrecord_paths: list of str, paths to TFRecord files, order of country_years given by cys
-    '''
-    expected_size = sum([SIZES['LSMS'][cy] for cy in cys])
-    tfrecord_paths = []
-    for cy in cys:
-        glob_path = os.path.join(LSMS_TFRECORDS_PATH_ROOT, cy, '*.tfrecord.gz')
-        tfrecord_paths.extend(sorted(glob(glob_path)))
     assert len(tfrecord_paths) == expected_size
     return tfrecord_paths
 
