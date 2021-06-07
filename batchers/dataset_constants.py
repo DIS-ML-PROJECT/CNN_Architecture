@@ -4,6 +4,8 @@ DHS_COUNTRIES = [
     'lesotho', 'malawi', 'mali', 'mozambique', 'nigeria', 'rwanda', 'senegal',
     'sierra_leone', 'tanzania', 'togo', 'uganda', 'zambia', 'zimbabwe']
 
+LSMS_COUNTRIES = ['ethiopia', 'malawi', 'nigeria', 'tanzania', 'uganda']
+
 _SURVEY_NAMES_5country = {
     'train': ['uganda_2011', 'tanzania_2010', 'rwanda_2010', 'nigeria_2013'],
     'val': ['malawi_2010'],
@@ -58,6 +60,10 @@ _SURVEY_NAMES_2009_17E = {
     'test': ['kenya', 'lesotho', 'senegal', 'zambia'],
 }
 
+_SURVEY_NAMES_LSMS = ['ethiopia_2011', 'ethiopia_2015', 'malawi_2010', 'malawi_2016',
+                      'nigeria_2010', 'nigeria_2015', 'tanzania_2008', 'tanzania_2012',
+                      'uganda_2005', 'uganda_2009', 'uganda_2013']
+
 SURVEY_NAMES = {
     '5country': _SURVEY_NAMES_5country,
     '2009-17': _SURVEY_NAMES_2009_17,
@@ -65,11 +71,13 @@ SURVEY_NAMES = {
     '2009-17B': _SURVEY_NAMES_2009_17B,
     '2009-17C': _SURVEY_NAMES_2009_17C,
     '2009-17D': _SURVEY_NAMES_2009_17D,
-    '2009-17E': _SURVEY_NAMES_2009_17E
+    '2009-17E': _SURVEY_NAMES_2009_17E,
+    'LSMS': _SURVEY_NAMES_LSMS,
 }
 
 SIZES = {
-    '2009-17': {'train': 12319, 'val': 3257, 'test': 4093, 'all': 19669},
+    '2009-17': {'train': 1, 'val': 1, 'test': 1, 'all': 3},
+    #'2009-17': {'train': 12319, 'val': 3257, 'test': 4093, 'all': 19669},
     '2009-17nl': {'all': 261396},
     '2009-17A': {'train': 11797, 'val': 3909, 'test': 3963, 'all': 19669},
     '2009-17B': {'train': 11820, 'val': 3940, 'test': 3909, 'all': 19669},
@@ -80,7 +88,12 @@ SIZES = {
     'incountryB': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
     'incountryC': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
     'incountryD': {'train': 11802, 'val': 3933, 'test': 3934, 'all': 19669},
-    'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669}
+    'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669},
+    'LSMSincountry': {'train': 1812, 'val': 604, 'test': 604, 'all': 3020},
+    'LSMS': {'ethiopia_2011': 329, 'ethiopia_2015': 329, 'malawi_2010': 102,
+             'malawi_2016': 102, 'nigeria_2010': 481, 'nigeria_2015': 481,
+             'tanzania_2008': 371, 'tanzania_2012': 328, 'uganda_2005': 166,
+             'uganda_2009': 165, 'uganda_2013': 166},
 }
 
 URBAN_SIZES = {
@@ -124,8 +137,19 @@ _MEANS_2009_17nl = {
     'SWIR2': 0.162268,
     'TEMP1': 298.736746,
     'NIR':   0.245430,
-    'DMSP':  7.152961,
+    'DMSP':  7.152961, #wealthpooled
     'VIIRS': 2.322687,
+}
+_MEANS_LSMS = {
+    'BLUE':  0.062551,
+    'GREEN': 0.090696,
+    'RED':   0.105640,
+    'SWIR1': 0.242577,
+    'SWIR2': 0.165792,
+    'TEMP1': 299.495280,
+    'NIR':   0.256701,
+    'DMSP':  5.105815,
+    'VIIRS': 0.557793,
 }
 
 _STD_DEVS_2009_17 = {
@@ -151,14 +175,27 @@ _STD_DEVS_2009_17nl = {
     'DMSP':  29.749457,
     'VIIRS': 14.611589,
 }
+_STD_DEVS_LSMS = {
+    'BLUE':  0.023979,
+    'GREEN': 0.032121,
+    'RED':   0.051943,
+    'SWIR1': 0.088163,
+    'SWIR2': 0.083826,
+    'TEMP1': 4.678959,
+    'NIR':   0.059025,
+    'DMSP':  31.688320,
+    'VIIRS': 6.421816,
+}
 
 MEANS_DICT = {
     '2009-17': _MEANS_2009_17,
-    '2009-17nl': _MEANS_2009_17nl
+    '2009-17nl': _MEANS_2009_17nl,
+    'LSMS': _MEANS_LSMS,
 }
 
 STD_DEVS_DICT = {
     '2009-17': _STD_DEVS_2009_17,
-    '2009-17nl': _STD_DEVS_2009_17nl
+    '2009-17nl': _STD_DEVS_2009_17nl,
+    'LSMS': _STD_DEVS_LSMS,
 }
 

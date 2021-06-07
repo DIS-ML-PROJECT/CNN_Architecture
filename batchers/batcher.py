@@ -6,8 +6,8 @@ import os
 import tensorflow as tf
 
 # edited mm
-ROOT_DIR = 'C:/Users/matte/Documents/Data/01_Universitaet/02_TH_Koeln/06_Semester/04_Machine_Learning_Project/CNN_Architecture'
-DHS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/dhs_tfrecords')
+DHS_TFRECORDS_PATH_ROOT = 'data/dhs_tfrecords'
+LSMS_TFRECORDS_PATH_ROOT = 'data/lsms_tfrecords'
 
 def get_tfrecord_paths(dataset, split='all'):
     '''
@@ -28,9 +28,26 @@ def get_tfrecord_paths(dataset, split='all'):
     tfrecord_paths = []
     for split in splits:
         for country_year in survey_names[split]:
-            glob_path = os.path.join(DHS_TFRECORDS_PATH_ROOT, country_year + '*', '*.tfrecord.gz')
+            glob_path = os.path.join(DHS_TFRECORDS_PATH_ROOT, #country_year + '*',
+                                     '*.tfrec') # ord.gz')
             tfrecord_paths.extend(glob(glob_path))
     tfrecord_paths = sorted(tfrecord_paths)
+    assert expected_size == len(tfrecord_paths)
+    return tfrecord_paths
+
+def get_lsms_tfrecord_paths(cys):
+    '''
+    Args
+    - cys: list of 'country_year' str, order matters!
+
+    Returns:
+    - tfrecord_paths: list of str, paths to TFRecord files, order of country_years given by cys
+    '''
+    expected_size = sum([SIZES['LSMS'][cy] for cy in cys])
+    tfrecord_paths = []
+    for cy in cys:
+        glob_path = os.path.join(LSMS_TFRECORDS_PATH_ROOT, cy, '*.tfrecord.gz')
+        tfrecord_paths.extend(sorted(glob(glob_path)))
     assert len(tfrecord_paths) == expected_size
     return tfrecord_paths
 
@@ -193,11 +210,11 @@ class Batcher():
         if self.label_name is not None:
             scalar_float_keys.append(self.label_name)
 
-        keys_to_features = {}
-        for band in bands:
-            keys_to_features[band] = tf.FixedLenFeature(shape=[255**2], dtype=tf.float32)
-        for key in scalar_float_keys:
-            keys_to_features[key] = tf.FixedLenFeature(shape=[], dtype=tf.float32)
+        #keys_to_features = {}
+        #for band in bands:
+        #    keys_to_features[band] = tf.io.FixedLenFeature(shape=[255**2], dtype=tf.float32)
+        #for key in scalar_float_keys:
+        #    keys_to_features[key] = tf.io.FixedLenFeature(shape=[], dtype=tf.float32)
 
         ex = tf.parse_single_example(example_proto, features=keys_to_features)
         loc = tf.stack([ex['lat'], ex['lon']])
@@ -334,7 +351,7 @@ class UrbanBatcher(Batcher):
         - predicate: tf.Tensor, type bool, True to keep, False to filter out
         '''
         keys_to_features = {
-            'urban_rural': tf.FixedLenFeature(shape=[], dtype=tf.float32)
+            'urban_rural': tf.io.FixedLenFeature(shape=[], dtype=tf.float32)
         }
         ex = tf.parse_single_example(example_proto, features=keys_to_features)
         do_keep = tf.equal(ex['urban_rural'], 1.0)
@@ -351,7 +368,7 @@ class RuralBatcher(Batcher):
         - predicate: tf.Tensor, type bool, True to keep, False to filter out
         '''
         keys_to_features = {
-            'urban_rural': tf.FixedLenFeature(shape=[], dtype=tf.float32)
+            'urban_rural': tf.io.FixedLenFeature(shape=[], dtype=tf.float32)
         }
         ex = tf.parse_single_example(example_proto, features=keys_to_features)
         do_keep = tf.equal(ex['urban_rural'], 0.0)
