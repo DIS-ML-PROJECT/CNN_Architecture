@@ -4,8 +4,6 @@ DHS_COUNTRIES = [
     'lesotho', 'malawi', 'mali', 'mozambique', 'nigeria', 'rwanda', 'senegal',
     'sierra_leone', 'tanzania', 'togo', 'uganda', 'zambia', 'zimbabwe']
 
-LSMS_COUNTRIES = ['ethiopia', 'malawi', 'nigeria', 'tanzania', 'uganda']
-
 _SURVEY_NAMES_5country = {
     'train': ['uganda_2011', 'tanzania_2010', 'rwanda_2010', 'nigeria_2013'],
     'val': ['malawi_2010'],
@@ -89,11 +87,6 @@ SIZES = {
     'incountryC': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
     'incountryD': {'train': 11802, 'val': 3933, 'test': 3934, 'all': 19669},
     'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669},
-    'LSMSincountry': {'train': 1812, 'val': 604, 'test': 604, 'all': 3020},
-    'LSMS': {'ethiopia_2011': 329, 'ethiopia_2015': 329, 'malawi_2010': 102,
-             'malawi_2016': 102, 'nigeria_2010': 481, 'nigeria_2015': 481,
-             'tanzania_2008': 371, 'tanzania_2012': 328, 'uganda_2005': 166,
-             'uganda_2009': 165, 'uganda_2013': 166},
 }
 
 URBAN_SIZES = {
@@ -140,17 +133,6 @@ _MEANS_2009_17nl = {
     'DMSP':  7.152961, #wealthpooled
     'VIIRS': 2.322687,
 }
-_MEANS_LSMS = {
-    'BLUE':  0.062551,
-    'GREEN': 0.090696,
-    'RED':   0.105640,
-    'SWIR1': 0.242577,
-    'SWIR2': 0.165792,
-    'TEMP1': 299.495280,
-    'NIR':   0.256701,
-    'DMSP':  5.105815,
-    'VIIRS': 0.557793,
-}
 
 _STD_DEVS_2009_17 = {
     'BLUE':  0.022926,
@@ -175,27 +157,15 @@ _STD_DEVS_2009_17nl = {
     'DMSP':  29.749457,
     'VIIRS': 14.611589,
 }
-_STD_DEVS_LSMS = {
-    'BLUE':  0.023979,
-    'GREEN': 0.032121,
-    'RED':   0.051943,
-    'SWIR1': 0.088163,
-    'SWIR2': 0.083826,
-    'TEMP1': 4.678959,
-    'NIR':   0.059025,
-    'DMSP':  31.688320,
-    'VIIRS': 6.421816,
-}
+
 
 MEANS_DICT = {
     '2009-17': _MEANS_2009_17,
     '2009-17nl': _MEANS_2009_17nl,
-    'LSMS': _MEANS_LSMS,
 }
 
 STD_DEVS_DICT = {
     '2009-17': _STD_DEVS_2009_17,
     '2009-17nl': _STD_DEVS_2009_17nl,
-    'LSMS': _STD_DEVS_LSMS,
 }
 
