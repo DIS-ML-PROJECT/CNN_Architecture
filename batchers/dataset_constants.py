@@ -58,6 +58,10 @@ _SURVEY_NAMES_2009_17E = {
     'test': ['kenya', 'lesotho', 'senegal', 'zambia'],
 }
 
+_SURVEY_NAMES_LSMS = ['ethiopia_2011', 'ethiopia_2015', 'malawi_2010', 'malawi_2016',
+                      'nigeria_2010', 'nigeria_2015', 'tanzania_2008', 'tanzania_2012',
+                      'uganda_2005', 'uganda_2009', 'uganda_2013']
+
 SURVEY_NAMES = {
     '5country': _SURVEY_NAMES_5country,
     '2009-17': _SURVEY_NAMES_2009_17,
@@ -65,11 +69,13 @@ SURVEY_NAMES = {
     '2009-17B': _SURVEY_NAMES_2009_17B,
     '2009-17C': _SURVEY_NAMES_2009_17C,
     '2009-17D': _SURVEY_NAMES_2009_17D,
-    '2009-17E': _SURVEY_NAMES_2009_17E
+    '2009-17E': _SURVEY_NAMES_2009_17E,
+    'LSMS': _SURVEY_NAMES_LSMS,
 }
 
 SIZES = {
-    '2009-17': {'train': 12319, 'val': 3257, 'test': 4093, 'all': 19669},
+    '2009-17': {'train': 1, 'val': 1, 'test': 1, 'all': 3},
+    #'2009-17': {'train': 12319, 'val': 3257, 'test': 4093, 'all': 19669},
     '2009-17nl': {'all': 261396},
     '2009-17A': {'train': 11797, 'val': 3909, 'test': 3963, 'all': 19669},
     '2009-17B': {'train': 11820, 'val': 3940, 'test': 3909, 'all': 19669},
@@ -80,7 +86,7 @@ SIZES = {
     'incountryB': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
     'incountryC': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
     'incountryD': {'train': 11802, 'val': 3933, 'test': 3934, 'all': 19669},
-    'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669}
+    'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669},
 }
 
 URBAN_SIZES = {
@@ -124,7 +130,7 @@ _MEANS_2009_17nl = {
     'SWIR2': 0.162268,
     'TEMP1': 298.736746,
     'NIR':   0.245430,
-    'DMSP':  7.152961,
+    'DMSP':  7.152961, #wealthpooled
     'VIIRS': 2.322687,
 }
 
@@ -152,13 +158,14 @@ _STD_DEVS_2009_17nl = {
     'VIIRS': 14.611589,
 }
 
+
 MEANS_DICT = {
     '2009-17': _MEANS_2009_17,
-    '2009-17nl': _MEANS_2009_17nl
+    '2009-17nl': _MEANS_2009_17nl,
 }
 
 STD_DEVS_DICT = {
     '2009-17': _STD_DEVS_2009_17,
-    '2009-17nl': _STD_DEVS_2009_17nl
+    '2009-17nl': _STD_DEVS_2009_17nl,
 }
 

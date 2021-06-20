@@ -6,8 +6,7 @@ import os
 import tensorflow as tf
 
 # edited mm
-ROOT_DIR = 'C:/Users/matte/Documents/Data/01_Universitaet/02_TH_Koeln/06_Semester/04_Machine_Learning_Project/CNN_Architecture'
-DHS_TFRECORDS_PATH_ROOT = os.path.join(ROOT_DIR, 'data/dhs_tfrecords')
+DHS_TFRECORDS_PATH_ROOT = 'data/dhs_tfrecords'
 
 def get_tfrecord_paths(dataset, split='all'):
     '''
@@ -28,12 +27,12 @@ def get_tfrecord_paths(dataset, split='all'):
     tfrecord_paths = []
     for split in splits:
         for country_year in survey_names[split]:
-            glob_path = os.path.join(DHS_TFRECORDS_PATH_ROOT, country_year + '*', '*.tfrecord.gz')
+            glob_path = os.path.join(DHS_TFRECORDS_PATH_ROOT, #country_year + '*',
+                                     '*.tfrec') # ord.gz')
             tfrecord_paths.extend(glob(glob_path))
     tfrecord_paths = sorted(tfrecord_paths)
-    assert len(tfrecord_paths) == expected_size
+    assert expected_size == len(tfrecord_paths)
     return tfrecord_paths
-
 
 class Batcher():
     def __init__(self, tfrecord_files, dataset, batch_size, label_name,
@@ -193,11 +192,11 @@ class Batcher():
         if self.label_name is not None:
             scalar_float_keys.append(self.label_name)
 
-        keys_to_features = {}
-        for band in bands:
-            keys_to_features[band] = tf.FixedLenFeature(shape=[255**2], dtype=tf.float32)
-        for key in scalar_float_keys:
-            keys_to_features[key] = tf.FixedLenFeature(shape=[], dtype=tf.float32)
+        #keys_to_features = {}
+        #for band in bands:
+        #    keys_to_features[band] = tf.io.FixedLenFeature(shape=[255**2], dtype=tf.float32)
+        #for key in scalar_float_keys:
+        #    keys_to_features[key] = tf.io.FixedLenFeature(shape=[], dtype=tf.float32)
 
         ex = tf.parse_single_example(example_proto, features=keys_to_features)
         loc = tf.stack([ex['lat'], ex['lon']])
@@ -334,7 +333,7 @@ class UrbanBatcher(Batcher):
         - predicate: tf.Tensor, type bool, True to keep, False to filter out
         '''
         keys_to_features = {
-            'urban_rural': tf.FixedLenFeature(shape=[], dtype=tf.float32)
+            'urban_rural': tf.io.FixedLenFeature(shape=[], dtype=tf.float32)
         }
         ex = tf.parse_single_example(example_proto, features=keys_to_features)
         do_keep = tf.equal(ex['urban_rural'], 1.0)
@@ -351,7 +350,7 @@ class RuralBatcher(Batcher):
         - predicate: tf.Tensor, type bool, True to keep, False to filter out
         '''
         keys_to_features = {
-            'urban_rural': tf.FixedLenFeature(shape=[], dtype=tf.float32)
+            'urban_rural': tf.io.FixedLenFeature(shape=[], dtype=tf.float32)
         }
         ex = tf.parse_single_example(example_proto, features=keys_to_features)
         do_keep = tf.equal(ex['urban_rural'], 0.0)
