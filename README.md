@@ -4,5 +4,5 @@ For now this Sphinx Documentation contains only the code of the CNN Architecture
 
 
 
-The original code was obtained from (https://github.com/sustainlab-group/africa_poverty)
+The original code was obtained from (https://github.com/sustainlab-group/africa_poverty.git)
 
