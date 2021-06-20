@@ -25,17 +25,25 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
     '''
     Args
     - sess: tf.Session
+        A Session object encapsulates the environment in which Operation objects are executed, and Tensor objects are evaluated.
     - ooc: bool, whether to use out-of-country split
     - batcher_type: str, type of batcher, one of ['base', 'urban', 'rural']
     - dataset: str, options depends on batcher_type
     - keep_frac: float
+        amount of dataset to keep and randomly select
     - model_name: str, one of ['resnet', 'vggf', 'simplecnn', 'resnetcombo']
+        in this case hard coded to resnet
     - model_params: dict
+        model parameters (includes e.g. batch size, dataset, ckpt_dir, .... )
+        these are saved to params.txt in the new_experiment directory
     - batch_size: int
     - ls_bands: one of [None, 'rgb', 'ms']
+        which bands are supposed to be used
     - nl_band: one of [None, 'merge', 'split']
+        are nl band supposed to be used, if yes are they supposed to be splitted?
     - label_name: str, name of the label in the TFRecord file
     - augment: bool
+        whether or not to perform a augmentation on the images
     - learning_rate: float
     - lr_decay: float
     - max_epochs: int
@@ -55,6 +63,8 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
     '''
 
     # set model class
+    # check if one of the supported models was chosen
+
     if model_name == 'resnet':
         model_class = Hyperspectral_Resnet
     #
@@ -230,6 +240,7 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
         if model_params['num_outputs'] == 1:
             val_preds = tf.reshape(val_preds, shape=[-1], name='val_preds')
 
+    #class for training and evaluation of regression models
     trainer = RegressionTrainer(
         train_batch, train_eval_batch, val_batch,
         train_model, train_eval_model, val_model,
@@ -288,10 +299,18 @@ def run_training_wrapper(**params):
     tf.compat.v1.set_random_seed(seed)  # edited mm
 
     # create the log and checkpoint directories if needed
+    # Returns a str
+    # '{experiment_name}_b{batch_size}_fc{fc_str}_conv{conv_str}'
+    # where fc_str and conv_str are the numbers past the decimal for the fc / conv regularization parameters.
+    # Optionally appends a tag to the end.
     full_experiment_name = get_full_experiment_name(
         params['experiment_name'], params['batch_size'],
         params['fc_reg'], params['conv_reg'], params['lr']
     )
+    # Creates 2 new directories:
+    # 1. log_dir: {log_dir_base}/{full_experiment_name}
+    # 2. ckpt_dir: {ckpt_dir_base}/{full_experiment_name}
+
     log_dir, ckpt_prefix = make_log_and_ckpt_dirs(
         params['log_dir'], params['ckpt_dir'], full_experiment_name
     )
