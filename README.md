@@ -5,7 +5,9 @@ This Repository contains the code from the DIS22 ML Project Team CNN Architectur
 Most of the Code is adapted from the original code repository of [sustainlab-group](https://github.com/sustainlab-group/africa_poverty).
 
 For a visualised dataflow, look at the miro board [Timeflow CNN](https://miro.com/app/board/o9J_lC6R8PY=/).
-While the diagrams "DHS Data sustainlab-group" and "LSMS Data" show the original dataflow by sustainlab-group, the diagram "DHS Data DIS 22" shows the shortened and adapted way used in this repository. 
+While the diagrams "DHS Data sustainlab-group" and "LSMS Data" show the original dataflow by sustainlab-group, the diagram "DHS Data DIS 22" shows the shortened and adapted way used in this repository:
+![dis22_dataflow](https://user-images.githubusercontent.com/72933444/122673505-065c1480-d1d1-11eb-9a3b-ce5bfac1fb44.jpg)
+
 
 While the sustainlab-group dealed with DHS and LSMS data, the DIS22 ML Project deals only with DHS data
 
