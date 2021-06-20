@@ -18,4 +18,4 @@ While the sustainlab-group dealed with DHS and LSMS data, the DIS22 ML Project d
 4. run notebook `models/dhs_ridge_resnet.ipynb`
 
 For summaries of these scripts and notebooks please check out the corresponding files (.md for .py and in-line documentation for .ipynb files).
-Please find a Sphinx Documentation for this repository, which for now contains only the code of the CNN Architecture Team. To open the Documentation, please clone the repository and run file `sphinx/_build/html/index.html`.
+Please find a Sphinx Documentation for this repository, which for now contains only the code of the CNN Architecture Team. To open the documentation, please clone the repository and run file `sphinx/_build/html/index.html`.
