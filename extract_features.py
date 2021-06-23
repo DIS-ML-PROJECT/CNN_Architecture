@@ -7,7 +7,7 @@ import numpy as np
 import tensorflow as tf
 
 # edit if necessary
-ROOT_DIR = 'C:/Users/matte/Documents/Data/01_Universitaet/02_TH_Koeln/06_Semester/04_Machine_Learning_Project/CNN_Architecture'
+ROOT_DIR = './'
 
 DATASET_NAME = '2009-17'
 BATCH_SIZE = 128

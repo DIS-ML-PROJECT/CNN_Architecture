@@ -6,7 +6,7 @@ import os
 import tensorflow as tf
 
 # edited mm
-DHS_TFRECORDS_PATH_ROOT = 'data/dhs_tfrecords'
+DHS_TFRECORDS_PATH_ROOT = '/content/CNN_Architecture/data/tfrecords'
 
 def get_tfrecord_paths(dataset, split='all'):
     '''
