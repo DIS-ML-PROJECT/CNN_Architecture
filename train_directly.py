@@ -179,8 +179,8 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
         )
 
     # set placeholders for tensors
-    train_tfrecord_paths_ph = tf.compat.v1.placeholder(tf.string, shape=[None])
-    val_tfrecord_paths_ph = tf.compat.v1.placeholder(tf.string, shape=[None])
+    train_tfrecord_paths_ph = tf.placeholder(tf.string, shape=[None])
+    val_tfrecord_paths_ph = tf.placeholder(tf.string, shape=[None])
 
     # get train batch
     with tf.name_scope('train_batcher'):
@@ -220,21 +220,21 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
     model_params['num_outpus'] = 1
 
     # train model
-    with tf.compat.v1.variable_scope(tf.compat.v1.get_variable_scope()) as model_scope:  # edited mm
+    with tf.variable_scope(tf.get_variable_scope()) as model_scope:  # edited mm
         train_model = model_class(train_batch['images'], is_training=True, **model_params)
         train_preds = train_model.outputs
         if model_params['num_outputs'] == 1:
             train_preds = tf.reshape(train_preds, shape=[-1], name='train_preds')
 
     # train, eval model
-    with tf.compat.v1.variable_scope(model_scope, reuse=True):  # edited mm
+    with tf.variable_scope(model_scope, reuse=True):  # edited mm
         train_eval_model = model_class(train_eval_batch['images'], is_training=False, **model_params)
         train_eval_preds = train_eval_model.outputs
         if model_params['num_outputs'] == 1:
             train_eval_preds = tf.reshape(train_eval_preds, shape=[-1], name='train_eval_preds')
 
     # val model
-    with tf.compat.v1.variable_scope(model_scope, reuse=True):  # edited mm
+    with tf.variable_scope(model_scope, reuse=True):  # edited mm
         val_model = model_class(val_batch['images'], is_training=False, **model_params)
         val_preds = val_model.outputs
         if model_params['num_outputs'] == 1:
@@ -291,12 +291,12 @@ def run_training_wrapper(**params):
             params[p] = None
 
     # reset any existing graph
-    tf.compat.v1.reset_default_graph()  # edited mm
+    tf.reset_default_graph()  # edited mm
 
     # set the random seeds
     seed = params['seed']
     np.random.seed(seed)
-    tf.compat.v1.set_random_seed(seed)  # edited mm
+    tf.set_random_seed(seed)  # edited mm
 
     # create the log and checkpoint directories if needed
     # Returns a str
@@ -331,9 +331,9 @@ def run_training_wrapper(**params):
         os.environ['CUDA_VISIBLE_DEVICES'] = str(params['gpu'])
 
     # configure session
-    config = tf.compat.v1.ConfigProto()  # edited mm
+    config = tf.ConfigProto()  # edited mm
     config.gpu_options.allow_growth = True
-    sess = tf.compat.v1.Session(config=config)  # edited mm
+    sess = tf.Session(config=config)  # edited mm
 
     # set model parameters
     model_params = {
@@ -389,18 +389,7 @@ def main(_):
 
 
 if __name__ == '__main__':
-
-    # delete all flags, edit mm
-    def del_all_flags(FLAGS):
-        flags_dict = FLAGS._flags()
-        keys_list = [keys for keys in flags_dict]
-        for keys in keys_list:
-            FLAGS.__delattr__(keys)
-
-
-    del_all_flags(tf.compat.v1.flags.FLAGS)
-
-    flags = tf.compat.v1.app.flags  # edited mm
+    flags = tf.app.flags
 
     # paths
     flags.DEFINE_string('experiment_name', 'new_experiment', 'name of the experiment being run')
@@ -453,4 +442,4 @@ if __name__ == '__main__':
     flags.DEFINE_integer('print_every', 10, 'print training statistics after every so many steps')
     flags.DEFINE_integer('seed', 123, 'seed for random initialization and shuffling')
 
-    tf.compat.v1.run()  # edited mm
+    tf.run()  # edited mm
