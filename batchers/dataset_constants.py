@@ -1,7 +1,7 @@
 DHS_COUNTRIES = [
-    'angola', 'benin', 'burkina_faso', 'cameroon', 'cote_d_ivoire',
+    'angola', 'benin', 'burkina_faso', 'cote_d_ivoire',
     'democratic_republic_of_congo', 'ethiopia', 'ghana', 'guinea', 'kenya',
-    'lesotho', 'malawi', 'mali', 'mozambique', 'nigeria', 'rwanda', 'senegal',
+    'lesotho', 'malawi', 'mali', 'nigeria', 'rwanda', 'senegal',
     'sierra_leone', 'tanzania', 'togo', 'uganda', 'zambia', 'zimbabwe']
 
 _SURVEY_NAMES_5country = {
