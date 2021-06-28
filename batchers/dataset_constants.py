@@ -64,24 +64,24 @@ _SURVEY_NAMES_LSMS = ['ethiopia_2011', 'ethiopia_2015', 'malawi_2010', 'malawi_2
 
 SURVEY_NAMES = {
     '5country': _SURVEY_NAMES_5country,
-    '2009-17': _SURVEY_NAMES_2009_17,
-    '2009-17A': _SURVEY_NAMES_2009_17A,
-    '2009-17B': _SURVEY_NAMES_2009_17B,
-    '2009-17C': _SURVEY_NAMES_2009_17C,
-    '2009-17D': _SURVEY_NAMES_2009_17D,
-    '2009-17E': _SURVEY_NAMES_2009_17E,
+    '2012-16': _SURVEY_NAMES_2009_17,
+    '2012-16A': _SURVEY_NAMES_2009_17A,
+    '2012-16B': _SURVEY_NAMES_2009_17B,
+    '2012-16C': _SURVEY_NAMES_2009_17C,
+    '2012-16D': _SURVEY_NAMES_2009_17D,
+    '2012-16E': _SURVEY_NAMES_2009_17E,
     'LSMS': _SURVEY_NAMES_LSMS,
 }
 
 SIZES = {
-    '2009-17': {'train': 1, 'val': 1, 'test': 1, 'all': 3},
-    #'2009-17': {'train': 12319, 'val': 3257, 'test': 4093, 'all': 19669},
-    '2009-17nl': {'all': 261396},
-    '2009-17A': {'train': 11797, 'val': 3909, 'test': 3963, 'all': 19669},
-    '2009-17B': {'train': 11820, 'val': 3940, 'test': 3909, 'all': 19669},
-    '2009-17C': {'train': 11800, 'val': 3929, 'test': 3940, 'all': 19669},
-    '2009-17D': {'train': 11812, 'val': 3928, 'test': 3929, 'all': 19669},
-    '2009-17E': {'train': 11778, 'val': 3963, 'test': 3928, 'all': 19669},
+    '2012-16': {'train': 1, 'val': 1, 'test': 1, 'all': 3},
+    #'2012-16': {'train': 12319, 'val': 3257, 'test': 4093, 'all': 19669},
+    '2012-16nl': {'all': 261396},
+    '2012-16A': {'train': 11797, 'val': 3909, 'test': 3963, 'all': 19669},
+    '2012-16B': {'train': 11820, 'val': 3940, 'test': 3909, 'all': 19669},
+    '2012-16C': {'train': 11800, 'val': 3929, 'test': 3940, 'all': 19669},
+    '2012-16D': {'train': 11812, 'val': 3928, 'test': 3929, 'all': 19669},
+    '2012-16E': {'train': 11778, 'val': 3963, 'test': 3928, 'all': 19669},
     'incountryA': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
     'incountryB': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
     'incountryC': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
@@ -90,21 +90,21 @@ SIZES = {
 }
 
 URBAN_SIZES = {
-    '2009-17': {'train': 3954, 'val': 1212, 'test': 1635, 'all': 6801},
-    '2009-17A': {'train': 4264, 'val': 1221, 'test': 1316, 'all': 6801},
-    '2009-17B': {'train': 4225, 'val': 1355, 'test': 1221, 'all': 6801},
-    '2009-17C': {'train': 4010, 'val': 1436, 'test': 1355, 'all': 6801},
-    '2009-17D': {'train': 3892, 'val': 1473, 'test': 1436, 'all': 6801},
-    '2009-17E': {'train': 4012, 'val': 1316, 'test': 1473, 'all': 6801},
+    '2012-16': {'train': 3954, 'val': 1212, 'test': 1635, 'all': 6801},
+    '2012-16A': {'train': 4264, 'val': 1221, 'test': 1316, 'all': 6801},
+    '2012-16B': {'train': 4225, 'val': 1355, 'test': 1221, 'all': 6801},
+    '2012-16C': {'train': 4010, 'val': 1436, 'test': 1355, 'all': 6801},
+    '2012-16D': {'train': 3892, 'val': 1473, 'test': 1436, 'all': 6801},
+    '2012-16E': {'train': 4012, 'val': 1316, 'test': 1473, 'all': 6801},
 }
 
 RURAL_SIZES = {
-    '2009-17': {'train': 8365, 'val': 2045, 'test': 2458, 'all': 12868},
-    '2009-17A': {'train': 7533, 'val': 2688, 'test': 2647, 'all': 12868},
-    '2009-17B': {'train': 7595, 'val': 2585, 'test': 2688, 'all': 12868},
-    '2009-17C': {'train': 7790, 'val': 2493, 'test': 2585, 'all': 12868},
-    '2009-17D': {'train': 7920, 'val': 2455, 'test': 2493, 'all': 12868},
-    '2009-17E': {'train': 7766, 'val': 2647, 'test': 2455, 'all': 12868},
+    '2012-16': {'train': 8365, 'val': 2045, 'test': 2458, 'all': 12868},
+    '2012-16A': {'train': 7533, 'val': 2688, 'test': 2647, 'all': 12868},
+    '2012-16B': {'train': 7595, 'val': 2585, 'test': 2688, 'all': 12868},
+    '2012-16C': {'train': 7790, 'val': 2493, 'test': 2585, 'all': 12868},
+    '2012-16D': {'train': 7920, 'val': 2455, 'test': 2493, 'all': 12868},
+    '2012-16E': {'train': 7766, 'val': 2647, 'test': 2455, 'all': 12868},
 }
 
 # means and standard deviations calculated over the entire dataset (train + val + test),
@@ -160,12 +160,12 @@ _STD_DEVS_2009_17nl = {
 
 
 MEANS_DICT = {
-    '2009-17': _MEANS_2009_17,
-    '2009-17nl': _MEANS_2009_17nl,
+    '2012-16': _MEANS_2009_17,
+    '2012-16nl': _MEANS_2009_17nl,
 }
 
 STD_DEVS_DICT = {
-    '2009-17': _STD_DEVS_2009_17,
-    '2009-17nl': _STD_DEVS_2009_17nl,
+    '2012-16': _STD_DEVS_2009_17,
+    '2012-16nl': _STD_DEVS_2009_17nl,
 }
 
