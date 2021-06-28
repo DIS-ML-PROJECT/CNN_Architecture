@@ -64,12 +64,12 @@ _SURVEY_NAMES_LSMS = ['ethiopia_2011', 'ethiopia_2015', 'malawi_2010', 'malawi_2
 
 SURVEY_NAMES = {
     '5country': _SURVEY_NAMES_5country,
-    '2012-16': _SURVEY_NAMES_2009_17,
-    '2012-16A': _SURVEY_NAMES_2009_17A,
-    '2012-16B': _SURVEY_NAMES_2009_17B,
-    '2012-16C': _SURVEY_NAMES_2009_17C,
-    '2012-16D': _SURVEY_NAMES_2009_17D,
-    '2012-16E': _SURVEY_NAMES_2009_17E,
+    '2012-16': _SURVEY_NAMES_2012_16,
+    '2012-16A': _SURVEY_NAMES_2012_16A,
+    '2012-16B': _SURVEY_NAMES_2012_16B,
+    '2012-16C': _SURVEY_NAMES_2012_16C,
+    '2012-16D': _SURVEY_NAMES_2012_16D,
+    '2012-16E': _SURVEY_NAMES_2012_16E,
     'LSMS': _SURVEY_NAMES_LSMS,
 }
 
@@ -110,7 +110,7 @@ RURAL_SIZES = {
 # means and standard deviations calculated over the entire dataset (train + val + test),
 # with negative values set to 0, and ignoring any pixel that is 0 across all bands
 
-_MEANS_2009_17 = {
+_MEANS_2012_16 = {
     'BLUE':  0.059183,
     'GREEN': 0.088619,
     'RED':   0.104145,
@@ -122,7 +122,7 @@ _MEANS_2009_17 = {
     'VIIRS': 1.096089,
     # 'NIGHTLIGHTS': 5.101585, # nightlights overall
 }
-_MEANS_2009_17nl = {
+_MEANS_2012_16nl = {
     'BLUE':  0.063927,
     'GREEN': 0.091981,
     'RED':   0.105234,
@@ -134,7 +134,7 @@ _MEANS_2009_17nl = {
     'VIIRS': 2.322687,
 }
 
-_STD_DEVS_2009_17 = {
+_STD_DEVS_2012_16 = {
     'BLUE':  0.022926,
     'GREEN': 0.031880,
     'RED':   0.051458,
@@ -146,7 +146,7 @@ _STD_DEVS_2009_17 = {
     'VIIRS': 4.786354,
     # 'NIGHTLIGHTS': 23.342916, # nightlights overall
 }
-_STD_DEVS_2009_17nl = {
+_STD_DEVS_2012_16nl = {
     'BLUE':  0.023697,
     'GREEN': 0.032474,
     'RED':   0.051421,
@@ -160,12 +160,12 @@ _STD_DEVS_2009_17nl = {
 
 
 MEANS_DICT = {
-    '2012-16': _MEANS_2009_17,
-    '2012-16nl': _MEANS_2009_17nl,
+    '2012-16': _MEANS_2012_16,
+    '2012-16nl': _MEANS_2012_16nl,
 }
 
 STD_DEVS_DICT = {
-    '2012-16': _STD_DEVS_2009_17,
-    '2012-16nl': _STD_DEVS_2009_17nl,
+    '2012-16': _STD_DEVS_2012_16,
+    '2012-16nl': _STD_DEVS_2012_16nl,
 }
 
