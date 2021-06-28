@@ -5,54 +5,54 @@ DHS_COUNTRIES = [
     'sierra_leone', 'tanzania', 'togo', 'uganda', 'zambia', 'zimbabwe']
 
 _SURVEY_NAMES_5country = {
-    'train': ['uganda_2011', 'tanzania_2010', 'rwanda_2010', 'nigeria_2013'],
-    'val': ['malawi_2010'],
+    'train': ['uganda_2014', 'tanzania_2012', 'rwanda_2014', 'nigeria_2013'],
+    'val': ['malawi_2012'],
     'test': []
 }
 
-_SURVEY_NAMES_2009_17 = {
+_SURVEY_NAMES_20012_16 = {
     'train': ['benin_2012', 'democratic_republic_of_congo_2013', 'guinea_2012', 'kenya_2014',
-              'kenya_2015', 'malawi_2010', 'malawi_2012', 'malawi_2014', 'malawi_2015', 'nigeria_2010',
-              'nigeria_2013', 'nigeria_2015', 'rwanda_2010', 'rwanda_2014', 'senegal_2010',
-              'senegal_2012', 'sierra_leone_2013', 'tanzania_2010', 'tanzania_2011', 'tanzania_2015',
-              'togo_2013', 'uganda_2009', 'uganda_2011', 'uganda_2014', 'zimbabwe_2010', 'zimbabwe_2015'],
-    'val': ['burkina_faso_2010', 'burkina_faso_2014', 'cote_d_ivoire_2012', 'ghana_2014',
-            'ghana_2016', 'lesotho_2009', 'lesotho_2014', 'zambia_2013'],
-    'test': ['angola_2011', 'angola_2015', 'cameroon_2011', 'ethiopia_2010', 'ethiopia_2016',
-             'mali_2012', 'mali_2015', 'mozambique_2009', 'mozambique_2011'],
+              'kenya_2015', 'malawi_2012', 'malawi_2014', 'malawi_2015', 'malawi_2016',
+              'nigeria_2013', 'nigeria_2015', 'rwanda_2014',
+              'senegal_2012', 'sierra_leone_2013', 'tanzania_2015',
+              'togo_2013', 'uganda_2014', 'zimbabwe_2015'],
+    'val': ['burkina_faso_2014', 'cote_d_ivoire_2012', 'ghana_2014',
+            'ghana_2016', 'lesotho_20014', 'zambia_2013'],
+    'test': ['angola_2015', 'angola_2016', 'ethiopia_2016', 'mali_2012', 
+            'mali_2013', 'mali_2015', 'tanzania_2012', 'tanzania_2015'],
 }
 
-_SURVEY_NAMES_2009_17A = {
-    'train': ['cameroon', 'democratic_republic_of_congo', 'ghana', 'kenya',
-              'lesotho', 'malawi', 'mozambique', 'nigeria', 'senegal',
+_SURVEY_NAMES_2012_16A = {
+    'train': ['democratic_republic_of_congo', 'ghana', 'kenya',
+              'lesotho', 'malawi', 'nigeria', 'senegal',
               'togo', 'uganda', 'zambia', 'zimbabwe'],
     'val': ['benin', 'burkina_faso', 'guinea', 'sierra_leone', 'tanzania'],
     'test': ['angola', 'cote_d_ivoire', 'ethiopia', 'mali', 'rwanda'],
 }
-_SURVEY_NAMES_2009_17B = {
+_SURVEY_NAMES_2012_16B = {
     'train': ['angola', 'cote_d_ivoire', 'democratic_republic_of_congo',
-              'ethiopia', 'kenya', 'lesotho', 'mali', 'mozambique',
+              'ethiopia', 'kenya', 'lesotho', 'mali',
               'nigeria', 'rwanda', 'senegal', 'togo', 'uganda', 'zambia'],
-    'val': ['cameroon', 'ghana', 'malawi', 'zimbabwe'],
+    'val': ['ghana', 'malawi', 'zimbabwe'],
     'test': ['benin', 'burkina_faso', 'guinea', 'sierra_leone', 'tanzania'],
 }
-_SURVEY_NAMES_2009_17C = {
+_SURVEY_NAMES_2012_16C = {
     'train': ['angola', 'benin', 'burkina_faso', 'cote_d_ivoire', 'ethiopia',
               'guinea', 'kenya', 'lesotho', 'mali', 'rwanda', 'senegal',
               'sierra_leone', 'tanzania', 'zambia'],
-    'val': ['democratic_republic_of_congo', 'mozambique', 'nigeria', 'togo', 'uganda'],
-    'test': ['cameroon', 'ghana', 'malawi', 'zimbabwe'],
+    'val': ['democratic_republic_of_congo', 'nigeria', 'togo', 'uganda'],
+    'test': ['ghana', 'malawi', 'zimbabwe'],
 }
-_SURVEY_NAMES_2009_17D = {
-    'train': ['angola', 'benin', 'burkina_faso', 'cameroon', 'cote_d_ivoire',
+_SURVEY_NAMES_2012_16D = {
+    'train': ['angola', 'benin', 'burkina_faso', 'cote_d_ivoire',
               'ethiopia', 'ghana', 'guinea', 'malawi', 'mali', 'rwanda',
               'sierra_leone', 'tanzania', 'zimbabwe'],
     'val': ['kenya', 'lesotho', 'senegal', 'zambia'],
-    'test': ['democratic_republic_of_congo', 'mozambique', 'nigeria', 'togo', 'uganda'],
+    'test': ['democratic_republic_of_congo', 'nigeria', 'togo', 'uganda'],
 }
-_SURVEY_NAMES_2009_17E = {
-    'train': ['benin', 'burkina_faso', 'cameroon', 'democratic_republic_of_congo',
-              'ghana', 'guinea', 'malawi', 'mozambique', 'nigeria', 'sierra_leone',
+_SURVEY_NAMES_2012_16E = {
+    'train': ['benin', 'burkina_faso', 'democratic_republic_of_congo',
+              'ghana', 'guinea', 'malawi', 'nigeria', 'sierra_leone',
               'tanzania', 'togo', 'uganda', 'zimbabwe'],
     'val': ['angola', 'cote_d_ivoire', 'ethiopia', 'mali', 'rwanda'],
     'test': ['kenya', 'lesotho', 'senegal', 'zambia'],
