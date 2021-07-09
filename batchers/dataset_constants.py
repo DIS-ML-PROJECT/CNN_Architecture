@@ -10,20 +10,19 @@ _SURVEY_NAMES_5country = {
     'test': []
 }
 
-_SURVEY_NAMES_20012_16 = {
-    'train': ['benin_2012', 'democratic_republic_of_congo_2013', 'guinea_2012', 'kenya_2014',
-              'kenya_2015', 'malawi_2012', 'malawi_2014', 'malawi_2015', 'malawi_2016',
-              'nigeria_2013', 'nigeria_2015', 'rwanda_2014',
-              'senegal_2012', 'sierra_leone_2013', 'tanzania_2015',
-              'togo_2013', 'uganda_2014', 'zimbabwe_2015'],
+_SURVEY_NAMES_2012_16 = {
+ 'train': ['benin_2012', 'democratic_republic_of_congo_2013','democratic_republic_of_congo_2014', 'guinea_2012', 'kenya_2014',
+              'kenya_2015', 'malawi_2012', 'malawi_2014', 'malawi_2015', 'malawi_2016', 'nigeria_2013',
+              'nigeria_2015', 'rwanda_2014', 'rwanda_2015', 'senegal_2012',
+              'senegal_2013', 'sierra_leone_2013', 'tanzania_2012', 'tanzania_2015', 'tanzania_2016'],
     'val': ['burkina_faso_2014', 'cote_d_ivoire_2012', 'ghana_2014',
-            'ghana_2016', 'lesotho_20014', 'zambia_2013'],
-    'test': ['angola_2015', 'angola_2016', 'ethiopia_2016', 'mali_2012', 
-            'mali_2013', 'mali_2015', 'tanzania_2012', 'tanzania_2015'],
+            'ghana_2016', 'lesotho_2014', 'togo_2013', 'togo_2014', 'zambia_2013', 'zambia_2014'],
+    'test': ['angola_2015', 'angola_2016', 'ethiopia_2016',
+             'mali_2012', 'mali_2013', 'mali_2015', 'uganda_2014', 'uganda_2015', 'zimbabwe_2010', 'zimbabwe_2015'],
 }
 
 _SURVEY_NAMES_2012_16A = {
-    'train': ['democratic_republic_of_congo', 'ghana', 'kenya',
+   'train': ['democratic_republic_of_congo', 'ghana', 'kenya',
               'lesotho', 'malawi', 'nigeria', 'senegal',
               'togo', 'uganda', 'zambia', 'zimbabwe'],
     'val': ['benin', 'burkina_faso', 'guinea', 'sierra_leone', 'tanzania'],
@@ -58,10 +57,6 @@ _SURVEY_NAMES_2012_16E = {
     'test': ['kenya', 'lesotho', 'senegal', 'zambia'],
 }
 
-_SURVEY_NAMES_LSMS = ['ethiopia_2011', 'ethiopia_2015', 'malawi_2010', 'malawi_2016',
-                      'nigeria_2010', 'nigeria_2015', 'tanzania_2008', 'tanzania_2012',
-                      'uganda_2005', 'uganda_2009', 'uganda_2013']
-
 SURVEY_NAMES = {
     '5country': _SURVEY_NAMES_5country,
     '2012-16': _SURVEY_NAMES_2012_16,
@@ -74,21 +69,20 @@ SURVEY_NAMES = {
 }
 
 SIZES = {
-    '2012-16': {'train': 1, 'val': 1, 'test': 1, 'all': 3},
-    #'2012-16': {'train': 12319, 'val': 3257, 'test': 4093, 'all': 19669},
-    '2012-16nl': {'all': 261396},
-    '2012-16A': {'train': 11797, 'val': 3909, 'test': 3963, 'all': 19669},
-    '2012-16B': {'train': 11820, 'val': 3940, 'test': 3909, 'all': 19669},
-    '2012-16C': {'train': 11800, 'val': 3929, 'test': 3940, 'all': 19669},
-    '2012-16D': {'train': 11812, 'val': 3928, 'test': 3929, 'all': 19669},
-    '2012-16E': {'train': 11778, 'val': 3963, 'test': 3928, 'all': 19669},
-    'incountryA': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
-    'incountryB': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
-    'incountryC': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},
-    'incountryD': {'train': 11802, 'val': 3933, 'test': 3934, 'all': 19669},
-    'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669},
+    '2012-16': {'train': 7877, 'val': 2607, 'test': 2435, 'all': 12919},
+    '2012-16nl': {'all': 12919},
+    '2012-16A': {'train': 7524, 'val': 2770, 'test': 2625, 'all': 12919},
+    '2012-16B': {'train': 8014, 'val': 2135, 'test': 2770, 'all': 12919},
+    '2012-16C': {'train': 8543, 'val': 2241, 'test': 2135, 'all': 12919},
+    '2012-16D': {'train': 7530, 'val': 3148, 'test': 2241, 'all': 12919},
+    '2012-16E': {'train': 7146, 'val': 2625, 'test': 3148, 'all': 12919},
+    'incountryA': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
+    'incountryB': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
+    'incountryC': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
+    'incountryD': {'train': 11802, 'val': 3933, 'test': 3934, 'all': 19669},  #sustainlab dataset
+    'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669},  #sustainlab dataset
 }
-
+"""
 URBAN_SIZES = {
     '2012-16': {'train': 3954, 'val': 1212, 'test': 1635, 'all': 6801},
     '2012-16A': {'train': 4264, 'val': 1221, 'test': 1316, 'all': 6801},
@@ -106,7 +100,7 @@ RURAL_SIZES = {
     '2012-16D': {'train': 7920, 'val': 2455, 'test': 2493, 'all': 12868},
     '2012-16E': {'train': 7766, 'val': 2647, 'test': 2455, 'all': 12868},
 }
-
+"""
 # means and standard deviations calculated over the entire dataset (train + val + test),
 # with negative values set to 0, and ignoring any pixel that is 0 across all bands
 
