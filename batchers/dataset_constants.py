@@ -18,7 +18,7 @@ _SURVEY_NAMES_2012_16 = {
     'val': ['burkina_faso_2014', 'cote_d_ivoire_2012', 'ghana_2014',
             'ghana_2016', 'lesotho_2014', 'togo_2013', 'togo_2014', 'zambia_2013', 'zambia_2014'],
     'test': ['angola_2015', 'angola_2016', 'ethiopia_2016',
-             'mali_2012', 'mali_2013', 'mali_2015', 'uganda_2014', 'uganda_2015', 'zimbabwe_2010', 'zimbabwe_2015'],
+             'mali_2012', 'mali_2013', 'mali_2015', 'uganda_2014', 'uganda_2015', 'zimbabwe_2015'],
 }
 
 _SURVEY_NAMES_2012_16A = {
@@ -65,7 +65,6 @@ SURVEY_NAMES = {
     '2012-16C': _SURVEY_NAMES_2012_16C,
     '2012-16D': _SURVEY_NAMES_2012_16D,
     '2012-16E': _SURVEY_NAMES_2012_16E,
-    'LSMS': _SURVEY_NAMES_LSMS,
 }
 
 SIZES = {
@@ -76,11 +75,11 @@ SIZES = {
     '2012-16C': {'train': 8543, 'val': 2241, 'test': 2135, 'all': 12919},
     '2012-16D': {'train': 7530, 'val': 3148, 'test': 2241, 'all': 12919},
     '2012-16E': {'train': 7146, 'val': 2625, 'test': 3148, 'all': 12919},
-    'incountryA': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
-    'incountryB': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
-    'incountryC': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
-    'incountryD': {'train': 11802, 'val': 3933, 'test': 3934, 'all': 19669},  #sustainlab dataset
-    'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669},  #sustainlab dataset
+    'incountryA': {'train': 7751, 'val': 2584, 'test': 2584, 'all': 12919},  
+    'incountryB': {'train': 7751, 'val': 2584, 'test': 2584, 'all': 12919},  
+    'incountryC': {'train': 7751, 'val': 2584, 'test': 2584, 'all': 12919},  
+    'incountryE': {'train': 7752, 'val': 2583, 'test': 2584, 'all': 12919},  
+    'incountryD': {'train': 7752, 'val': 2584, 'test': 2583, 'all': 12919},  
 }
 """
 URBAN_SIZES = {
