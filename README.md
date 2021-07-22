@@ -8,6 +8,7 @@ For a visualised dataflow, look at the miro board [Timeflow CNN](https://miro.co
 While the diagrams "DHS Data sustainlab-group" and "LSMS Data" show the original dataflow by sustainlab-group, the diagram "DHS Data DIS 22" shows the shortened and adapted way used in this repository:
 ![dis22_dataflow](https://user-images.githubusercontent.com/72933444/122673505-065c1480-d1d1-11eb-9a3b-ce5bfac1fb44.jpg)
 
+The file `data/blacklist.csv` contains images, which should not be used for training the models. Source of this images is the [Data Acquisition Team](https://github.com/DIS-ML-PROJECT/Satellite-model).
 
 While the sustainlab-group dealed with DHS and LSMS data, the DIS22 ML Project deals only with DHS data
 
