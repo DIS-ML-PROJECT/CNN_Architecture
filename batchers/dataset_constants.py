@@ -68,6 +68,7 @@ SURVEY_NAMES = {
 }
 
 SIZES = {
+<<<<<<< HEAD
     '2012-16': {'train': 7877, 'val': 2607, 'test': 2445, 'all': 12929},
     '2012-16nl': {'all': 12929},
     '2012-16A': {'train': 7534, 'val': 2770, 'test': 2625, 'all': 12929},
@@ -78,8 +79,8 @@ SIZES = {
     'incountryA': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
     'incountryB': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
     'incountryC': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
-    'incountryE': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},  
     'incountryD': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},  
+    'incountryE': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},  
 }
 
 URBAN_SIZES = {
