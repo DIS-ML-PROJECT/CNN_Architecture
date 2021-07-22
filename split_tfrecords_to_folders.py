@@ -38,7 +38,7 @@ def create_folders(in_file, out_dir):
         if not os.path.exists(concat_name):
             shutil.move(in_file, concat_name) #copying files on my maschine. Might change to move(mv) on Colab
 #%%
-root_path = '/mnt/datadisk/sciebo/DIS22/Data_Acquisition/tfrecords'
+root_path = '/mnt/datadisk/sciebo/DIS22/Data_Acquisition/s2tfrec'
 tfrecord_list = os.listdir(root_path)
 out_dir = '/home/stoermer/01_data'
 for tf_file in tfrecord_list:

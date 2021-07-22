@@ -18,7 +18,7 @@ _SURVEY_NAMES_2012_16 = {
     'val': ['burkina_faso_2014', 'cote_d_ivoire_2012', 'ghana_2014',
             'ghana_2016', 'lesotho_2014', 'togo_2013', 'togo_2014', 'zambia_2013', 'zambia_2014'],
     'test': ['angola_2015', 'angola_2016', 'ethiopia_2016',
-             'mali_2012', 'mali_2013', 'mali_2015', 'uganda_2014', 'uganda_2015', 'zimbabwe_2010', 'zimbabwe_2015'],
+             'mali_2012', 'mali_2013', 'mali_2015', 'uganda_2014', 'uganda_2015', 'zimbabwe_2015'],
 }
 
 _SURVEY_NAMES_2012_16A = {
@@ -65,42 +65,40 @@ SURVEY_NAMES = {
     '2012-16C': _SURVEY_NAMES_2012_16C,
     '2012-16D': _SURVEY_NAMES_2012_16D,
     '2012-16E': _SURVEY_NAMES_2012_16E,
-    'LSMS': _SURVEY_NAMES_LSMS,
 }
 
 SIZES = {
-    '2012-16': {'train': 7877, 'val': 2607, 'test': 2435, 'all': 12919},
-    '2012-16nl': {'all': 12919},
-    '2012-16A': {'train': 7524, 'val': 2770, 'test': 2625, 'all': 12919},
-    '2012-16B': {'train': 8014, 'val': 2135, 'test': 2770, 'all': 12919},
-    '2012-16C': {'train': 8543, 'val': 2241, 'test': 2135, 'all': 12919},
-    '2012-16D': {'train': 7530, 'val': 3148, 'test': 2241, 'all': 12919},
-    '2012-16E': {'train': 7146, 'val': 2625, 'test': 3148, 'all': 12919},
-    'incountryA': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
-    'incountryB': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
-    'incountryC': {'train': 11801, 'val': 3934, 'test': 3934, 'all': 19669},  #sustainlab dataset
-    'incountryD': {'train': 11802, 'val': 3933, 'test': 3934, 'all': 19669},  #sustainlab dataset
-    'incountryE': {'train': 11802, 'val': 3934, 'test': 3933, 'all': 19669},  #sustainlab dataset
-}
-"""
-URBAN_SIZES = {
-    '2012-16': {'train': 3954, 'val': 1212, 'test': 1635, 'all': 6801},
-    '2012-16A': {'train': 4264, 'val': 1221, 'test': 1316, 'all': 6801},
-    '2012-16B': {'train': 4225, 'val': 1355, 'test': 1221, 'all': 6801},
-    '2012-16C': {'train': 4010, 'val': 1436, 'test': 1355, 'all': 6801},
-    '2012-16D': {'train': 3892, 'val': 1473, 'test': 1436, 'all': 6801},
-    '2012-16E': {'train': 4012, 'val': 1316, 'test': 1473, 'all': 6801},
+    '2012-16': {'train': 7877, 'val': 2607, 'test': 2445, 'all': 12929},
+    '2012-16nl': {'all': 12929},
+    '2012-16A': {'train': 7534, 'val': 2770, 'test': 2625, 'all': 12929},
+    '2012-16B': {'train': 8014, 'val': 2145, 'test': 2770, 'all': 12929},
+    '2012-16C': {'train': 8543, 'val': 2241, 'test': 2145, 'all': 12929},
+    '2012-16D': {'train': 7540, 'val': 3148, 'test': 2241, 'all': 12929},
+    '2012-16E': {'train': 7156, 'val': 2625, 'test': 3148, 'all': 12929},
+    'incountryA': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
+    'incountryB': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
+    'incountryC': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
+    'incountryE': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},  
+    'incountryD': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},  
 }
 
-RURAL_SIZES = {
-    '2012-16': {'train': 8365, 'val': 2045, 'test': 2458, 'all': 12868},
-    '2012-16A': {'train': 7533, 'val': 2688, 'test': 2647, 'all': 12868},
-    '2012-16B': {'train': 7595, 'val': 2585, 'test': 2688, 'all': 12868},
-    '2012-16C': {'train': 7790, 'val': 2493, 'test': 2585, 'all': 12868},
-    '2012-16D': {'train': 7920, 'val': 2455, 'test': 2493, 'all': 12868},
-    '2012-16E': {'train': 7766, 'val': 2647, 'test': 2455, 'all': 12868},
+URBAN_SIZES = {
+    '2012-16': {'train': 2647, 'val': 1031, 'test': 916, 'all': 4594},
+    '2012-16A': {'train': 2810, 'val': 847, 'test': 937, 'all': 4594},
+    '2012-16B': {'train': 3002, 'val': 745, 'test': 847, 'all': 4594},
+    '2012-16C': {'train': 3016, 'val': 833, 'test': 745, 'all': 4594},
+    '2012-16D': {'train': 2529, 'val': 1232, 'test': 833, 'all': 4594},
+    '2012-16E': {'train': 2425, 'val': 937, 'test': 1232, 'all': 4594},
 }
-"""
+RURAL_SIZES = {
+    '2012-16': {'train': 5230, 'val': 1576, 'test': 1529, 'all': 8335},
+    '2012-16A': {'train': 4724, 'val': 1923, 'test': 1688, 'all': 12868},
+    '2012-16B': {'train': 5012, 'val': 1400, 'test': 1923, 'all': 12868},
+    '2012-16C': {'train': 5527, 'val': 1408, 'test': 1400, 'all': 12868},
+    '2012-16D': {'train': 5011, 'val': 1916, 'test': 1408, 'all': 12868},
+    '2012-16E': {'train': 4731, 'val': 1688, 'test': 1916, 'all': 12868},
+}
+
 # means and standard deviations calculated over the entire dataset (train + val + test),
 # with negative values set to 0, and ignoring any pixel that is 0 across all bands
 
@@ -162,4 +160,3 @@ STD_DEVS_DICT = {
     '2012-16': _STD_DEVS_2012_16,
     '2012-16nl': _STD_DEVS_2012_16nl,
 }
-

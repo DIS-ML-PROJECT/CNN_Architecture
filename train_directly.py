@@ -39,8 +39,8 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
     - batch_size: int
     - ls_bands: one of [None, 'rgb', 'ms']
         which bands are supposed to be used
-    - nl_band: one of [None, 'merge', 'split']
-        are nl band supposed to be used, if yes are they supposed to be splitted?
+    - nl_band: one of [None, 'nl']
+        are nl band supposed to be used?
     - label_name: str, name of the label in the TFRecord file
     - augment: bool
         whether or not to perform a augmentation on the images
@@ -86,8 +86,8 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
     # out-of-country split for dhs
     if ooc:
 
-        # sustainlab: temporary hack: hard-coding '2009-17' base dataset for all DHS OOC
-        base_dataset = '2009-17'
+        # sustainlab: temporary hack: hard-coding '2012-16' base dataset for all DHS OOC
+        base_dataset = '2012-16'
 
         # get tfrecord paths for train, val and all data
         train_tfrecord_paths = np.asarray(batcher.get_tfrecord_paths(dataset, 'train'))
@@ -111,8 +111,8 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
             raise ValueError('incountry w/ non-base batcher is not supported')
 
 
-        base_dataset = '2009-17'
-        all_tfrecord_paths = np.asarray(batcher.get_tfrecord_paths('2009-17', 'all'))
+        base_dataset = '2012-16'
+        all_tfrecord_paths = np.asarray(batcher.get_tfrecord_paths('2012-16', 'all'))
 
         # get incountry folds
         with open(os.path.join(ROOT_DIR, 'data/dhs_incountry_folds.pkl'), 'rb') as f:
@@ -392,9 +392,8 @@ if __name__ == '__main__':
     flags = tf.app.flags
 
     # paths
-    flags.DEFINE_string('experiment_name', 'new_experiment', 'name of the experiment being run')
+    flags.DEFINE_string('experiment_name', 'first_run', 'name of the experiment being run')
     flags.DEFINE_string('ckpt_dir', os.path.join(ROOT_DIR, 'ckpts/'), 'checkpoint directory')
-    flags.DEFINE_string('log_dir', os.path.join(ROOT_DIR, 'logs/'), 'log directory')
 
     # initialization
     flags.DEFINE_string('init_ckpt_dir', None,
@@ -423,11 +422,11 @@ if __name__ == '__main__':
 
     # data params
     flags.DEFINE_string('batcher_type', 'base', 'batcher, one of ["base" (default), "urban", "rural"]')
-    flags.DEFINE_string('dataset', '2009-17', 'dataset to use, options depend on batcher_type (default "2009-17")')
+    flags.DEFINE_string('dataset', '2012-16', 'dataset to use, options depend on batcher_type (default "2012-16")')
     flags.DEFINE_boolean('ooc', True, 'whether to use out-of-country split (default True)')
     flags.DEFINE_float('keep_frac', 1.0, 'fraction of training data to use (default 1.0)')
-    flags.DEFINE_string('ls_bands', None, 'Landsat bands to use, one of [None (default), "rgb", "ms"]')
-    flags.DEFINE_string('nl_band', None, 'nightlights band, one of [None (default), "merge", "split"]')
+    flags.DEFINE_string('ls_bands', 'ms', 'Landsat bands to use, one of [None (default), "rgb", "ms"]')
+    flags.DEFINE_string('nl_band', 'nl', 'nightlights band, one of [None (default), "nl"]')
 
     # system
     flags.DEFINE_integer('gpu', None, 'which GPU to use (default None)')
@@ -442,4 +441,4 @@ if __name__ == '__main__':
     flags.DEFINE_integer('print_every', 10, 'print training statistics after every so many steps')
     flags.DEFINE_integer('seed', 123, 'seed for random initialization and shuffling')
 
-    tf.run()  # edited mm
+    tf.app.run()  # edited mm
