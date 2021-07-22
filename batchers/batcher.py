@@ -2,12 +2,12 @@ from batchers.dataset_constants import SIZES, SURVEY_NAMES, MEANS_DICT, STD_DEVS
 
 from glob import glob
 import os
-
+import pandas as pd
 import tensorflow as tf
 
-# edited mm
 DHS_TFRECORDS_PATH_ROOT = '/home/stoermer/01_data/'
-
+df_blacklist = pd.read_csv('../data/blacklist.csv')
+df_blacklist['loc'] = df_blacklist.apply(lambda x: tf.stack([x['LATNUM'], x['LONGNUM']]))
 
 def get_tfrecord_paths(dataset, split='all'):
     '''
@@ -272,7 +272,10 @@ class Batcher():
         if label is not None:
             result['labels'] = label
 
-        return result
+        if loc in set(df_blacklist['loc']):
+            return None
+        else:
+            return result
 
     def split_nl_band(self, ex):
         '''Splits the Nightlight Band band into separate DMSP and VIIRS bands.
