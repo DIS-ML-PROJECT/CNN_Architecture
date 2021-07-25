@@ -104,52 +104,40 @@ RURAL_SIZES = {
 # with negative values set to 0, and ignoring any pixel that is 0 across all bands
 
 _MEANS_2012_16 = {
-    'BLUE':  0.059183,
-    'GREEN': 0.088619,
-    'RED':   0.104145,
-    'SWIR1': 0.246874,
-    'SWIR2': 0.168728,
-    'TEMP1': 299.078023,
-    'NIR':   0.253074,
-    'DMSP':  4.005496,
-    'VIIRS': 1.096089,
-    # 'NIGHTLIGHTS': 5.101585, # nightlights overall
-}
-_MEANS_2012_16nl = {
-    'BLUE':  0.063927,
-    'GREEN': 0.091981,
-    'RED':   0.105234,
-    'SWIR1': 0.235316,
-    'SWIR2': 0.162268,
-    'TEMP1': 298.736746,
-    'NIR':   0.245430,
-    'DMSP':  7.152961, #wealthpooled
-    'VIIRS': 2.322687,
+    'Band 1':  0.062204,
+    'Band 2':  0.056957,
+    'Band 3':  0.056957,
+    'Band 4':  0.086789,
+    'Band 5':  0.110065,
+    'Band 6':  0.133231,
+    'Band 7':  0.125452,
+    'Band 8':  0.140215,
+    'Band 8A': 0.136593,
+    'Band 9':  0.081529,
+    'Band 10': 0.011516,
+    'Band 11': 0.188277,
+    'Band 12': 0.133316,
+    'Nightlight Band': 0.000224,
+    
 }
 
 _STD_DEVS_2012_16 = {
-    'BLUE':  0.022926,
-    'GREEN': 0.031880,
-    'RED':   0.051458,
-    'SWIR1': 0.088857,
-    'SWIR2': 0.083240,
-    'TEMP1': 4.300303,
-    'NIR':   0.058973,
-    'DMSP':  23.038301,
-    'VIIRS': 4.786354,
-    # 'NIGHTLIGHTS': 23.342916, # nightlights overall
-}
-_STD_DEVS_2012_16nl = {
-    'BLUE':  0.023697,
-    'GREEN': 0.032474,
-    'RED':   0.051421,
-    'SWIR1': 0.095830,
-    'SWIR2': 0.087522,
-    'TEMP1': 6.208949,
-    'NIR':   0.071084,
-    'DMSP':  29.749457,
-    'VIIRS': 14.611589,
-}
+    'Band 1': 6.807503,
+    'Band 2': 4.908025,
+    'Band 3': 4.908025,
+    'Band 4': 4.624917,
+    'Band 5': 5.034538,
+    'Band 6': 4.109622,
+    'Band 7': 3.454208,
+    'Band 8': 3.922794,
+    'Band 8A': 3.536461,
+    'Band 9': 3.469965,
+    'Band 10': 1.550465,
+    'Band 11': 4.778478,
+    'Band 12': 4.123393,
+    'Nightlight Band': 0.123593,
+   
+
 
 
 MEANS_DICT = {
