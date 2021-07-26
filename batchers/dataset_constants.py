@@ -18,7 +18,7 @@ _SURVEY_NAMES_2012_16 = {
     'val': ['burkina_faso_2014', 'cote_d_ivoire_2012', 'ghana_2014',
             'ghana_2016', 'lesotho_2014', 'togo_2013', 'togo_2014', 'zambia_2013', 'zambia_2014'],
     'test': ['angola_2015', 'angola_2016', 'ethiopia_2016',
-             'mali_2012', 'mali_2013', 'mali_2015', 'uganda_2014', 'uganda_2015', 'zimbabwe_2015'],
+             'mali_2012', 'mali_2013', 'mali_2015', 'uganda_2014', 'uganda_2015', 'zimbabwe_2010', 'zimbabwe_2015'],
 }
 
 _SURVEY_NAMES_2012_16A = {
@@ -68,7 +68,6 @@ SURVEY_NAMES = {
 }
 
 SIZES = {
-<<<<<<< HEAD
     '2012-16': {'train': 7877, 'val': 2607, 'test': 2445, 'all': 12929},
     '2012-16nl': {'all': 12929},
     '2012-16A': {'train': 7534, 'val': 2770, 'test': 2625, 'all': 12929},
@@ -76,11 +75,11 @@ SIZES = {
     '2012-16C': {'train': 8543, 'val': 2241, 'test': 2145, 'all': 12929},
     '2012-16D': {'train': 7540, 'val': 3148, 'test': 2241, 'all': 12929},
     '2012-16E': {'train': 7156, 'val': 2625, 'test': 3148, 'all': 12929},
-    'incountryA': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
-    'incountryB': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
-    'incountryC': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},  
-    'incountryD': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},  
-    'incountryE': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},  
+    'incountryA': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},
+    'incountryB': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},
+    'incountryC': {'train': 7751, 'val': 2589, 'test': 2589, 'all': 12929},
+    'incountryD': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},
+    'incountryE': {'train': 7752, 'val': 2588, 'test': 2588, 'all': 12929},
 }
 
 URBAN_SIZES = {
@@ -118,7 +117,7 @@ _MEANS_2012_16 = {
     'Band 11': 0.188277,
     'Band 12': 0.133316,
     'Nightlight Band': 0.000224,
-    
+
 }
 
 _STD_DEVS_2012_16 = {
@@ -136,7 +135,7 @@ _STD_DEVS_2012_16 = {
     'Band 11': 4.778478,
     'Band 12': 4.123393,
     'Nightlight Band': 0.123593,
-}  
+}
 
 
 
@@ -147,3 +146,4 @@ MEANS_DICT = {
 STD_DEVS_DICT = {
     '2012-16': _STD_DEVS_2012_16,
 }
+

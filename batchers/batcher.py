@@ -5,7 +5,8 @@ import os
 import pandas as pd
 import tensorflow as tf
 
-DHS_TFRECORDS_PATH_ROOT = '/home/stoermer/01_data/'
+# edited mm
+DHS_TFRECORDS_PATH_ROOT = '../../../01_data/'
 df_blacklist = pd.read_csv('../data/blacklist.csv')
 df_blacklist['loc'] = df_blacklist.apply(lambda x: tf.stack([x['LATNUM'], x['LONGNUM']]))
 
@@ -54,8 +55,7 @@ class Batcher():
             - 'ms': all 7 Landsat bands
         - nl_band: one of [None, 'nl']
             - None: no nightlights band
-            - 'merge': single nightlights band
-            - 'split': separate bands for DMSP and VIIRS (if one is absent, then band is all 0)
+            - 'nl': nightlights band
         - nl_label: one of [None, 'center', 'mean']
             - None: do not include nightlights as a label
             - 'center': nightlight value of center pixel
@@ -78,7 +78,7 @@ class Batcher():
         self.normalize = normalize
         self.cache = cache
 
-        if ls_bands not in [None, 'rgb', 'ms']:
+        if ls_bands not in [None, 'sentinel']:
             raise ValueError(f'Error: got {ls_bands} for "ls_bands"')
         self.ls_bands = ls_bands
 
@@ -181,24 +181,19 @@ class Batcher():
           - default value of -1 if 'year' is not a key in the protobuf
         '''
         bands = []
-        if self.ls_bands == 'rgb':
-            bands = ['Band 1', 'Band 2', 'Band 3']  # BGR order
-        elif self.ls_bands == 'ms':
-            bands = ['Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 8A',
+        self.ls_bands == 'ms':
+            bands = ['Band 1', 'Band 10', 'Band 11', 'Band 12', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 8A',
                      'Band 9']
         if self.nl_band is not None:
             bands += ['Nightlight Band']
         print(bands)
-        scalar_float_keys = ['centerlat', 'centerlon', 'wealth', 'wealthpooled', 'wealthpooled5country']
+        scalar_float_keys = ['centerlat', 'centerlon']
         if self.label_name is not None:
             scalar_float_keys.append(self.label_name)
         scalar_int_keys = ['year']
         if self.label_name is not None:
             scalar_int_keys.append(self.label_name)
 
-        str_keys = ['country', 'urbanrural']
-        if self.label_name is not None:
-            str_keys.append(self.label_name)
 
         keys_to_features = {}
         for band in bands:
@@ -207,20 +202,10 @@ class Batcher():
             keys_to_features[key] = tf.io.FixedLenFeature(shape=[], dtype=tf.float32)
         for key in scalar_int_keys:
             keys_to_features[key] = tf.io.FixedLenFeature(shape=[], dtype=tf.int64)
-        for key in str_keys:
-            keys_to_features[key] = tf.io.FixedLenFeature(shape=[], dtype=tf.string)
 
         ex = tf.parse_single_example(example_proto, features=keys_to_features)
         loc = tf.stack([ex['centerlat'], ex['centerlon']])
         year = ex.get('year')
-        country = ex.get('country')
-        wealth = ex.get('wealth')
-        wealthpooled = ex.get('wealthpooled')
-        wealthpooled5country = ex.get('wealthpooled5country')
-        if ex.get('urbanrural') == 'U':
-            urban = 1
-        else:
-            urban = 0
 
         img = float('nan')
         if len(bands) > 0:
@@ -241,18 +226,10 @@ class Batcher():
                 if self.negatives == 'zero':
                     ex[band] = tf.nn.relu(ex[band])
                 if self.normalize:
-                    if band == 'Nightlight Band':
-                        ex[band] = tf.cond(
-                            year < 2012,  # true = DMSP
-                            true_fn=lambda: (ex[band] - means['DMSP']) / std_devs['DMSP'],
-                            false_fn=lambda: (ex[band] - means['VIIRS']) / std_devs['VIIRS']
-                        )
-                    else:
-                        ex[band] = (ex[band] - means[band]) / std_devs[band]
+                    ex[band] = (ex[band] - means[band]) / std_devs[band]
             img = tf.stack([ex[band] for band in bands], axis=2)
 
-        result = {'images': img, 'locs': loc, 'years': year, 'countries': country, 'urban': urban, 'wealth': wealth,
-                  'wealthpooled': wealthpooled, 'wealthpooled5country': wealthpooled5country}
+        result = {'images': img, locs: loc, 'years': year}
 
         if self.nl_label == 'mean':
             nl_label = tf.reduce_mean(ex['Nightlight Band'])
@@ -272,35 +249,9 @@ class Batcher():
         if label is not None:
             result['labels'] = label
 
-        if loc in set(df_blacklist['loc']):
-            return None
-        else:
+        if loc not in set(df_blacklist['loc']):
             return result
 
-    def split_nl_band(self, ex):
-        '''Splits the Nightlight Band band into separate DMSP and VIIRS bands.
-
-        Args
-        - ex: dict {'images': img, 'years': year, ...}
-            - img: tf.Tensor, shape [H, W, C], type float32, final band is Nightlight Band
-            - year: tf.Tensor, scalar, type int32
-
-        Returns: ex, with img updated to have 2 Nightlight Band bands
-        - img: tf.Tensor, shape [H, W, C], type float32, last two bands are [DMSP, VIIRS]
-        '''
-        assert self.nl_band == 'split'
-        all_0 = tf.zeros(shape=[224, 224, 1], dtype=tf.float32, name='all_0')
-        img = ex['images']
-        year = ex['years']
-
-        ex['images'] = tf.cond(
-            year < 2012,
-            # if DMSP, then add an all-0 VIIRS band to the end
-            true_fn=lambda: tf.concat([img, all_0], axis=2),
-            # if VIIRS, then insert an all-0 DMSP band before the last band
-            false_fn=lambda: tf.concat([img[:, :, 0:-1], all_0, img[:, :, -1:]], axis=2)
-        )
-        return ex
 
     def augment_example(self, ex):
         '''Performs image augmentation (random flips + levels adjustments).
@@ -345,12 +296,9 @@ class Batcher():
         if self.ls_bands is not None:
             if self.nl_band is None:
                 img = rand_levels(img)
-            elif self.nl_band == 'merge':
+            elif self.nl_band == 'nl':
                 img_nonl = rand_levels(img[:, :, :-1])
                 img = tf.concat([img_nonl, img[:, :, -1:]], axis=2)
-            elif self.nl_band == 'split':
-                img_nonl = rand_levels(img[:, :, :-2])
-                img = tf.concat([img_nonl, img[:, :, -2:]], axis=2)
         return img
 
 
@@ -467,11 +415,7 @@ class ResidualBatcher(Batcher):
             if self.shuffle:
                 dataset = dataset.shuffle(buffer_size=1000)
             dataset = dataset.map(self.augment_example)
-            if self.nl_band == 'split':
-                dataset = dataset.map(self.split_nl_band)
         else:
-            if self.nl_band == 'split':
-                dataset = dataset.map(self.split_nl_band)
             if self.cache:
                 dataset = dataset.cache()
             if self.shuffle:

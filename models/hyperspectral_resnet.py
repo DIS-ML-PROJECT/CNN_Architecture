@@ -318,11 +318,11 @@ def first_layer_dilated_conv(x, c):
     7: Thermal 1 (Band 6 VCID 1)
     8: Thermal 2 (Band 6 VCID 2)
     """
-    _15_meter = [0,1,2,6]
-    _30_meter = [3,4,5]
-    _60_meter = [7,8]
-    split_weights = tf.split(axis=2, num_or_size_splits=9, value=weights)
-    split_x = tf.split(axis=3, num_or_size_splits=9, value=x)
+    _10_meter = [2,3,4,8]
+    _20_meter = [5,6,9]
+    _60_meter = [1,10]
+    split_weights = tf.split(axis=2, num_or_size_splits=10, value=weights)
+    split_x = tf.split(axis=3, num_or_size_splits=10, value=x)
 
     def do_dilated_cov(indicies, rate, name):
         return tf.nn.atrous_conv2d(
@@ -332,10 +332,10 @@ def first_layer_dilated_conv(x, c):
             padding='SAME',
             name=name)
 
-    dilated_conv_15m = do_dilated_cov(_15_meter, 1, '15_meter_dilated_conv')
-    dilated_conv_30m = do_dilated_cov(_30_meter, 2, '30_meter_dilated_conv')
+    dilated_conv_10m = do_dilated_cov(_10_meter, 1, '10_meter_dilated_conv')
+    dilated_conv_20m = do_dilated_cov(_20_meter, 2, '20_meter_dilated_conv')
     dilated_conv_60m = do_dilated_cov(_60_meter, 4, '60_meter_dilated_conv')
-    return dilated_conv_15m + dilated_conv_30m + dilated_conv_60m
+    return dilated_conv_10m + dilated_conv_20m + dilated_conv_60m
 
 
 def _max_pool(x, ksize=3, stride=2):

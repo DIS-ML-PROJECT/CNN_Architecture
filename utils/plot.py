@@ -69,6 +69,7 @@ def plot_image_by_band(img, band_order, nrows, title, rgb=None, colorbar=False):
     if colorbar:
         fig.colorbar(im, orientation='vertical', ax=axs)
     plt.show()
+    plt.save_fig('../plots/'+img+'_'+band+'.png')
 
 def scatter_preds(labels, preds, by_name=None, by_col=None, ax=None,
                   title=None, figsize=(5, 5)):

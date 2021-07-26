@@ -1,4 +1,4 @@
-#from models.vggf_model import VGGF
+from models.vggf_model import VGGF
 #from models.simple_cnn import SimpleCNN
 from models.resnet_model import Hyperspectral_Resnet
 #from models.resnet_combo import ResnetCombo
@@ -14,8 +14,8 @@ import time
 import numpy as np
 import tensorflow as tf
 
-# edit if necessary
-ROOT_DIR = './'
+# ROOT DIRECTORY
+ROOT_DIR = '../../01_data'
 
 
 def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_params, batch_size,
@@ -37,7 +37,7 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
         model parameters (includes e.g. batch size, dataset, ckpt_dir, .... )
         these are saved to params.txt in the new_experiment directory
     - batch_size: int
-    - ls_bands: one of [None, 'rgb', 'ms']
+    - ls_bands: one of [None, 'sentinel']
         which bands are supposed to be used
     - nl_band: one of [None, 'nl']
         are nl band supposed to be used?
@@ -220,21 +220,21 @@ def run_training(sess, ooc, batcher_type, dataset, keep_frac, model_name, model_
     model_params['num_outpus'] = 1
 
     # train model
-    with tf.variable_scope(tf.get_variable_scope()) as model_scope:  # edited mm
+    with tf.variable_scope(tf.get_variable_scope()) as model_scope:
         train_model = model_class(train_batch['images'], is_training=True, **model_params)
         train_preds = train_model.outputs
         if model_params['num_outputs'] == 1:
             train_preds = tf.reshape(train_preds, shape=[-1], name='train_preds')
 
     # train, eval model
-    with tf.variable_scope(model_scope, reuse=True):  # edited mm
+    with tf.variable_scope(model_scope, reuse=True):
         train_eval_model = model_class(train_eval_batch['images'], is_training=False, **model_params)
         train_eval_preds = train_eval_model.outputs
         if model_params['num_outputs'] == 1:
             train_eval_preds = tf.reshape(train_eval_preds, shape=[-1], name='train_eval_preds')
 
     # val model
-    with tf.variable_scope(model_scope, reuse=True):  # edited mm
+    with tf.variable_scope(model_scope, reuse=True):
         val_model = model_class(val_batch['images'], is_training=False, **model_params)
         val_preds = val_model.outputs
         if model_params['num_outputs'] == 1:
@@ -291,12 +291,12 @@ def run_training_wrapper(**params):
             params[p] = None
 
     # reset any existing graph
-    tf.reset_default_graph()  # edited mm
+    tf.reset_default_graph()
 
     # set the random seeds
     seed = params['seed']
     np.random.seed(seed)
-    tf.set_random_seed(seed)  # edited mm
+    tf.set_random_seed(seed)
 
     # create the log and checkpoint directories if needed
     # Returns a str
@@ -331,9 +331,9 @@ def run_training_wrapper(**params):
         os.environ['CUDA_VISIBLE_DEVICES'] = str(params['gpu'])
 
     # configure session
-    config = tf.ConfigProto()  # edited mm
+    config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
-    sess = tf.Session(config=config)  # edited mm
+    sess = tf.Session(config=config)
 
     # set model parameters
     model_params = {
@@ -392,7 +392,7 @@ if __name__ == '__main__':
     flags = tf.app.flags
 
     # paths
-    flags.DEFINE_string('experiment_name', 'first_run', 'name of the experiment being run')
+    flags.DEFINE_string('experiment_name', 'DHS_OOC', 'name of the experiment being run')
     flags.DEFINE_string('ckpt_dir', os.path.join(ROOT_DIR, 'ckpts/'), 'checkpoint directory')
 
     # initialization
@@ -425,7 +425,7 @@ if __name__ == '__main__':
     flags.DEFINE_string('dataset', '2012-16', 'dataset to use, options depend on batcher_type (default "2012-16")')
     flags.DEFINE_boolean('ooc', True, 'whether to use out-of-country split (default True)')
     flags.DEFINE_float('keep_frac', 1.0, 'fraction of training data to use (default 1.0)')
-    flags.DEFINE_string('ls_bands', 'ms', 'Landsat bands to use, one of [None (default), "rgb", "ms"]')
+    flags.DEFINE_string('ls_bands', 'sentinel', 'Landsat bands to use, one of [None (default), "sentinel"]')
     flags.DEFINE_string('nl_band', 'nl', 'nightlights band, one of [None (default), "nl"]')
 
     # system
@@ -441,4 +441,4 @@ if __name__ == '__main__':
     flags.DEFINE_integer('print_every', 10, 'print training statistics after every so many steps')
     flags.DEFINE_integer('seed', 123, 'seed for random initialization and shuffling')
 
-    tf.app.run()  # edited mm
+    tf.app.run()

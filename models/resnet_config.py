@@ -2,7 +2,7 @@
 
 import tensorflow as tf
 
-FLAGS = tf.compat.v1.flags.FLAGS
+FLAGS = tf.flags.FLAGS
 
 
 class Config:

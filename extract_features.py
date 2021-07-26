@@ -9,7 +9,7 @@ import tensorflow as tf
 # edit if necessary
 ROOT_DIR = './'
 
-DATASET_NAME = '2009-17'
+DATASET_NAME = '2012-16'
 BATCH_SIZE = 128
 KEEP_FRAC = 1.0
 LABEL_NAME = 'wealthpooled'
@@ -27,8 +27,6 @@ def get_bands(bands: str):
         'ms': ('ms', None),
         'msnl': ('ms', 'split'),
         'nl': (None, 'split'),
-        'rgb': ('rgb', None),
-        'rgbnl': ('rgb', 'split'),
     }[bands]
 
 # models to run
@@ -36,10 +34,6 @@ ALL_MODELS = {}
 
 # best ResNet-18 transfer models
 TRANSFER_MODELS = {
-    'ResNet-18 RGB Transfer': {
-        'model_dir': 'transfer_2009-17nl_nlcenter_18preact_rgb_b64_fc001_conv001_lr0001',
-        'bands': ('rgb', None)
-    },
     'ResNet-18 MS Transfer': {
         'model_dir': 'transfer_2009-17nl_nlcenter_18preact_ms_b64_fc001_conv001_lr0001',
         'bands': ('ms', None)
@@ -48,15 +42,6 @@ TRANSFER_MODELS = {
 
 # ImageNet 'Transfer' Learning
 IMAGENET_TRANSFER_MODELS = [
-    '18preact_rgb_random',
-    '18preact_rgb_random2',
-    '18preact_rgb_random3',
-    '18preact_rgb_same',
-    '18preact_rgbnl_random',
-    '18preact_rgbnl_random2',
-    '18preact_rgbnl_random3',
-    '18preact_rgbnl_same',
-    '18preact_rgbnl_samecaled',
     '18preact_ms_random',
     '18preact_ms_random2',
     '18preact_ms_random3',
@@ -96,17 +81,11 @@ OOC_MODEL_DIRS = [
     '2009-17D_18preact_nl_random_b64_fc1.0_conv1.0_lr01',
     '2009-17E_18preact_nl_random_b64_fc1.0_conv1.0_lr0001',
 
-    # 10/7/2018
-    '2009-17A_18preact_rgb_same_b64_fc001_conv001_lr01',
-    '2009-17B_18preact_rgb_same_b64_fc001_conv001_lr0001',
-    '2009-17C_18preact_rgb_same_b64_fc001_conv001_lr0001',
-    '2009-17D_18preact_rgb_same_b64_fc1.0_conv1.0_lr01',
-    '2009-17E_18preact_rgb_same_b64_fc001_conv001_lr0001',
 ]
 
 # get parameters and bands for ooc models
 for model_dir in OOC_MODEL_DIRS:
-    regex = r'2009-17(\w)_18preact_(\w+)_\w+_b64.+'
+    regex = r'2012-16(\w)_18preact_(\w+)_\w+_b64.+'
     fold, bands_name = re.match(regex, model_dir).groups()
     bands_tup = get_bands(bands_name)
     model_name = f'Resnet-18 {bands_name} {fold}'
@@ -148,7 +127,7 @@ KEEP_MODEL_DIRS = sorted(glob(os.path.join(LOGS_ROOT_DIR, '2009-17*_18preact_nl_
 
 for model_dir in KEEP_MODEL_DIRS:
     model_dir = os.path.basename(model_dir)
-    regex = r'2009-17(\w)_18preact_(\w+)_\w+_keep(.+)_seed(\w+)_b64.+'
+    regex = r'2012-16(\w)_18preact_(\w+)_\w+_keep(.+)_seed(\w+)_b64.+'
     fold, bands_name, keep, seed = re.match(regex, model_dir).groups()
     bands_tup = get_bands(bands_name)
     model_name = f'Resnet-18 {bands_name} {fold}, keep{keep} seed{seed}'
