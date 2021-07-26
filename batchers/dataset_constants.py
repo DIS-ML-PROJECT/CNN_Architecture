@@ -105,8 +105,8 @@ RURAL_SIZES = {
 
 _MEANS_2012_16 = {
     'Band 1':  0.062204,
-    'Band 2':  0.056957,
-    'Band 3':  0.056957,
+    'Band 2':  0.056957, #typo in tfrecord creation : Band needs to be calculated again
+    'Band 3':  0.056957, #typo in tfrecord creation : Band needs to be calculated again
     'Band 4':  0.086789,
     'Band 5':  0.110065,
     'Band 6':  0.133231,
@@ -123,8 +123,8 @@ _MEANS_2012_16 = {
 
 _STD_DEVS_2012_16 = {
     'Band 1': 6.807503,
-    'Band 2': 4.908025,
-    'Band 3': 4.908025,
+    'Band 2': 4.908025, #typo in tfrecord creation : Band needs to be calculated again
+    'Band 3': 4.908025, #typo in tfrecord creation : Band needs to be calculated again
     'Band 4': 4.624917,
     'Band 5': 5.034538,
     'Band 6': 4.109622,
