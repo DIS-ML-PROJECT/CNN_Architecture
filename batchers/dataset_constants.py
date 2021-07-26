@@ -101,7 +101,7 @@ RURAL_SIZES = {
 }
 
 # means and standard deviations calculated over the entire dataset (train + val + test),
-# with negative values set to 0, and ignoring any pixel that is 0 across all bands
+# for each band
 
 _MEANS_2012_16 = {
     'Band 1':  0.062204,
@@ -136,16 +136,14 @@ _STD_DEVS_2012_16 = {
     'Band 11': 4.778478,
     'Band 12': 4.123393,
     'Nightlight Band': 0.123593,
-   
+}  
 
 
 
 MEANS_DICT = {
     '2012-16': _MEANS_2012_16,
-    '2012-16nl': _MEANS_2012_16nl,
 }
 
 STD_DEVS_DICT = {
     '2012-16': _STD_DEVS_2012_16,
-    '2012-16nl': _STD_DEVS_2012_16nl,
 }

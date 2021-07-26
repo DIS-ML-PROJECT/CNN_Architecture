@@ -16,7 +16,7 @@ def create_folders(in_file, out_dir):
     - inFile: str, path to tf_record file
     - out_dir: str, path to output directory
     '''
-    tensorflow.enable_eager_execution()
+    tensorflow.enable_eager_execution() #only used in tensorflow 1 
     os.makedirs(out_dir, exist_ok=True)
     #load and  read ExampleMessage
     data = tensorflow.data.TFRecordDataset(in_file)
@@ -24,9 +24,9 @@ def create_folders(in_file, out_dir):
         example = tensorflow.train.Example()
         example.ParseFromString(raw_record.numpy())
 
-        #get features and process to dir name
+        #get original strings back from features
         survey_country = example.features.feature['country'].bytes_list.value[0].decode()
-        country_str = survey_country.lower().replace(' ', '_').replace("'", '_')
+        country_str = survey_country.lower().replace(' ', '_').replace("'", '_') #modify country-string to make them the same shape
         year = example.features.feature['year'].int64_list.value[0]
         #build paths
         file_code = f'{country_str}_{year}'
